@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Plugin Documentation</title>
+    <title>Changes Report</title>
     <style type="text/css" media="all">
       @import url("./css/maven-base.css");
       @import url("./css/maven-theme.css");
@@ -48,8 +48,8 @@
                           <a href="index.html" title="Introduction">Introduction</a>
             </li>
                   <li class="none">
-            <strong>Goals</strong>
-          </li>
+                          <a href="plugin-info.html" title="Goals">Goals</a>
+            </li>
                   <li class="none">
                           <a href="usage.html" title="Usage">Usage</a>
             </li>
@@ -72,8 +72,8 @@
                           <a href="project-reports.html" title="Project Reports">Project Reports</a>
                     <ul>
                       <li class="none">
-            <strong>Plugin Documentation</strong>
-          </li>
+                          <a href="plugin-info.html" title="Plugin Documentation">Plugin Documentation</a>
+            </li>
                       <li class="none">
                           <a href="apidocs/index.html" title="JavaDocs">JavaDocs</a>
             </li>
@@ -93,8 +93,8 @@
                           <a href="property-updates-report.html" title="Property Updates Report">Property Updates Report</a>
             </li>
                       <li class="none">
-                          <a href="changes-report.html" title="Changes Report">Changes Report</a>
-            </li>
+            <strong>Changes Report</strong>
+          </li>
                       <li class="none">
                           <a href="invoker-report.html" title="Invoker Build Results">Invoker Build Results</a>
             </li>
@@ -110,52 +110,8 @@
     </div>
     <div id="bodyColumn">
       <div id="contentBox">
-        <a name="Plugin_Documentation"></a><div class="section"><h2>Plugin Documentation<a name="Plugin_Documentation"></a></h2><p>Goals available for this plugin:</p><table border="0" class="bodyTable"><tr class="a"><th>Goal</th><th>Description</th></tr><tr class="b"><td><a href="compile-mojo.html">protoc:compile</a></td><td>This mojo executes the <code>protoc</code> compiler for generating
-main java sources from protocol buffer definitions. It also
-searches dependency artifacts for <code>.proto</code> files and
-includes them in the <code>proto_path</code> so that they can be
-referenced. Finally, it adds the <code>.proto</code> files to the
-project as resources so that they are included in the final
-artifact.</td></tr><tr class="a"><td><a href="help-mojo.html">protoc:help</a></td><td>Display help information on maven-protoc-plugin.<br />
- Call 
-
-<pre>
-  mvn protoc:help -Ddetail=true -Dgoal=&lt;goal-name&gt;
-</pre>
-
-to display parameter details.</td></tr><tr class="b"><td><a href="testCompile-mojo.html">protoc:testCompile</a></td><td>This mojo executes the <code>protoc</code> compiler for generating
-test java sources from protocol buffer definitions. It also
-searches dependency artifacts in the test scope for
-<code>.proto</code> files and includes them in the
-<code>proto_path</code> so that they can be referenced. Finally, it
-adds the <code>.proto</code> files to the project as test resources
-so that they can be included in the test-jar artifact.</td></tr></table><a name="System_Requirements"></a><div class="section"><h3>System Requirements<a name="System_Requirements"></a></h3><p>The following specifies the minimum requirements to run this Maven plugin:</p><table border="0" class="bodyTable"><tr class="a"><td>Maven</td><td>2.0.9</td></tr><tr class="b"><td>JDK</td><td>1.5</td></tr><tr class="a"><td>Memory</td><td>No minimum requirement.</td></tr><tr class="b"><td>Disk Space</td><td>No minimum requirement.</td></tr></table></div><a name="Usage"></a><div class="section"><h3>Usage<a name="Usage"></a></h3><p>You should specify the version in your project's plugin configuration:</p><div class="source"><pre>&lt;project&gt;
-  ...
-  &lt;build&gt;
-    &lt;!-- To define the plugin version in your parent POM --&gt;
-    &lt;pluginManagement&gt;
-      &lt;plugins&gt;
-        &lt;plugin&gt;
-          &lt;groupId&gt;com.google.protobuf.tools&lt;/groupId&gt;
-          &lt;artifactId&gt;maven-protoc-plugin&lt;/artifactId&gt;
-          &lt;version&gt;0.2.0&lt;/version&gt;
-        &lt;/plugin&gt;
-        ...
-      &lt;/plugins&gt;
-    &lt;/pluginManagement&gt;
-    &lt;!-- To use the plugin goals in your POM or parent POM --&gt;
-    &lt;plugins&gt;
-      &lt;plugin&gt;
-        &lt;groupId&gt;com.google.protobuf.tools&lt;/groupId&gt;
-        &lt;artifactId&gt;maven-protoc-plugin&lt;/artifactId&gt;
-        &lt;version&gt;0.2.0&lt;/version&gt;
-      &lt;/plugin&gt;
-      ...
-    &lt;/plugins&gt;
-  &lt;/build&gt;
-  ...
-&lt;/project&gt;
-</pre></div><p>For more information, see <a class="externalLink" href="http://maven.apache.org/guides/mini/guide-configuring-plugins.html">&quot;Guide to Configuring Plug-ins&quot;</a></p></div></div>
+        <div class="section"><h2>Changes Report<a name="Changes_Report"></a></h2><a name="Changes_Report"></a><div class="section"><h3>Release History<a name="Release_History"></a></h3><a name="Release_History"></a><table border="0" class="bodyTable"><tr class="a"><th>Version</th><th>Date</th><th>Description</th></tr><tr class="b"><td><a href="#a0.2">0.2</a></td><td>2011-12-12</td><td>Bug fixes and new features</td></tr></table></div><div class="section"><h3>Release 0.2 - 2011-12-12<a name="Release_0.2_-_2011-12-12"></a></h3><a name="a0.2"></a><table border="0" class="bodyTable"><tr class="a"><th>Type</th><th>Changes</th><th>By</th></tr><tr class="b"><td><div class="figure"><p align="center"><img src="images/add.gif" alt="add" title="add" /></p></div></td><td>Added protobuf toolchain extension for use by maven-toolchains-plugin.
+                Integrated protobuf toolchain into plugin execution.</td><td><a href="team-list.html#sergei-ivanov">sergei-ivanov</a></td></tr><tr class="a"><td><div class="figure"><p align="center"><img src="images/add.gif" alt="add" title="add" /></p></div></td><td>Additional debug logging is produced when Maven runs in verbose mode.</td><td><a href="team-list.html#sergei-ivanov">sergei-ivanov</a></td></tr><tr class="b"><td><div class="figure"><p align="center"><img src="images/add.gif" alt="add" title="add" /></p></div></td><td>Added a suite of integration tests.</td><td><a href="team-list.html#sergei-ivanov">sergei-ivanov</a></td></tr><tr class="a"><td><div class="figure"><p align="center"><img src="images/add.gif" alt="add" title="add" /></p></div></td><td>Created content for the Maven-generated web site.</td><td><a href="team-list.html#sergei-ivanov">sergei-ivanov</a></td></tr><tr class="b"><td><div class="figure"><p align="center"><img src="images/fix.gif" alt="fix" title="fix" /></p></div></td><td>Updated documentation in source code.</td><td><a href="team-list.html#sergei-ivanov">sergei-ivanov</a></td></tr><tr class="a"><td><div class="figure"><p align="center"><img src="images/fix.gif" alt="fix" title="fix" /></p></div></td><td>Updated Mojo documentation.</td><td><a href="team-list.html#sergei-ivanov">sergei-ivanov</a></td></tr><tr class="b"><td><div class="figure"><p align="center"><img src="images/fix.gif" alt="fix" title="fix" /></p></div></td><td>Updated Mojo annotations for Maven3 (marked plugin as thread-safe for parallel module builds).</td><td><a href="team-list.html#sergei-ivanov">sergei-ivanov</a></td></tr><tr class="a"><td><div class="figure"><p align="center"><img src="images/add.gif" alt="add" title="add" /></p></div></td><td>Allowed protoc executable to be specified when invoking plugin from command line.</td><td><a href="team-list.html#sergei-ivanov">sergei-ivanov</a></td></tr><tr class="b"><td><div class="figure"><p align="center"><img src="images/add.gif" alt="add" title="add" /></p></div></td><td>Added options to suppress plugin execution.</td><td><a href="team-list.html#sergei-ivanov">sergei-ivanov</a></td></tr><tr class="a"><td><div class="figure"><p align="center"><img src="images/fix.gif" alt="fix" title="fix" /></p></div></td><td>Enabled test protobuf definitions to import production definitions from the same module. Thanks to B. K. Oxley (binkley).</td><td><a href="team-list.html#sergei-ivanov">sergei-ivanov</a></td></tr><tr class="b"><td><div class="figure"><p align="center"><img src="images/fix.gif" alt="fix" title="fix" /></p></div></td><td>Fixed importing protobuf definitions from other projects or modules when namespaces are used. Thanks to Paul Nyheim (pnyheim).</td><td><a href="team-list.html#sergei-ivanov">sergei-ivanov</a></td></tr></table></div></div>
       </div>
     </div>
     <div class="clear">
