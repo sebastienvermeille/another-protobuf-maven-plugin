@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Maven Protoc Plugin - Project Mailing Lists</title>
+    <title>Maven Protoc Plugin - Dependency Information</title>
     <style type="text/css" media="all">
       @import url("./css/maven-base.css");
       @import url("./css/maven-theme.css");
@@ -78,8 +78,8 @@
                           <a href="team-list.html" title="Project Team">Project Team</a>
             </li>
                       <li class="none">
-                          <a href="dependency-info.html" title="Dependency Information">Dependency Information</a>
-            </li>
+            <strong>Dependency Information</strong>
+          </li>
                       <li class="none">
                           <a href="plugins.html" title="Project Plugins">Project Plugins</a>
             </li>
@@ -105,8 +105,8 @@
                           <a href="project-summary.html" title="Project Summary">Project Summary</a>
             </li>
                       <li class="none">
-            <strong>Mailing Lists</strong>
-          </li>
+                          <a href="mail-lists.html" title="Mailing Lists">Mailing Lists</a>
+            </li>
                       <li class="none">
                           <a href="dependencies.html" title="Dependencies">Dependencies</a>
             </li>
@@ -125,7 +125,16 @@
     </div>
     <div id="bodyColumn">
       <div id="contentBox">
-        <div class="section"><h2>Project Mailing Lists<a name="Project_Mailing_Lists"></a></h2><a name="Project_Mailing_Lists"></a><p>There are no mailing lists currently associated with this project.</p></div>
+        <div class="section"><h2>Dependency Information<a name="Dependency_Information"></a></h2><a name="Dependency_Information"></a><div class="section"><h3>Apache Maven<a name="Apache_Maven"></a></h3><a name="Apache_Maven"></a><div class="source"><pre>&lt;dependency&gt;
+  &lt;groupId&gt;com.google.protobuf.tools&lt;/groupId&gt;
+  &lt;artifactId&gt;maven-protoc-plugin&lt;/artifactId&gt;
+  &lt;version&gt;0.3.0&lt;/version&gt;
+  &lt;type&gt;maven-plugin&lt;/type&gt;
+&lt;/dependency&gt;</pre></div></div><div class="section"><h3>Apache Buildr<a name="Apache_Buildr"></a></h3><a name="Apache_Buildr"></a><div class="source"><pre>'com.google.protobuf.tools:maven-protoc-plugin:maven-plugin:0.3.0'</pre></div></div><div class="section"><h3>Apache Ant<a name="Apache_Ant"></a></h3><a name="Apache_Ant"></a><div class="source"><pre>&lt;dependency org=&quot;com.google.protobuf.tools&quot; name=&quot;maven-protoc-plugin&quot; rev=&quot;0.3.0&quot;&gt;
+  &lt;artifact name=&quot;maven-protoc-plugin&quot; type=&quot;maven-plugin&quot; /&gt;
+&lt;/dependency&gt;</pre></div></div><div class="section"><h3>Groovy Grape<a name="Groovy_Grape"></a></h3><a name="Groovy_Grape"></a><div class="source"><pre>@Grapes(
+@Grab(group='com.google.protobuf.tools', module='maven-protoc-plugin', version='0.3.0')
+)</pre></div></div><div class="section"><h3>Grails<a name="Grails"></a></h3><a name="Grails"></a><div class="source"><pre>compile 'com.google.protobuf.tools:maven-protoc-plugin:0.3.0'</pre></div></div><div class="section"><h3>Leiningen<a name="Leiningen"></a></h3><a name="Leiningen"></a><div class="source"><pre>[com.google.protobuf.tools/maven-protoc-plugin &quot;0.3.0&quot;]</pre></div></div><div class="section"><h3>SBT<a name="SBT"></a></h3><a name="SBT"></a><div class="source"><pre>libraryDependencies += &quot;com.google.protobuf.tools&quot; %% &quot;maven-protoc-plugin&quot; % &quot;0.3.0&quot;</pre></div></div></div>
       </div>
     </div>
     <div class="clear">
