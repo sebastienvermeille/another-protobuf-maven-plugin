@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Maven Protoc Plugin &#x2013; protoc:test-compile</title>
+    <title>Maven Protoc Plugin &#x2013; protoc:compile-custom</title>
     <style type="text/css" media="all">
       @import url("./css/maven-base.css");
       @import url("./css/maven-theme.css");
@@ -90,21 +90,21 @@
         
   
     <div class="section">
-<h2><a name="protoc:test-compile"></a>protoc:test-compile</h2>
+<h2><a name="protoc:compile-custom"></a>protoc:compile-custom</h2>
       
 <p><b>Full name</b>:</p>
       
-<p>com.google.protobuf.tools:maven-protoc-plugin:0.4.1-SNAPSHOT:test-compile</p>
+<p>com.google.protobuf.tools:maven-protoc-plugin:0.4.1-SNAPSHOT:compile-custom</p>
       
 <p><b>Description</b>:</p>
       
-<div>This mojo executes the <tt>protoc</tt> compiler for generating
-test Java sources from protocol buffer definitions. It also
-searches dependency artifacts in the test scope for
+<div>This mojo executes the <tt>protoc</tt> compiler with the
+specified plugin executable to generate main sources from protocol
+buffer definitions. It also searches dependency artifacts for
 <tt>.proto</tt> files and includes them in the
 <tt>proto_path</tt> so that they can be referenced. Finally, it
-adds the <tt>.proto</tt> files to the project as test resources
-so that they can be included in the test-jar artifact.</div>
+adds the <tt>.proto</tt> files to the project as resources so
+that they are included in the final artifact.</div>
       
 <p><b>Attributes</b>:</p>
       
@@ -112,13 +112,13 @@ so that they can be included in the test-jar artifact.</div>
         
 <li>Requires a Maven project to be executed.</li>
         
-<li>Requires dependency resolution of artifacts in scope: <tt>test</tt>.</li>
+<li>Requires dependency resolution of artifacts in scope: <tt>compile</tt>.</li>
         
 <li>The goal is thread-safe and supports parallel builds.</li>
         
-<li>Since version: <tt>0.3.3</tt>.</li>
+<li>Since version: <tt>0.4.1</tt>.</li>
         
-<li>Binds by default to the <a class="externalLink" href="http://maven.apache.org/ref/current/maven-core/lifecycles.html">lifecycle phase</a>: <tt>generate-test-sources</tt>.</li>
+<li>Binds by default to the <a class="externalLink" href="http://maven.apache.org/ref/current/maven-core/lifecycles.html">lifecycle phase</a>: <tt>generate-sources</tt>.</li>
       </ul>
       
 <div class="section">
@@ -191,7 +191,7 @@ considerations, then this parameter should be set to
 <td><tt>0.3.0</tt></td>
             
 <td>This is the directory into which the (optional) descriptor set file
-will be created.<br /><b>Default value is</b>: <tt>${project.build.directory}/generated-test-resources/protobuf/descriptor-sets</tt>.<br /></td>
+will be created.<br /><b>Default value is</b>: <tt>${project.build.directory}/generated-resources/protobuf/descriptor-sets</tt>.<br /></td>
           </tr>
           
 <tr class="b">
@@ -200,7 +200,7 @@ will be created.<br /><b>Default value is</b>: <tt>${project.build.directory}/ge
             
 <td><tt>boolean</tt></td>
             
-<td><tt>0.3.3</tt></td>
+<td><tt>0.4.1</tt></td>
             
 <td>Set this to <tt>false</tt> to disable hashing of dependent jar
 paths. This plugin expands jars on the classpath looking for
@@ -212,26 +212,37 @@ used.<br /><b>Default value is</b>: <tt>true</tt>.<br /></td>
           
 <tr class="a">
             
-<td><b><a href="#outputDirectory">outputDirectory</a></b></td>
+<td><b><a href="#pluginId">pluginId</a></b></td>
             
-<td><tt>File</tt></td>
+<td><tt>String</tt></td>
             
-<td><tt>0.3.3</tt></td>
+<td><tt>0.4.1</tt></td>
             
-<td>This is the directory into which the <tt>.java</tt> test
-sources will be created.<br /><b>Default value is</b>: <tt>${project.build.directory}/generated-test-sources/protobuf/java</tt>.<br /></td>
+<td>A unique id that identifies the plugin to protoc.
+<b>Cannot</b> be one of the built-in protoc plugins: 
+
+<ul>
+
+<li>java</li>
+
+<li>cpp</li>
+
+<li>python</li>
+
+<li>descriptor-set</li>
+</ul><br /><b>User property is</b>: <tt>protocPluginId</tt>.</td>
           </tr>
           
 <tr class="b">
             
-<td><b><a href="#protoTestSourceRoot">protoTestSourceRoot</a></b></td>
+<td><b><a href="#protoSourceRoot">protoSourceRoot</a></b></td>
             
 <td><tt>File</tt></td>
             
-<td><tt>0.3.3</tt></td>
+<td><tt>0.4.1</tt></td>
             
-<td>The source directories containing the test <tt>.proto</tt>
-definitions to be compiled.<br /><b>Default value is</b>: <tt>${basedir}/src/test/proto</tt>.<br /></td>
+<td>The source directories containing the <tt>.proto</tt>
+definitions to be compiled.<br /><b>Default value is</b>: <tt>${basedir}/src/main/proto</tt>.<br /></td>
           </tr>
           
 <tr class="a">
@@ -240,7 +251,7 @@ definitions to be compiled.<br /><b>Default value is</b>: <tt>${basedir}/src/tes
             
 <td><tt>File</tt></td>
             
-<td><tt>0.3.3</tt></td>
+<td><tt>0.4.1</tt></td>
             
 <td>Since <tt>protoc</tt> cannot access jars, proto files in
 dependencies are extracted to this location and deleted on exit.
@@ -283,7 +294,7 @@ descriptor set file for the specified <tt>.proto</tt> files.<br /><b>Default val
             
 <td><tt>File[]</tt></td>
             
-<td><tt>0.3.3</tt></td>
+<td><tt>0.4.1</tt></td>
             
 <td>Additional source paths for <tt>.proto</tt> definitions.<br /></td>
           </tr>
@@ -294,7 +305,7 @@ descriptor set file for the specified <tt>.proto</tt> files.<br /><b>Default val
             
 <td><tt>boolean</tt></td>
             
-<td><tt>0.3.3</tt></td>
+<td><tt>0.4.1</tt></td>
             
 <td>Normally <tt>protoc</tt> is invoked on every execution of the
 plugin. Setting this parameter to <tt>true</tt> will enable
@@ -326,7 +337,7 @@ a row without clearing out the output directory in between.<br /><b>Default valu
 <td><tt>0.4.1</tt></td>
             
 <td>If generated descriptor set is to be attached to the build,
-specifies an optional classifier.<br /><b>Default value is</b>: <tt>test</tt>.<br /></td>
+specifies an optional classifier.<br /></td>
           </tr>
           
 <tr class="b">
@@ -335,7 +346,7 @@ specifies an optional classifier.<br /><b>Default value is</b>: <tt>test</tt>.<b
             
 <td><tt>Set</tt></td>
             
-<td><tt>0.3.3</tt></td>
+<td><tt>0.4.1</tt></td>
             
 <td>A list of &lt;exclude&gt; elements specifying the protobuf
 definition files (by pattern) that should be excluded from
@@ -379,7 +390,7 @@ set making it &quot;self-contained&quot;.<br /><b>Default value is</b>: <tt>fals
             
 <td><tt>Set</tt></td>
             
-<td><tt>0.3.3</tt></td>
+<td><tt>0.4.1</tt></td>
             
 <td>A list of &lt;include&gt; elements specifying the protobuf
 definition files (by pattern) that should be included in
@@ -389,6 +400,81 @@ compilation. When not specified, the default includes will be:
 &#xa0;&lt;include&gt;**/*.proto&lt;/include&gt;<br />
 &lt;/includes&gt;<br />
 </tt><br /></td>
+          </tr>
+          
+<tr class="b">
+            
+<td><b><a href="#outputDirectory">outputDirectory</a></b></td>
+            
+<td><tt>File</tt></td>
+            
+<td><tt>0.4.1</tt></td>
+            
+<td><br /><b>User property is</b>: <tt>protocPluginOutputDirectory</tt>.</td>
+          </tr>
+          
+<tr class="a">
+            
+<td><b><a href="#pluginArtifact">pluginArtifact</a></b></td>
+            
+<td><tt>String</tt></td>
+            
+<td><tt>0.4.1</tt></td>
+            
+<td>Plugin artifact specification, in
+<tt>groupId:artifactId:version[:type[:classifier]]</tt> format.
+When this parameter is set, the specified artifact will be resolved
+as a plugin executable.<br /><b>User property is</b>: <tt>protocPluginArtifact</tt>.</td>
+          </tr>
+          
+<tr class="b">
+            
+<td><b><a href="#pluginExecutable">pluginExecutable</a></b></td>
+            
+<td><tt>String</tt></td>
+            
+<td><tt>0.4.1</tt></td>
+            
+<td>An optional path to plugin executable. If unspecified, alternative
+options must be used (e.g. toolchains).<br /><b>User property is</b>: <tt>protocPluginExecutable</tt>.</td>
+          </tr>
+          
+<tr class="a">
+            
+<td><b><a href="#pluginParameter">pluginParameter</a></b></td>
+            
+<td><tt>String</tt></td>
+            
+<td><tt>0.4.1</tt></td>
+            
+<td>An optional parameter to be passed to the plugin. <b>Cannot</b>
+contain colon (<tt>:</tt>) symbols.<br /><b>User property is</b>: <tt>protocPluginParameter</tt>.</td>
+          </tr>
+          
+<tr class="b">
+            
+<td><b><a href="#pluginTool">pluginTool</a></b></td>
+            
+<td><tt>String</tt></td>
+            
+<td><tt>0.4.1</tt></td>
+            
+<td>If <tt>pluginToolchain</tt> is specified, this parameter
+specifies the tool in the toolchain, which is to be resolved as
+plugin executable.<br /><b>User property is</b>: <tt>protocPluginTool</tt>.</td>
+          </tr>
+          
+<tr class="a">
+            
+<td><b><a href="#pluginToolchain">pluginToolchain</a></b></td>
+            
+<td><tt>String</tt></td>
+            
+<td><tt>0.4.1</tt></td>
+            
+<td>A name of an optional custom toolchain that can be used to locate
+the plugin executable. The toolchain must be registered as a build
+extension and initialised properly.<br /><b>User property is</b>: <tt>protocPluginToolchain</tt>.</td>
           </tr>
           
 <tr class="b">
@@ -411,7 +497,7 @@ specified artifact as <tt>protoc</tt> executable.<br /><b>User property is</b>: 
             
 <td><tt>String</tt></td>
             
-<td><tt>0.3.3</tt></td>
+<td><tt>0.4.1</tt></td>
             
 <td>This is the path to the <tt>protoc</tt> executable. When this
 parameter is not set, the plugin attempts to load a
@@ -439,7 +525,7 @@ generated.<br /><b>Default value is</b>: <tt>${project.build.directory}/protoc-p
             
 <td><tt>List</tt></td>
             
-<td><tt>0.3.3</tt></td>
+<td><tt>0.4.1</tt></td>
             
 <td>Specifies one of more custom protoc plugins, written in Java and
 available as Maven artifacts. An executable plugin will be created
@@ -464,7 +550,7 @@ Windows it is a WinRun4J .exe and .ini.<br /></td>
             
 <td><tt>long</tt></td>
             
-<td><tt>0.3.3</tt></td>
+<td><tt>0.4.1</tt></td>
             
 <td>Sets the granularity in milliseconds of the last modification date
 for testing whether source protobuf definitions need recompilation.
@@ -490,7 +576,7 @@ parameter to <tt>10000</tt>.</p><br /><b>Default value is</b>: <tt>0</tt>.<br />
           
 <li><b>Type</b>: <tt>java.io.File[]</tt></li>
           
-<li><b>Since</b>: <tt>0.3.3</tt></li>
+<li><b>Since</b>: <tt>0.4.1</tt></li>
           
 <li><b>Required</b>: <tt>No</tt></li>
         </ul><hr />
@@ -544,7 +630,7 @@ sources.</div>
           
 <li><b>Type</b>: <tt>boolean</tt></li>
           
-<li><b>Since</b>: <tt>0.3.3</tt></li>
+<li><b>Since</b>: <tt>0.4.1</tt></li>
           
 <li><b>Required</b>: <tt>No</tt></li>
           
@@ -580,8 +666,6 @@ specifies an optional classifier.</div>
 <li><b>Since</b>: <tt>0.4.1</tt></li>
           
 <li><b>Required</b>: <tt>No</tt></li>
-          
-<li><b>Default</b>: <tt>test</tt></li>
         </ul><hr />
 <p><b><a name="descriptorSetFileName">descriptorSetFileName</a>:</b></p>
         
@@ -611,7 +695,7 @@ will be created.</div>
           
 <li><b>Required</b>: <tt>Yes</tt></li>
           
-<li><b>Default</b>: <tt>${project.build.directory}/generated-test-resources/protobuf/descriptor-sets</tt></li>
+<li><b>Default</b>: <tt>${project.build.directory}/generated-resources/protobuf/descriptor-sets</tt></li>
         </ul><hr />
 <p><b><a name="excludes">excludes</a>:</b></p>
         
@@ -627,7 +711,7 @@ empty: <tt><br />
           
 <li><b>Type</b>: <tt>java.util.Set</tt></li>
           
-<li><b>Since</b>: <tt>0.3.3</tt></li>
+<li><b>Since</b>: <tt>0.4.1</tt></li>
           
 <li><b>Required</b>: <tt>No</tt></li>
         </ul><hr />
@@ -663,7 +747,7 @@ used.</div>
           
 <li><b>Type</b>: <tt>boolean</tt></li>
           
-<li><b>Since</b>: <tt>0.3.3</tt></li>
+<li><b>Since</b>: <tt>0.4.1</tt></li>
           
 <li><b>Required</b>: <tt>Yes</tt></li>
           
@@ -700,39 +784,143 @@ compilation. When not specified, the default includes will be:
           
 <li><b>Type</b>: <tt>java.util.Set</tt></li>
           
-<li><b>Since</b>: <tt>0.3.3</tt></li>
+<li><b>Since</b>: <tt>0.4.1</tt></li>
           
 <li><b>Required</b>: <tt>No</tt></li>
         </ul><hr />
 <p><b><a name="outputDirectory">outputDirectory</a>:</b></p>
         
-<div>This is the directory into which the <tt>.java</tt> test
-sources will be created.</div>
+<div></div>
         
 <ul>
           
 <li><b>Type</b>: <tt>java.io.File</tt></li>
           
-<li><b>Since</b>: <tt>0.3.3</tt></li>
+<li><b>Since</b>: <tt>0.4.1</tt></li>
+          
+<li><b>Required</b>: <tt>No</tt></li>
+          
+<li><b>User Property</b>: <tt>protocPluginOutputDirectory</tt></li>
+        </ul><hr />
+<p><b><a name="pluginArtifact">pluginArtifact</a>:</b></p>
+        
+<div>Plugin artifact specification, in
+<tt>groupId:artifactId:version[:type[:classifier]]</tt> format.
+When this parameter is set, the specified artifact will be resolved
+as a plugin executable.</div>
+        
+<ul>
+          
+<li><b>Type</b>: <tt>java.lang.String</tt></li>
+          
+<li><b>Since</b>: <tt>0.4.1</tt></li>
+          
+<li><b>Required</b>: <tt>No</tt></li>
+          
+<li><b>User Property</b>: <tt>protocPluginArtifact</tt></li>
+        </ul><hr />
+<p><b><a name="pluginExecutable">pluginExecutable</a>:</b></p>
+        
+<div>An optional path to plugin executable. If unspecified, alternative
+options must be used (e.g. toolchains).</div>
+        
+<ul>
+          
+<li><b>Type</b>: <tt>java.lang.String</tt></li>
+          
+<li><b>Since</b>: <tt>0.4.1</tt></li>
+          
+<li><b>Required</b>: <tt>No</tt></li>
+          
+<li><b>User Property</b>: <tt>protocPluginExecutable</tt></li>
+        </ul><hr />
+<p><b><a name="pluginId">pluginId</a>:</b></p>
+        
+<div>A unique id that identifies the plugin to protoc.
+<b>Cannot</b> be one of the built-in protoc plugins: 
+
+<ul>
+
+<li>java</li>
+
+<li>cpp</li>
+
+<li>python</li>
+
+<li>descriptor-set</li>
+</ul></div>
+        
+<ul>
+          
+<li><b>Type</b>: <tt>java.lang.String</tt></li>
+          
+<li><b>Since</b>: <tt>0.4.1</tt></li>
           
 <li><b>Required</b>: <tt>Yes</tt></li>
           
-<li><b>Default</b>: <tt>${project.build.directory}/generated-test-sources/protobuf/java</tt></li>
+<li><b>User Property</b>: <tt>protocPluginId</tt></li>
         </ul><hr />
-<p><b><a name="protoTestSourceRoot">protoTestSourceRoot</a>:</b></p>
+<p><b><a name="pluginParameter">pluginParameter</a>:</b></p>
         
-<div>The source directories containing the test <tt>.proto</tt>
+<div>An optional parameter to be passed to the plugin. <b>Cannot</b>
+contain colon (<tt>:</tt>) symbols.</div>
+        
+<ul>
+          
+<li><b>Type</b>: <tt>java.lang.String</tt></li>
+          
+<li><b>Since</b>: <tt>0.4.1</tt></li>
+          
+<li><b>Required</b>: <tt>No</tt></li>
+          
+<li><b>User Property</b>: <tt>protocPluginParameter</tt></li>
+        </ul><hr />
+<p><b><a name="pluginTool">pluginTool</a>:</b></p>
+        
+<div>If <tt>pluginToolchain</tt> is specified, this parameter
+specifies the tool in the toolchain, which is to be resolved as
+plugin executable.</div>
+        
+<ul>
+          
+<li><b>Type</b>: <tt>java.lang.String</tt></li>
+          
+<li><b>Since</b>: <tt>0.4.1</tt></li>
+          
+<li><b>Required</b>: <tt>No</tt></li>
+          
+<li><b>User Property</b>: <tt>protocPluginTool</tt></li>
+        </ul><hr />
+<p><b><a name="pluginToolchain">pluginToolchain</a>:</b></p>
+        
+<div>A name of an optional custom toolchain that can be used to locate
+the plugin executable. The toolchain must be registered as a build
+extension and initialised properly.</div>
+        
+<ul>
+          
+<li><b>Type</b>: <tt>java.lang.String</tt></li>
+          
+<li><b>Since</b>: <tt>0.4.1</tt></li>
+          
+<li><b>Required</b>: <tt>No</tt></li>
+          
+<li><b>User Property</b>: <tt>protocPluginToolchain</tt></li>
+        </ul><hr />
+<p><b><a name="protoSourceRoot">protoSourceRoot</a>:</b></p>
+        
+<div>The source directories containing the <tt>.proto</tt>
 definitions to be compiled.</div>
         
 <ul>
           
 <li><b>Type</b>: <tt>java.io.File</tt></li>
           
-<li><b>Since</b>: <tt>0.3.3</tt></li>
+<li><b>Since</b>: <tt>0.4.1</tt></li>
           
 <li><b>Required</b>: <tt>Yes</tt></li>
           
-<li><b>Default</b>: <tt>${basedir}/src/test/proto</tt></li>
+<li><b>Default</b>: <tt>${basedir}/src/main/proto</tt></li>
         </ul><hr />
 <p><b><a name="protocArtifact">protocArtifact</a>:</b></p>
         
@@ -764,7 +952,7 @@ executable in the <tt>PATH</tt> is used.</div>
           
 <li><b>Type</b>: <tt>java.lang.String</tt></li>
           
-<li><b>Since</b>: <tt>0.3.3</tt></li>
+<li><b>Since</b>: <tt>0.4.1</tt></li>
           
 <li><b>Required</b>: <tt>No</tt></li>
           
@@ -796,7 +984,7 @@ Windows it is a WinRun4J .exe and .ini.</div>
           
 <li><b>Type</b>: <tt>java.util.List</tt></li>
           
-<li><b>Since</b>: <tt>0.3.3</tt></li>
+<li><b>Since</b>: <tt>0.4.1</tt></li>
           
 <li><b>Required</b>: <tt>No</tt></li>
         </ul><hr />
@@ -832,7 +1020,7 @@ parameter to <tt>10000</tt>.</p></div>
           
 <li><b>Type</b>: <tt>long</tt></li>
           
-<li><b>Since</b>: <tt>0.3.3</tt></li>
+<li><b>Since</b>: <tt>0.4.1</tt></li>
           
 <li><b>Required</b>: <tt>No</tt></li>
           
@@ -848,7 +1036,7 @@ This directory is always cleaned during execution.</div>
           
 <li><b>Type</b>: <tt>java.io.File</tt></li>
           
-<li><b>Since</b>: <tt>0.3.3</tt></li>
+<li><b>Since</b>: <tt>0.4.1</tt></li>
           
 <li><b>Required</b>: <tt>Yes</tt></li>
           
