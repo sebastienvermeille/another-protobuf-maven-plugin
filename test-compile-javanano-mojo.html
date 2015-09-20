@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Maven Protoc Plugin &#x2013; protoc:compile-cpp</title>
+    <title>Maven Protoc Plugin &#x2013; protoc:test-compile-javanano</title>
     <style type="text/css" media="all">
       @import url("./css/maven-base.css");
       @import url("./css/maven-theme.css");
@@ -90,20 +90,21 @@
         
   
     <div class="section">
-<h2><a name="protoc:compile-cpp"></a>protoc:compile-cpp</h2>
+<h2><a name="protoc:test-compile-javanano"></a>protoc:test-compile-javanano</h2>
       
 <p><b>Full name</b>:</p>
       
-<p>com.google.protobuf.tools:maven-protoc-plugin:0.4.3:compile-cpp</p>
+<p>com.google.protobuf.tools:maven-protoc-plugin:0.4.3:test-compile-javanano</p>
       
 <p><b>Description</b>:</p>
       
 <div>This mojo executes the <tt>protoc</tt> compiler for generating
-main C++ sources from protocol buffer definitions. It also searches
-dependency artifacts for <tt>.proto</tt> files and includes
-them in the <tt>proto_path</tt> so that they can be referenced.
-Finally, it adds the <tt>.proto</tt> files to the project as
-resources so that they are included in the final artifact.</div>
+test JavaNano sources from protocol buffer definitions. It also
+searches dependency artifacts in the test scope for
+<tt>.proto</tt> files and includes them in the
+<tt>proto_path</tt> so that they can be referenced. Finally, it
+adds the <tt>.proto</tt> files to the project as test resources
+so that they can be included in the test-jar artifact.</div>
       
 <p><b>Attributes</b>:</p>
       
@@ -111,13 +112,13 @@ resources so that they are included in the final artifact.</div>
         
 <li>Requires a Maven project to be executed.</li>
         
-<li>Requires dependency resolution of artifacts in scope: <tt>compile</tt>.</li>
+<li>Requires dependency resolution of artifacts in scope: <tt>test</tt>.</li>
         
 <li>The goal is thread-safe and supports parallel builds.</li>
         
-<li>Since version: <tt>0.3.3</tt>.</li>
+<li>Since version: <tt>0.4.3</tt>.</li>
         
-<li>Binds by default to the <a class="externalLink" href="http://maven.apache.org/ref/current/maven-core/lifecycles.html">lifecycle phase</a>: <tt>generate-sources</tt>.</li>
+<li>Binds by default to the <a class="externalLink" href="http://maven.apache.org/ref/current/maven-core/lifecycles.html">lifecycle phase</a>: <tt>generate-test-sources</tt>.</li>
       </ul>
       
 <div class="section">
@@ -190,7 +191,7 @@ considerations, then this parameter should be set to
 <td><tt>0.3.0</tt></td>
             
 <td>This is the directory into which the (optional) descriptor set file
-will be created.<br /><b>Default value is</b>: <tt>${project.build.directory}/generated-resources/protobuf/descriptor-sets</tt>.<br /></td>
+will be created.<br /><b>Default value is</b>: <tt>${project.build.directory}/generated-test-resources/protobuf/descriptor-sets</tt>.<br /></td>
           </tr>
           
 <tr class="b">
@@ -199,7 +200,7 @@ will be created.<br /><b>Default value is</b>: <tt>${project.build.directory}/ge
             
 <td><tt>boolean</tt></td>
             
-<td><tt>0.3.3</tt></td>
+<td><tt>0.4.3</tt></td>
             
 <td>Set this to <tt>false</tt> to disable hashing of dependent jar
 paths. This plugin expands jars on the classpath looking for
@@ -215,22 +216,22 @@ used.<br /><b>Default value is</b>: <tt>true</tt>.<br /></td>
             
 <td><tt>File</tt></td>
             
-<td><tt>0.3.3</tt></td>
+<td><tt>0.4.3</tt></td>
             
-<td>This is the directory into which the <tt>.cpp</tt> will be
-created.<br /><b>Default value is</b>: <tt>${project.build.directory}/generated-sources/protobuf/cpp</tt>.<br /></td>
+<td>This is the directory into which the <tt>.java</tt> test
+sources will be created.<br /><b>Default value is</b>: <tt>${project.build.directory}/generated-test-sources/protobuf/javanano</tt>.<br /></td>
           </tr>
           
 <tr class="b">
             
-<td><b><a href="#protoSourceRoot">protoSourceRoot</a></b></td>
+<td><b><a href="#protoTestSourceRoot">protoTestSourceRoot</a></b></td>
             
 <td><tt>File</tt></td>
             
-<td><tt>0.3.3</tt></td>
+<td><tt>0.4.3</tt></td>
             
-<td>The source directories containing the <tt>.proto</tt>
-definitions to be compiled.<br /><b>Default value is</b>: <tt>${basedir}/src/main/proto</tt>.<br /></td>
+<td>The source directories containing the test <tt>.proto</tt>
+definitions to be compiled.<br /><b>Default value is</b>: <tt>${basedir}/src/test/proto</tt>.<br /></td>
           </tr>
           
 <tr class="a">
@@ -239,7 +240,7 @@ definitions to be compiled.<br /><b>Default value is</b>: <tt>${basedir}/src/mai
             
 <td><tt>File</tt></td>
             
-<td><tt>0.3.3</tt></td>
+<td><tt>0.4.3</tt></td>
             
 <td>Since <tt>protoc</tt> cannot access jars, proto files in
 dependencies are extracted to this location and deleted on exit.
@@ -282,7 +283,7 @@ descriptor set file for the specified <tt>.proto</tt> files.<br /><b>Default val
             
 <td><tt>File[]</tt></td>
             
-<td><tt>0.3.3</tt></td>
+<td><tt>0.4.3</tt></td>
             
 <td>Additional source paths for <tt>.proto</tt> definitions.<br /></td>
           </tr>
@@ -293,7 +294,7 @@ descriptor set file for the specified <tt>.proto</tt> files.<br /><b>Default val
             
 <td><tt>boolean</tt></td>
             
-<td><tt>0.3.3</tt></td>
+<td><tt>0.4.3</tt></td>
             
 <td>Normally <tt>protoc</tt> is invoked on every execution of the
 plugin. Setting this parameter to <tt>true</tt> will enable
@@ -325,7 +326,7 @@ a row without clearing out the output directory in between.<br /><b>Default valu
 <td><tt>0.4.1</tt></td>
             
 <td>If generated descriptor set is to be attached to the build,
-specifies an optional classifier.<br /></td>
+specifies an optional classifier.<br /><b>Default value is</b>: <tt>test</tt>.<br /></td>
           </tr>
           
 <tr class="b">
@@ -334,7 +335,7 @@ specifies an optional classifier.<br /></td>
             
 <td><tt>Set</tt></td>
             
-<td><tt>0.3.3</tt></td>
+<td><tt>0.4.3</tt></td>
             
 <td>A list of &lt;exclude&gt; elements specifying the protobuf
 definition files (by pattern) that should be excluded from
@@ -378,7 +379,7 @@ set making it &quot;self-contained&quot;.<br /><b>Default value is</b>: <tt>fals
             
 <td><tt>Set</tt></td>
             
-<td><tt>0.3.3</tt></td>
+<td><tt>0.4.3</tt></td>
             
 <td>A list of &lt;include&gt; elements specifying the protobuf
 definition files (by pattern) that should be included in
@@ -392,6 +393,18 @@ compilation. When not specified, the default includes will be:
           
 <tr class="b">
             
+<td><b><a href="#javaNanoOptions">javaNanoOptions</a></b></td>
+            
+<td><tt>String</tt></td>
+            
+<td><tt>0.4.3</tt></td>
+            
+<td>Additional comma-separated options to be passed to the JavaNano
+generator. <b>Cannot</b> contain colon (<tt>:</tt>) symbols.<br /><b>User property is</b>: <tt>javaNanoOptions</tt>.</td>
+          </tr>
+          
+<tr class="a">
+            
 <td><b><a href="#protocArtifact">protocArtifact</a></b></td>
             
 <td><tt>String</tt></td>
@@ -404,13 +417,13 @@ When this parameter is set, the plugin attempts to resolve the
 specified artifact as <tt>protoc</tt> executable.<br /><b>User property is</b>: <tt>protocArtifact</tt>.</td>
           </tr>
           
-<tr class="a">
+<tr class="b">
             
 <td><b><a href="#protocExecutable">protocExecutable</a></b></td>
             
 <td><tt>String</tt></td>
             
-<td><tt>0.3.3</tt></td>
+<td><tt>0.4.3</tt></td>
             
 <td>This is the path to the <tt>protoc</tt> executable. When this
 parameter is not set, the plugin attempts to load a
@@ -420,7 +433,7 @@ toolchain is defined in the project, the <tt>protoc</tt>
 executable in the <tt>PATH</tt> is used.<br /><b>User property is</b>: <tt>protocExecutable</tt>.</td>
           </tr>
           
-<tr class="b">
+<tr class="a">
             
 <td><b><a href="#protocPluginDirectory">protocPluginDirectory</a></b></td>
             
@@ -432,13 +445,13 @@ executable in the <tt>PATH</tt> is used.<br /><b>User property is</b>: <tt>proto
 generated.<br /><b>Default value is</b>: <tt>${project.build.directory}/protoc-plugins</tt>.<br /></td>
           </tr>
           
-<tr class="a">
+<tr class="b">
             
 <td><b><a href="#protocPlugins">protocPlugins</a></b></td>
             
 <td><tt>List</tt></td>
             
-<td><tt>0.3.3</tt></td>
+<td><tt>0.4.3</tt></td>
             
 <td>Specifies one of more custom protoc plugins, written in Java and
 available as Maven artifacts. An executable plugin will be created
@@ -446,7 +459,7 @@ at execution time. On UNIX the executable is a shell script and on
 Windows it is a WinRun4J .exe and .ini.<br /></td>
           </tr>
           
-<tr class="b">
+<tr class="a">
             
 <td><b><a href="#skip">skip</a></b></td>
             
@@ -457,13 +470,13 @@ Windows it is a WinRun4J .exe and .ini.<br /></td>
 <td>When <tt>true</tt>, skip the execution.<br /><b>Default value is</b>: <tt>false</tt>.<br /><b>User property is</b>: <tt>protoc.skip</tt>.</td>
           </tr>
           
-<tr class="a">
+<tr class="b">
             
 <td><b><a href="#staleMillis">staleMillis</a></b></td>
             
 <td><tt>long</tt></td>
             
-<td><tt>0.3.3</tt></td>
+<td><tt>0.4.3</tt></td>
             
 <td>Sets the granularity in milliseconds of the last modification date
 for testing whether source protobuf definitions need recompilation.
@@ -489,7 +502,7 @@ parameter to <tt>10000</tt>.</p><br /><b>Default value is</b>: <tt>0</tt>.<br />
           
 <li><b>Type</b>: <tt>java.io.File[]</tt></li>
           
-<li><b>Since</b>: <tt>0.3.3</tt></li>
+<li><b>Since</b>: <tt>0.4.3</tt></li>
           
 <li><b>Required</b>: <tt>No</tt></li>
         </ul><hr />
@@ -543,7 +556,7 @@ sources.</div>
           
 <li><b>Type</b>: <tt>boolean</tt></li>
           
-<li><b>Since</b>: <tt>0.3.3</tt></li>
+<li><b>Since</b>: <tt>0.4.3</tt></li>
           
 <li><b>Required</b>: <tt>No</tt></li>
           
@@ -579,6 +592,8 @@ specifies an optional classifier.</div>
 <li><b>Since</b>: <tt>0.4.1</tt></li>
           
 <li><b>Required</b>: <tt>No</tt></li>
+          
+<li><b>Default</b>: <tt>test</tt></li>
         </ul><hr />
 <p><b><a name="descriptorSetFileName">descriptorSetFileName</a>:</b></p>
         
@@ -608,7 +623,7 @@ will be created.</div>
           
 <li><b>Required</b>: <tt>Yes</tt></li>
           
-<li><b>Default</b>: <tt>${project.build.directory}/generated-resources/protobuf/descriptor-sets</tt></li>
+<li><b>Default</b>: <tt>${project.build.directory}/generated-test-resources/protobuf/descriptor-sets</tt></li>
         </ul><hr />
 <p><b><a name="excludes">excludes</a>:</b></p>
         
@@ -624,7 +639,7 @@ empty: <tt><br />
           
 <li><b>Type</b>: <tt>java.util.Set</tt></li>
           
-<li><b>Since</b>: <tt>0.3.3</tt></li>
+<li><b>Since</b>: <tt>0.4.3</tt></li>
           
 <li><b>Required</b>: <tt>No</tt></li>
         </ul><hr />
@@ -660,7 +675,7 @@ used.</div>
           
 <li><b>Type</b>: <tt>boolean</tt></li>
           
-<li><b>Since</b>: <tt>0.3.3</tt></li>
+<li><b>Since</b>: <tt>0.4.3</tt></li>
           
 <li><b>Required</b>: <tt>Yes</tt></li>
           
@@ -697,39 +712,54 @@ compilation. When not specified, the default includes will be:
           
 <li><b>Type</b>: <tt>java.util.Set</tt></li>
           
-<li><b>Since</b>: <tt>0.3.3</tt></li>
+<li><b>Since</b>: <tt>0.4.3</tt></li>
           
 <li><b>Required</b>: <tt>No</tt></li>
         </ul><hr />
+<p><b><a name="javaNanoOptions">javaNanoOptions</a>:</b></p>
+        
+<div>Additional comma-separated options to be passed to the JavaNano
+generator. <b>Cannot</b> contain colon (<tt>:</tt>) symbols.</div>
+        
+<ul>
+          
+<li><b>Type</b>: <tt>java.lang.String</tt></li>
+          
+<li><b>Since</b>: <tt>0.4.3</tt></li>
+          
+<li><b>Required</b>: <tt>No</tt></li>
+          
+<li><b>User Property</b>: <tt>javaNanoOptions</tt></li>
+        </ul><hr />
 <p><b><a name="outputDirectory">outputDirectory</a>:</b></p>
         
-<div>This is the directory into which the <tt>.cpp</tt> will be
-created.</div>
+<div>This is the directory into which the <tt>.java</tt> test
+sources will be created.</div>
         
 <ul>
           
 <li><b>Type</b>: <tt>java.io.File</tt></li>
           
-<li><b>Since</b>: <tt>0.3.3</tt></li>
+<li><b>Since</b>: <tt>0.4.3</tt></li>
           
 <li><b>Required</b>: <tt>Yes</tt></li>
           
-<li><b>Default</b>: <tt>${project.build.directory}/generated-sources/protobuf/cpp</tt></li>
+<li><b>Default</b>: <tt>${project.build.directory}/generated-test-sources/protobuf/javanano</tt></li>
         </ul><hr />
-<p><b><a name="protoSourceRoot">protoSourceRoot</a>:</b></p>
+<p><b><a name="protoTestSourceRoot">protoTestSourceRoot</a>:</b></p>
         
-<div>The source directories containing the <tt>.proto</tt>
+<div>The source directories containing the test <tt>.proto</tt>
 definitions to be compiled.</div>
         
 <ul>
           
 <li><b>Type</b>: <tt>java.io.File</tt></li>
           
-<li><b>Since</b>: <tt>0.3.3</tt></li>
+<li><b>Since</b>: <tt>0.4.3</tt></li>
           
 <li><b>Required</b>: <tt>Yes</tt></li>
           
-<li><b>Default</b>: <tt>${basedir}/src/main/proto</tt></li>
+<li><b>Default</b>: <tt>${basedir}/src/test/proto</tt></li>
         </ul><hr />
 <p><b><a name="protocArtifact">protocArtifact</a>:</b></p>
         
@@ -761,7 +791,7 @@ executable in the <tt>PATH</tt> is used.</div>
           
 <li><b>Type</b>: <tt>java.lang.String</tt></li>
           
-<li><b>Since</b>: <tt>0.3.3</tt></li>
+<li><b>Since</b>: <tt>0.4.3</tt></li>
           
 <li><b>Required</b>: <tt>No</tt></li>
           
@@ -793,7 +823,7 @@ Windows it is a WinRun4J .exe and .ini.</div>
           
 <li><b>Type</b>: <tt>java.util.List</tt></li>
           
-<li><b>Since</b>: <tt>0.3.3</tt></li>
+<li><b>Since</b>: <tt>0.4.3</tt></li>
           
 <li><b>Required</b>: <tt>No</tt></li>
         </ul><hr />
@@ -829,7 +859,7 @@ parameter to <tt>10000</tt>.</p></div>
           
 <li><b>Type</b>: <tt>long</tt></li>
           
-<li><b>Since</b>: <tt>0.3.3</tt></li>
+<li><b>Since</b>: <tt>0.4.3</tt></li>
           
 <li><b>Required</b>: <tt>No</tt></li>
           
@@ -845,7 +875,7 @@ This directory is always cleaned during execution.</div>
           
 <li><b>Type</b>: <tt>java.io.File</tt></li>
           
-<li><b>Since</b>: <tt>0.3.3</tt></li>
+<li><b>Since</b>: <tt>0.4.3</tt></li>
           
 <li><b>Required</b>: <tt>Yes</tt></li>
           
