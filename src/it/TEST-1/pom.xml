@@ -7,13 +7,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.google.protobuf.tools.maven-protoc-plugin.its</groupId>
+        <groupId>org.xolstice.maven.plugins.protobuf.its</groupId>
         <artifactId>it-parent</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>1.0.0</version>
     </parent>
 
-    <artifactId>TEST-1</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <artifactId>test-1</artifactId>
+    <version>1.0.0</version>
 
     <name>Integration Test 1</name>
 
@@ -40,8 +40,8 @@
                 </executions>
             </plugin>
             <plugin>
-                <groupId>com.google.protobuf.tools</groupId>
-                <artifactId>maven-protoc-plugin</artifactId>
+                <groupId>org.xolstice.maven.plugins</groupId>
+                <artifactId>protobuf-maven-plugin</artifactId>
                 <version>@project.version@</version>
                 <extensions>true</extensions>
                 <executions>

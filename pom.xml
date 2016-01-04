@@ -2,12 +2,12 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.google.protobuf.tools</groupId>
-    <artifactId>maven-protoc-plugin</artifactId>
+    <groupId>org.xolstice.maven.plugins</groupId>
+    <artifactId>protobuf-maven-plugin</artifactId>
     <packaging>maven-plugin</packaging>
-    <name>Maven Protoc Plugin</name>
+    <name>Maven Protocol Buffers Plugin</name>
     <version>0.5.0-SNAPSHOT</version>
-    <url>https://github.com/sergei-ivanov/maven-protoc-plugin</url>
+    <url>http://www.xolstice.org/protobuf-maven-plugin</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -79,32 +79,32 @@
     </contributors>
 
     <scm>
-        <url>https://github.com/sergei-ivanov/maven-protoc-plugin</url>
-        <connection>scm:git:git://github.com/sergei-ivanov/maven-protoc-plugin.git</connection>
-        <developerConnection>scm:git:ssh://git@github.com/sergei-ivanov/maven-protoc-plugin.git</developerConnection>
+        <url>https://github.com/xolstice/protobuf-maven-plugin</url>
+        <connection>scm:git:git://github.com/xolstice/protobuf-maven-plugin.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/xolstice/protobuf-maven-plugin.git</developerConnection>
         <tag>HEAD</tag>
     </scm>
 
     <distributionManagement>
-        <downloadUrl>https://bintray.com/sergei-ivanov/maven/maven-protoc-plugin/view</downloadUrl>
+        <downloadUrl>https://bintray.com/xolstice/maven/protobuf-maven-plugin/view</downloadUrl>
         <site>
             <!--
                 release:perform checks this element to determine whether site-deploy goal needs to be run.
                 The actual site deployment is done by GitHub site-maven-plugin, so the URL here is not used.
             -->
             <id>gh-pages</id>
-            <url>https://github.com/sergei-ivanov/maven-protoc-plugin/tree/gh-pages</url>
+            <url>https://github.com/xolstice/protobuf-maven-plugin/tree/gh-pages</url>
         </site>
         <repository>
             <id>bintray</id>
             <name>Releases on Bintray</name>
-            <url>https://api.bintray.com/maven/sergei-ivanov/maven/maven-protoc-plugin</url>
+            <url>https://api.bintray.com/maven/xolstice/maven/protobuf-maven-plugin</url>
         </repository>
     </distributionManagement>
 
     <issueManagement>
         <system>Github</system>
-        <url>https://github.com/sergei-ivanov/maven-protoc-plugin/issues/</url>
+        <url>https://github.com/xolstice/protobuf-maven-plugin/issues/</url>
     </issueManagement>
 
     <build>

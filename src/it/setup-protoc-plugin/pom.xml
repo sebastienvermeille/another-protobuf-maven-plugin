@@ -5,7 +5,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.google.protobuf.tools.maven-protoc-plugin.its</groupId>
+    <groupId>org.xolstice.maven.plugins.protobuf.its</groupId>
     <artifactId>test-protoc-plugin</artifactId>
     <name>minimal protoc plugin</name>
     <version>1.0.5</version>

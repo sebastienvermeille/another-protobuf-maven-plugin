@@ -7,12 +7,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.google.protobuf.tools.maven-protoc-plugin.its</groupId>
-        <artifactId>TEST-24-parent</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <groupId>org.xolstice.maven.plugins.protobuf.its</groupId>
+        <artifactId>test-24-parent</artifactId>
+        <version>1.0.0</version>
     </parent>
 
-    <artifactId>TEST-24-project2</artifactId>
+    <artifactId>test-24-project2</artifactId>
 
     <name>Integration Test 24 (2)</name>
 
@@ -29,7 +29,7 @@
                         </goals>
                         <configuration>
                             <includeGroupIds>${project.groupId}</includeGroupIds>
-                            <includeArtifactIds>TEST-24-project1</includeArtifactIds>
+                            <includeArtifactIds>test-24-project1</includeArtifactIds>
                             <includeTypes>protobin</includeTypes>
                         </configuration>
                     </execution>
@@ -41,8 +41,8 @@
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>TEST-24-project1</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <artifactId>test-24-project1</artifactId>
+            <version>1.0.0</version>
             <type>protobin</type>
         </dependency>
     </dependencies>
