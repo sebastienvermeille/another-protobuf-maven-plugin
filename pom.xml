@@ -7,7 +7,9 @@
     <packaging>maven-plugin</packaging>
     <name>Maven Protocol Buffers Plugin</name>
     <version>0.5.0-SNAPSHOT</version>
-    <url>http://www.xolstice.org/protobuf-maven-plugin</url>
+    <url>https://www.xolstice.org/protobuf-maven-plugin</url>
+    <description>Maven Plugin that executes the Protocol Buffers (protoc) compiler</description>
+    <inceptionYear>2016</inceptionYear>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -29,54 +31,30 @@
         <maven>${mavenVersion}</maven>
     </prerequisites>
 
+    <organization>
+        <name>Maven Protocol Buffers Plugin Authors</name>
+        <url>https://github.com/xolstice/protobuf-maven-plugin/blob/master/AUTHORS</url>
+    </organization>
+
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
     <developers>
-        <developer>
-            <id>gak</id>
-            <name>Gregory Kick</name>
-            <organization>Google Inc.</organization>
-            <organizationUrl>http://www.google.com</organizationUrl>
-        </developer>
-        <developer>
-            <id>dtrott</id>
-            <name>David Trott</name>
-            <timezone>-8</timezone>
-        </developer>
-        <developer>
-            <id>masterzen</id>
-            <name>Brice Figureau</name>
-            <timezone>1</timezone>
-        </developer>
         <developer>
             <id>sergei-ivanov</id>
             <name>Sergei Ivanov</name>
-            <timezone>0</timezone>
-        </developer>
-        <developer>
-            <id>rwicke</id>
-            <name>Robert Wicke</name>
+            <email>sergei@xolstice.org</email>
+            <url>https://github.com/sergei-ivanov</url>
+            <organization>Xolstice Ltd.</organization>
+            <organizationUrl>https://www.xolstice.org</organizationUrl>
             <timezone>0</timezone>
         </developer>
     </developers>
-
-    <contributors>
-        <contributor>
-            <name>Paul Nyheim (pnyheim)</name>
-            <timezone>1</timezone>
-        </contributor>
-        <contributor>
-            <name>B. K. Oxley (binkley)</name>
-            <timezone>-6</timezone>
-        </contributor>
-        <contributor>
-            <name>abatalev</name>
-        </contributor>
-        <contributor>
-            <name>Marek Kedzierski (kedzie)</name>
-        </contributor>
-        <contributor>
-            <name>Alexander Torstling (atorstling)</name>
-        </contributor>
-    </contributors>
 
     <scm>
         <url>https://github.com/xolstice/protobuf-maven-plugin</url>
@@ -186,6 +164,7 @@
                         <maxmemory>512m</maxmemory>
                         <detectLinks>true</detectLinks>
                         <show>package</show>
+                        <notimestamp>true</notimestamp>
                     </configuration>
                 </plugin>
 
@@ -431,7 +410,7 @@
                         <phase>site-deploy</phase>
                         <configuration>
                             <message>Create website for ${project.artifactId}-${project.version}</message>
-                            <merge>true</merge>
+                            <merge>false</merge>
                             <noJekyll>true</noJekyll>
                             <server>github</server>
                         </configuration>
@@ -469,7 +448,15 @@
                     <maxmemory>512m</maxmemory>
                     <detectLinks>true</detectLinks>
                     <show>package</show>
+                    <notimestamp>true</notimestamp>
                 </configuration>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>javadoc-no-fork</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
             </plugin>
 
             <!--
@@ -479,15 +466,6 @@
                 <version>2.3</version>
             </plugin>
             -->
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-report-plugin</artifactId>
-                <version>2.18.1</version>
-                <configuration>
-                    <alwaysGenerateSurefireReport>false</alwaysGenerateSurefireReport>
-                </configuration>
-            </plugin>
 
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
@@ -592,6 +570,18 @@
                                 <id>attach-sources</id>
                                 <goals>
                                     <goal>jar-no-fork</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>attach-javadocs</id>
+                                <goals>
+                                    <goal>jar</goal>
                                 </goals>
                             </execution>
                         </executions>
