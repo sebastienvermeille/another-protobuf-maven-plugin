@@ -74,7 +74,7 @@
                                                                                                                                                                                                                                                         <li class="collapsed">
                           <a href="project-info.html" title="Project Information">Project Information</a>
                   </li>
-                                                                                                                                                              <li class="collapsed">
+                                                                                                                                                                                <li class="collapsed">
                           <a href="project-reports.html" title="Project Reports">Project Reports</a>
                   </li>
           </ul>
@@ -89,7 +89,7 @@
       <div id="contentBox">
         <!-- APT Format: http://maven.apache.org/doxia/references/apt-format.html --><div class="section">
 <h2><a name="Usage"></a>Usage</h2>
-<p>The Protoc Plugin generates Java, C++ or Python sources from <tt>.proto</tt> files using the <tt>protoc</tt> tool. The following examples describe the basic usage of the Plugin.</p>
+<p>Maven Protocol Buffers Plugin generates Java, C++ or Python sources from <tt>.proto</tt> files using the <tt>protoc</tt> tool. The following examples describe the basic usage of the Plugin.</p>
 <div class="section">
 <h3><a name="Compiling_Protobuf_Sources_into_Java"></a>Compiling Protobuf Sources into Java</h3>
 <p>The following default directory structure of the project is assumed:</p>
@@ -175,18 +175,18 @@ mvn clean install
 <li>A dependency on <tt>com.google.protobuf:protobuf-java</tt> artifact may not be required.</li></ul></div>
 <div class="section">
 <h3><a name="Running_Plugin_Goals_On_Command_Line"></a>Running Plugin Goals On Command Line</h3>
-<p>It is possible to run Protoc Plugin goals from the command line, even if the plugin is not configured in the project:</p>
+<p>It is possible to run Maven Protocol Buffers Plugin goals from the command line, even if the plugin is not configured in the project:</p>
 <div class="source">
 <pre>
-mvn protoc:compile      -DprotocExecutable=&quot;C:/Java/protobuf-2.4.1/bin/protoc.exe&quot;
-mvn protoc:test-compile -DprotocExecutable=&quot;C:/Java/protobuf-2.4.1/bin/protoc.exe&quot;
+mvn protobuf:compile      -DprotocExecutable=&quot;C:/Java/protobuf-2.4.1/bin/protoc.exe&quot;
+mvn protobuf:test-compile -DprotocExecutable=&quot;C:/Java/protobuf-2.4.1/bin/protoc.exe&quot;
 
 </pre></div>
 <p>If a <tt>protobuf</tt> toolchain is configured in the project, then the toolchains plugin needs to be executed first and there is no need to specify the <tt>protocExecutable</tt> parameter.</p>
 <div class="source">
 <pre>
-mvn toolchains:toolchain protoc:compile
-mvn toolchains:toolchain protoc:test-compile
+mvn toolchains:toolchain protobuf:compile
+mvn toolchains:toolchain protobuf:test-compile
 
 </pre></div></div>
 <div class="section">

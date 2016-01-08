@@ -109,7 +109,7 @@
             </li>
               </ul>
         </li>
-                                                                                                                                                              <li class="collapsed">
+                                                                                                                                                                                <li class="collapsed">
                           <a href="project-reports.html" title="Project Reports">Project Reports</a>
                   </li>
           </ul>
@@ -123,33 +123,33 @@
     <div id="bodyColumn">
       <div id="contentBox">
         <!-- APT Format: http://maven.apache.org/doxia/references/apt-format.html --><div class="section">
-<h2><a name="Maven_Protoc_Plugin"></a>Maven Protoc Plugin</h2>
-<p>The Protoc Plugin uses the Protocol Buffer Compiler (<tt>protoc</tt>) tool to generate Java source files from <tt>.proto</tt> (protocol buffer definition) files for the specified project. For more information about the Protocol Buffer Compiler, please refer to <a class="externalLink" href="http://code.google.com/apis/protocolbuffers/docs/reference/java-generated.html">Reference Guide</a>.</p>
+<h2><a name="Maven_Protocol_Buffers_Plugin"></a>Maven Protocol Buffers Plugin</h2>
+<p>Maven Protocol Buffers Plugin uses Protocol Buffer Compiler (<tt>protoc</tt>) tool to generate Java source files from <tt>.proto</tt> (protocol buffer definition) files for the specified project. For more information about the Protocol Buffer Compiler, please refer to <a class="externalLink" href="http://code.google.com/apis/protocolbuffers/docs/reference/java-generated.html">Reference Guide</a>.</p>
 <p>The Plugin automatically scans all project dependencies for bundled <tt>.proto</tt> files, and configures <tt>proto_path</tt> of the Protocol Buffer Compiler to use those files as imports.</p>
 <p>The Plugin automatically attaches the source <tt>.proto</tt> files to the resources of the project, so that they are later packaged into the final artifact and can be referenced as imports from the dependent projects or modules.</p>
 <div class="section">
 <h3><a name="Goals_Overview"></a>Goals Overview</h3>
-<p>The Protoc Plugin has the following goals:</p>
+<p>Maven Protocol Buffers Plugin has the following goals:</p>
 <ul>
-<li><a href="./compile-mojo.html">protoc:compile</a> compiles main <tt>.proto</tt> definitions into Java files and attaches the generated Java sources to the project.</li>
-<li><a href="./test-compile-mojo.html">protoc:test-compile</a> compiles test <tt>.proto</tt> definitions into Java files and attaches the generated Java test sources to the project.</li>
-<li><a href="./compile-cpp-mojo.html">protoc:compile-cpp</a> compiles main <tt>.proto</tt> definitions into C++ files and attaches the generated C++ sources to the project.</li>
-<li><a href="./test-compile-cpp-mojo.html">protoc:test-compile-cpp</a> compiles test <tt>.proto</tt> definitions into C++ files and attaches the generated C++ test sources to the project.</li>
-<li><a href="./compile-python-mojo.html">protoc:compile-python</a> compiles main <tt>.proto</tt> definitions into Python files and attaches the generated Python sources to the project.</li>
-<li><a href="./test-compile-python-mojo.html">protoc:test-compile-python</a> compiles test <tt>.proto</tt> definitions into Python files and attaches the generated Python test sources to the project.</li>
-<li><a href="./compile-javanano-mojo.html">protoc:compile-javanano</a> uses JavaNano generator (requires protobuf compiler version 3 or above) to compile main <tt>.proto</tt> definitions into Java files and attaches the generated Java sources to the project.</li>
-<li><a href="./test-compile-javanano-mojo.html">protoc:test-compile-javanano</a> uses JavaNano generator (requires protobuf compiler version 3 or above) to compile test <tt>.proto</tt> definitions into Java files and attaches the generated Java test sources to the project.</li>
-<li><a href="./compile-custom-mojo.html">protoc:compile-custom</a> compiles main <tt>.proto</tt> definitions using a custom <tt>protoc</tt> plugin.</li>
-<li><a href="./test-compile-custom-mojo.html">protoc:test-compile-custom</a> compiles test <tt>.proto</tt> definitions using a custom <tt>protoc</tt> plugin.</li></ul></div>
+<li><a href="./compile-mojo.html">protobuf:compile</a> compiles main <tt>.proto</tt> definitions into Java files and attaches the generated Java sources to the project.</li>
+<li><a href="./test-compile-mojo.html">protobuf:test-compile</a> compiles test <tt>.proto</tt> definitions into Java files and attaches the generated Java test sources to the project.</li>
+<li><a href="./compile-cpp-mojo.html">protobuf:compile-cpp</a> compiles main <tt>.proto</tt> definitions into C++ files and attaches the generated C++ sources to the project.</li>
+<li><a href="./test-compile-cpp-mojo.html">protobuf:test-compile-cpp</a> compiles test <tt>.proto</tt> definitions into C++ files and attaches the generated C++ test sources to the project.</li>
+<li><a href="./compile-python-mojo.html">protobuf:compile-python</a> compiles main <tt>.proto</tt> definitions into Python files and attaches the generated Python sources to the project.</li>
+<li><a href="./test-compile-python-mojo.html">protobuf:test-compile-python</a> compiles test <tt>.proto</tt> definitions into Python files and attaches the generated Python test sources to the project.</li>
+<li><a href="./compile-javanano-mojo.html">protobuf:compile-javanano</a> uses JavaNano generator (requires protobuf compiler version 3 or above) to compile main <tt>.proto</tt> definitions into Java files and attaches the generated Java sources to the project.</li>
+<li><a href="./test-compile-javanano-mojo.html">protobuf:test-compile-javanano</a> uses JavaNano generator (requires protobuf compiler version 3 or above) to compile test <tt>.proto</tt> definitions into Java files and attaches the generated Java test sources to the project.</li>
+<li><a href="./compile-custom-mojo.html">protobuf:compile-custom</a> compiles main <tt>.proto</tt> definitions using a custom <tt>protoc</tt> plugin.</li>
+<li><a href="./test-compile-custom-mojo.html">protobuf:test-compile-custom</a> compiles test <tt>.proto</tt> definitions using a custom <tt>protoc</tt> plugin.</li></ul></div>
 <div class="section">
 <h3><a name="Usage"></a>Usage</h3>
-<p>General instructions on how to use the Protoc Plugin can be found on the <a href="./usage.html">usage page</a>. Some more specific use cases are described in the examples given below.</p>
+<p>General instructions on how to use Maven Protocol Buffers Plugin can be found on the <a href="./usage.html">usage page</a>. Some more specific use cases are described in the examples given below.</p>
 <p>In case you still have questions regarding the Plugin's usage, please have a look at the <a href="./faq.html">FAQ</a>.</p><!-- TODO add mailing lists / newsgroups / wiki -->
 <p>If you feel like the plugin is missing a feature or has a defect, you can fill a feature request or bug report in our <a href="./issue-tracking.html">issue tracker</a>. When creating a new issue, please provide a comprehensive description of your concern. Especially for fixing bugs it is crucial that the developers can reproduce your problem. For this reason, entire debug logs, POMs or most preferably little demo projects attached to the issue are very much appreciated.</p>
 <p>Of course, patches and pull requests are welcome, too. Contributors can check out the project from the <a href="./source-repository.html">source repository</a> and will find supplementary information in the <a href="./contributions.html">contributor's guide</a>.</p></div>
 <div class="section">
 <h3><a name="Examples"></a>Examples</h3>
-<p>To provide you with better understanding of some usages of the Protoc Plugin, you can take a look into the following examples:</p>
+<p>To provide you with better understanding of some usages of Maven Protocol Buffers Plugin, you can take a look into the following examples:</p>
 <ul>
 <li><a href="./examples/protobuf-toolchain.html"> Using Protobuf Toolchain</a></li>
 <li><a href="./examples/protoc-artifact.html"> Resolving Protoc Artifact From Maven Central Repo</a></li>

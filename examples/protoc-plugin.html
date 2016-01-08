@@ -74,7 +74,7 @@
                                                                                                                                                                                                                                                         <li class="collapsed">
                           <a href="../project-info.html" title="Project Information">Project Information</a>
                   </li>
-                                                                                                                                                              <li class="collapsed">
+                                                                                                                                                                                <li class="collapsed">
                           <a href="../project-reports.html" title="Project Reports">Project Reports</a>
                   </li>
           </ul>
@@ -92,7 +92,7 @@
 <p>It is possible to customize <tt>protoc</tt>'s output with plugins. Protoc plugins are executables that are invoked by <tt>protoc</tt>. They read code generator requests from <tt>stdin</tt> and output results to <tt>stdout</tt>.</p>
 <p>Currently, both native and pure Java plugins are supported.</p>
 <p>Plugins written in Java (or any other JVM language) have to be resolvable as Maven artifacts. Also, the output directory for generated files is the same as the Java output directory. They are configured by adding a <tt>protocPlugins</tt> element containing one of more <tt>protocPlugin</tt> elements to the <tt>configuration</tt> section.</p>
-<p>Native plugins are supported by two dedicated goals: <a href="../compile-custom-mojo.html">protoc:compile-custom</a> and <a href="../test-compile-custom-mojo.html">protoc:test-compile-custom</a>.</p>
+<p>Native plugins are supported by two dedicated goals: <a href="../compile-custom-mojo.html">protobuf:compile-custom</a> and <a href="../test-compile-custom-mojo.html">protobuf:test-compile-custom</a>.</p>
 <div class="section">
 <h3><a name="Using_a_pure_Java_protoc_plugin"></a>Using a pure Java <tt>protoc</tt> plugin</h3>
 <p>The following example includes uses a single plugin to generate Java code in addition to <tt>protoc</tt>'s regular output.</p>
