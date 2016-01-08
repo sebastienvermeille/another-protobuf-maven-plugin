@@ -462,7 +462,7 @@ abstract class AbstractProtocMojo extends AbstractMojo {
                     //get toolchain from context
                     final Toolchain tc = toolchainManager.getToolchainFromBuildContext("protobuf", session); //NOI18N
                     if (tc != null) {
-                        getLog().info("Toolchain in protoc-plugin: " + tc);
+                        getLog().info("Toolchain in protobuf-maven-plugin: " + tc);
                         //when the executable to use is explicitly set by user in mojo's parameter, ignore toolchains.
                         if (protocExecutable != null) {
                             getLog().warn(
@@ -664,12 +664,12 @@ abstract class AbstractProtocMojo extends AbstractMojo {
      */
     protected boolean skipMojo() {
         if (skip) {
-            getLog().info("Skipping protoc mojo execution");
+            getLog().info("Skipping mojo execution");
             return true;
         }
 
         if (!forceMojoExecution && "pom".equals(this.project.getPackaging())) {
-            getLog().info("Skipping protoc mojo execution for project with packaging type 'pom'");
+            getLog().info("Skipping mojo execution for project with packaging type 'pom'");
             return true;
         }
 

@@ -130,7 +130,7 @@ public final class ProtocCompileCustomMojo extends AbstractProtocCompileMojo {
             //get toolchain from context
             final Toolchain tc = toolchainManager.getToolchainFromBuildContext(pluginToolchain, session);
             if (tc != null) {
-                getLog().info("Toolchain in protoc-plugin: " + tc);
+                getLog().info("Toolchain in protobuf-maven-plugin: " + tc);
                 //when the executable to use is explicitly set by user in mojo's parameter, ignore toolchains.
                 if (pluginExecutable != null) {
                     getLog().warn("Toolchains are ignored, 'pluginExecutable' parameter is set to " + pluginExecutable);

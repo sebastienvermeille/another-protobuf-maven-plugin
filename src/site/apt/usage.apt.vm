@@ -6,7 +6,7 @@
 
 Usage
 
-  The Protoc Plugin generates Java, C++ or Python sources from <<<.proto>>> files using the <<<protoc>>> tool.
+  ${project.name} generates Java, C++ or Python sources from <<<.proto>>> files using the <<<protoc>>> tool.
   The following examples describe the basic usage of the Plugin.
 
 * Compiling Protobuf Sources into Java
@@ -126,13 +126,13 @@ mvn clean install
 
 * Running Plugin Goals On Command Line
 
-  It is possible to run Protoc Plugin goals from the command line,
+  It is possible to run ${project.name} goals from the command line,
   even if the plugin is not configured in the project:
 
 +-----+
 
-mvn protoc:compile      -DprotocExecutable="C:/Java/protobuf-2.4.1/bin/protoc.exe"
-mvn protoc:test-compile -DprotocExecutable="C:/Java/protobuf-2.4.1/bin/protoc.exe"
+mvn ${goalPrefix}:compile      -DprotocExecutable="C:/Java/protobuf-2.4.1/bin/protoc.exe"
+mvn ${goalPrefix}:test-compile -DprotocExecutable="C:/Java/protobuf-2.4.1/bin/protoc.exe"
 
 +-----+
 
@@ -142,8 +142,8 @@ mvn protoc:test-compile -DprotocExecutable="C:/Java/protobuf-2.4.1/bin/protoc.ex
 
 +-----+
 
-mvn toolchains:toolchain protoc:compile
-mvn toolchains:toolchain protoc:test-compile
+mvn toolchains:toolchain ${goalPrefix}:compile
+mvn toolchains:toolchain ${goalPrefix}:test-compile
 
 +-----+
 

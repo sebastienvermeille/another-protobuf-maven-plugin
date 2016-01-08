@@ -17,8 +17,8 @@ Using Custom Protoc Plugins
   They are configured by adding a <<<protocPlugins>>> element containing one of more <<<protocPlugin>>> elements
   to the <<<configuration>>> section.
 
-  Native plugins are supported by two dedicated goals: {{{../compile-custom-mojo.html}protoc:compile-custom}}
-  and {{{../test-compile-custom-mojo.html}protoc:test-compile-custom}}.
+  Native plugins are supported by two dedicated goals: {{{../compile-custom-mojo.html}${goalPrefix}:compile-custom}}
+  and {{{../test-compile-custom-mojo.html}${goalPrefix}:test-compile-custom}}.
 
 * Using a pure Java <<<protoc>>> plugin
 

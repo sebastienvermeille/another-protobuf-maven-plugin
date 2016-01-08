@@ -1,4 +1,4 @@
-# Maven Protocol Buffers (protoc) Plugin
+# Maven Protocol Buffers Plugin
 
 A plugin that integrates protocol buffers compiler (protoc) into Maven lifecycle.
 This is a continuation of `maven-protoc-plugin` that was started at Google

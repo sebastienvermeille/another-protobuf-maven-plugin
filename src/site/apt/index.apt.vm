@@ -4,9 +4,9 @@
 
 ~~ APT Format: http://maven.apache.org/doxia/references/apt-format.html
 
-Maven Protoc Plugin
+${project.name}
 
-  The Protoc Plugin uses the Protocol Buffer Compiler (<<<protoc>>>) tool to generate Java source files
+  ${project.name} uses Protocol Buffer Compiler (<<<protoc>>>) tool to generate Java source files
   from <<<.proto>>> (protocol buffer definition) files for the specified project.
   For more information about the Protocol Buffer Compiler, please refer to
   {{{http://code.google.com/apis/protocolbuffers/docs/reference/java-generated.html}Reference Guide}}.
@@ -20,46 +20,46 @@ Maven Protoc Plugin
 
 * Goals Overview
 
-  The Protoc Plugin has the following goals:
+  ${project.name} has the following goals:
 
-  * {{{./compile-mojo.html}protoc:compile}}
+  * {{{./compile-mojo.html}${goalPrefix}:compile}}
     compiles main <<<.proto>>> definitions into Java files and attaches the generated Java sources to the project.
 
-  * {{{./test-compile-mojo.html}protoc:test-compile}}
+  * {{{./test-compile-mojo.html}${goalPrefix}:test-compile}}
     compiles test <<<.proto>>> definitions into Java files and attaches the generated Java test sources to the project.
 
-  * {{{./compile-cpp-mojo.html}protoc:compile-cpp}}
+  * {{{./compile-cpp-mojo.html}${goalPrefix}:compile-cpp}}
     compiles main <<<.proto>>> definitions into C++ files and attaches the generated C++ sources to the project.
 
-  * {{{./test-compile-cpp-mojo.html}protoc:test-compile-cpp}}
+  * {{{./test-compile-cpp-mojo.html}${goalPrefix}:test-compile-cpp}}
     compiles test <<<.proto>>> definitions into C++ files and attaches the generated C++ test sources to the project.
 
-  * {{{./compile-python-mojo.html}protoc:compile-python}}
+  * {{{./compile-python-mojo.html}${goalPrefix}:compile-python}}
     compiles main <<<.proto>>> definitions into Python files and attaches the generated Python sources to the project.
 
-  * {{{./test-compile-python-mojo.html}protoc:test-compile-python}}
+  * {{{./test-compile-python-mojo.html}${goalPrefix}:test-compile-python}}
     compiles test <<<.proto>>> definitions into Python files and attaches the generated Python test sources to the project.
 
-  * {{{./compile-javanano-mojo.html}protoc:compile-javanano}}
+  * {{{./compile-javanano-mojo.html}${goalPrefix}:compile-javanano}}
     uses JavaNano generator (requires protobuf compiler version 3 or above) to
     compile main <<<.proto>>> definitions into Java files and attaches the generated Java sources to the project.
 
-  * {{{./test-compile-javanano-mojo.html}protoc:test-compile-javanano}}
+  * {{{./test-compile-javanano-mojo.html}${goalPrefix}:test-compile-javanano}}
     uses JavaNano generator (requires protobuf compiler version 3 or above) to
     compile test <<<.proto>>> definitions into Java files and attaches the generated Java test sources to the project.
 
-  * {{{./compile-custom-mojo.html}protoc:compile-custom}}
+  * {{{./compile-custom-mojo.html}${goalPrefix}:compile-custom}}
     compiles main <<<.proto>>> definitions using a custom <<<protoc>>> plugin.
 
-  * {{{./test-compile-custom-mojo.html}protoc:test-compile-custom}}
+  * {{{./test-compile-custom-mojo.html}${goalPrefix}:test-compile-custom}}
     compiles test <<<.proto>>> definitions using a custom <<<protoc>>> plugin.
 
   []
 
 * Usage
 
-  General instructions on how to use the Protoc Plugin can be found on the {{{./usage.html}usage page}}. Some more
-  specific use cases are described in the examples given below.
+  General instructions on how to use ${project.name} can be found on the {{{./usage.html}usage page}}.
+  Some more specific use cases are described in the examples given below.
 
   In case you still have questions regarding the Plugin's usage, please have a look at the {{{./faq.html}FAQ}}.
   ~~ TODO add mailing lists / newsgroups / wiki
@@ -75,7 +75,7 @@ Maven Protoc Plugin
 
 * Examples
 
-  To provide you with better understanding of some usages of the Protoc Plugin,
+  To provide you with better understanding of some usages of ${project.name},
   you can take a look into the following examples:
 
   * {{{./examples/protobuf-toolchain.html} Using Protobuf Toolchain}}

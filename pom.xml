@@ -25,6 +25,8 @@
         <plexusComponentVersion>1.6</plexusComponentVersion>
         <plexusUtilsVersion>3.0.22</plexusUtilsVersion>
         <pluginToolsVersion>3.4</pluginToolsVersion>
+
+        <goalPrefix>protobuf</goalPrefix>
     </properties>
 
     <prerequisites>
@@ -293,6 +295,9 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-plugin-plugin</artifactId>
+                <configuration>
+                    <goalPrefix>${goalPrefix}</goalPrefix>
+                </configuration>
                 <executions>
                     <execution>
                         <id>default-descriptor</id>
@@ -300,9 +305,6 @@
                         <goals>
                             <goal>descriptor</goal>
                         </goals>
-                        <configuration>
-                            <goalPrefix>protoc</goalPrefix>
-                        </configuration>
                     </execution>
                     <execution>
                         <id>generate-helpmojo</id>
@@ -437,6 +439,9 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-plugin-plugin</artifactId>
                 <version>3.4</version>
+                <configuration>
+                    <goalPrefix>${goalPrefix}</goalPrefix>
+                </configuration>
             </plugin>
 
             <plugin>
