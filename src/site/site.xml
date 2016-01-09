@@ -23,7 +23,7 @@
     <body>
 
         <links>
-            <item name="Google Protocol Buffers" href="http://code.google.com/p/protobuf/"/>
+            <item name="Google Protocol Buffers" href="https://github.com/google/protobuf"/>
         </links>
 
         <menu name="Overview">

@@ -25,7 +25,7 @@ ${project.name}
   ${project.name} uses Protocol Buffer Compiler (<<<protoc>>>) tool to generate Java source files
   from <<<.proto>>> (protocol buffer definition) files for the specified project.
   For more information about the Protocol Buffer Compiler, please refer to
-  {{{http://code.google.com/apis/protocolbuffers/docs/reference/java-generated.html}Reference Guide}}.
+  {{{https://developers.google.com/protocol-buffers/docs/reference/java-generated}Reference Guide}}.
 
   The Plugin automatically scans all project dependencies for bundled <<<.proto>>> files,
   and configures <<<proto_path>>> of the Protocol Buffer Compiler to use those files as imports.
