@@ -39,7 +39,7 @@ import java.io.File;
         requiresDependencyResolution = ResolutionScope.TEST,
         threadSafe = true
 )
-public class ProtocTestCompileJavaNanoMojo extends AbstractProtocTestCompileMojo {
+public final class ProtocTestCompileJavaNanoMojo extends AbstractProtocTestCompileMojo {
 
     /**
      * This is the directory into which the {@code .java} test sources will be created.
