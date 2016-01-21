@@ -330,7 +330,7 @@
                             <goal>helpmojo</goal>
                         </goals>
                         <configuration>
-                            <helpPackageName>com.google.protobuf.maven</helpPackageName>
+                            <helpPackageName>org.xolstice.maven.plugin.protobuf</helpPackageName>
                         </configuration>
                     </execution>
                 </executions>

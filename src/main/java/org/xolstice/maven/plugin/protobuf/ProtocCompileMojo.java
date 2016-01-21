@@ -1,4 +1,4 @@
-package com.google.protobuf.maven;
+package org.xolstice.maven.plugin.protobuf;
 
 /*
  * Copyright (c) 2016 Maven Protocol Buffers Plugin Authors. All rights reserved.
@@ -25,41 +25,33 @@ import org.apache.maven.plugins.annotations.ResolutionScope;
 import java.io.File;
 
 /**
- * This mojo executes the {@code protoc} compiler for generating test C++ sources
- * from protocol buffer definitions. It also searches dependency artifacts in the test scope for
+ * This mojo executes the {@code protoc} compiler for generating main Java sources
+ * from protocol buffer definitions. It also searches dependency artifacts for
  * {@code .proto} files and includes them in the {@code proto_path} so that they can be
- * referenced. Finally, it adds the {@code .proto} files to the project as test resources so
- * that they can be included in the test-jar artifact.
- *
- * @since 0.3.3
+ * referenced. Finally, it adds the {@code .proto} files to the project as resources so
+ * that they are included in the final artifact.
  */
 @Mojo(
-        name = "test-compile-cpp",
-        defaultPhase = LifecyclePhase.GENERATE_TEST_SOURCES,
-        requiresDependencyResolution = ResolutionScope.TEST,
+        name = "compile",
+        defaultPhase = LifecyclePhase.GENERATE_SOURCES,
+        requiresDependencyResolution = ResolutionScope.COMPILE,
         threadSafe = true
 )
-public final class ProtocTestCompileCppMojo extends AbstractProtocTestCompileMojo {
+public final class ProtocCompileMojo extends AbstractProtocCompileMojo {
 
     /**
-     * This is the directory into which the {@code .cpp} test sources will be created.
+     * This is the directory into which the {@code .java} will be created.
      */
     @Parameter(
             required = true,
-            defaultValue = "${project.build.directory}/generated-test-sources/protobuf/cpp"
+            defaultValue = "${project.build.directory}/generated-sources/protobuf/java"
     )
     private File outputDirectory;
 
     @Override
     protected void addProtocBuilderParameters(final Protoc.Builder protocBuilder) throws MojoExecutionException {
         super.addProtocBuilderParameters(protocBuilder);
-        protocBuilder.setCppOutputDirectory(getOutputDirectory());
-        // We need to add project output directory to the protobuf import paths,
-        // in case test protobuf definitions extend or depend on production ones
-        final File buildOutputDirectory = new File(project.getBuild().getOutputDirectory());
-        if (buildOutputDirectory.exists()) {
-            protocBuilder.addProtoPathElement(buildOutputDirectory);
-        }
+        protocBuilder.setJavaOutputDirectory(getOutputDirectory());
     }
 
     @Override

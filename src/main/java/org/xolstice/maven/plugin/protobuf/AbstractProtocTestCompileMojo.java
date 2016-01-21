@@ -1,4 +1,4 @@
-package com.google.protobuf.maven;
+package org.xolstice.maven.plugin.protobuf;
 
 /*
  * Copyright (c) 2016 Maven Protocol Buffers Plugin Authors. All rights reserved.
@@ -24,20 +24,20 @@ import java.io.File;
 import java.util.List;
 
 /**
- * An abstract base mojo configuration for using {@code protoc} compiler with the main sources.
+ * An abstract base mojo configuration for using {@code protoc} compiler with the test sources.
  *
  * @since 0.3.3
  */
-public abstract class AbstractProtocCompileMojo extends AbstractProtocMojo {
+public abstract class AbstractProtocTestCompileMojo extends AbstractProtocMojo {
 
     /**
-     * The source directories containing the {@code .proto} definitions to be compiled.
+     * The source directories containing the test {@code .proto} definitions to be compiled.
      */
     @Parameter(
             required = true,
-            defaultValue = "${basedir}/src/main/proto"
+            defaultValue = "${basedir}/src/test/proto"
     )
-    private File protoSourceRoot;
+    private File protoTestSourceRoot;
 
     /**
      * This is the directory into which the (optional) descriptor set file will be created.
@@ -46,7 +46,7 @@ public abstract class AbstractProtocCompileMojo extends AbstractProtocMojo {
      */
     @Parameter(
             required = true,
-            defaultValue = "${project.build.directory}/generated-resources/protobuf/descriptor-sets"
+            defaultValue = "${project.build.directory}/generated-test-resources/protobuf/descriptor-sets"
     )
     private File descriptorSetOutputDirectory;
 
@@ -56,30 +56,31 @@ public abstract class AbstractProtocCompileMojo extends AbstractProtocMojo {
      * @since 0.4.1
      */
     @Parameter(
-            required = false
+            required = false,
+            defaultValue = "test"
     )
     protected String descriptorSetClassifier;
 
     @Override
     protected void doAttachProtoSources() {
-        projectHelper.addResource(project, getProtoSourceRoot().getAbsolutePath(),
+        projectHelper.addTestResource(project, getProtoSourceRoot().getAbsolutePath(),
                 ImmutableList.copyOf(getIncludes()), ImmutableList.copyOf(getExcludes()));
     }
 
     @Override
     protected void doAttachGeneratedFiles() {
         final File outputDirectory = getOutputDirectory();
-        project.addCompileSourceRoot(outputDirectory.getAbsolutePath());
+        project.addTestCompileSourceRoot(outputDirectory.getAbsolutePath());
         if (writeDescriptorSet) {
             final File descriptorSetFile = new File(getDescriptorSetOutputDirectory(), descriptorSetFileName);
-            projectHelper.attachArtifact(project, "protobin", descriptorSetClassifier, descriptorSetFile);
+            projectHelper.attachArtifact(project, "test-protobin", descriptorSetClassifier, descriptorSetFile);
         }
         buildContext.refresh(outputDirectory);
     }
 
     @Override
     protected List<Artifact> getDependencyArtifacts() {
-        return project.getCompileArtifacts();
+        return project.getTestArtifacts();
     }
 
     @Override
@@ -89,6 +90,6 @@ public abstract class AbstractProtocCompileMojo extends AbstractProtocMojo {
 
     @Override
     protected File getProtoSourceRoot() {
-        return protoSourceRoot;
+        return protoTestSourceRoot;
     }
 }

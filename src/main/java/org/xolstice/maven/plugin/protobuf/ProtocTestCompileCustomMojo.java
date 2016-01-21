@@ -1,4 +1,4 @@
-package com.google.protobuf.maven;
+package org.xolstice.maven.plugin.protobuf;
 
 /*
  * Copyright (c) 2016 Maven Protocol Buffers Plugin Authors. All rights reserved.
@@ -28,21 +28,21 @@ import java.io.File;
 
 /**
  * This mojo executes the {@code protoc} compiler with the specified plugin
- * executable to generate main sources from protocol buffer definitions.
+ * executable to generate test sources from protocol buffer definitions.
  * It also searches dependency artifacts for {@code .proto} files and
  * includes them in the {@code proto_path} so that they can be referenced.
  * Finally, it adds the {@code .proto} files to the project as resources so
- * that they are included in the final artifact.
+ * that they can be included in the test-jar artifact.
  *
  * @since 0.4.1
  */
 @Mojo(
-        name = "compile-custom",
-        defaultPhase = LifecyclePhase.GENERATE_SOURCES,
-        requiresDependencyResolution = ResolutionScope.COMPILE,
+        name = "test-compile-custom",
+        defaultPhase = LifecyclePhase.GENERATE_TEST_SOURCES,
+        requiresDependencyResolution = ResolutionScope.TEST,
         threadSafe = true
 )
-public final class ProtocCompileCustomMojo extends AbstractProtocCompileMojo {
+public final class ProtocTestCompileCustomMojo extends AbstractProtocTestCompileMojo {
 
     /**
      * A unique id that identifies the plugin to protoc.
@@ -70,14 +70,14 @@ public final class ProtocCompileCustomMojo extends AbstractProtocCompileMojo {
     @Parameter(
             required = true,
             readonly = true,
-            defaultValue = "${project.build.directory}/generated-sources/protobuf"
+            defaultValue = "${project.build.directory}/generated-test-sources/protobuf"
     )
     private File outputBaseDirectory;
 
     /**
      * This is the directory where the generated code will be placed.
      * If this parameter is unspecified, then the default location is constructed as follows:<br>
-     * {@code ${project.build.directory}/generated-sources/protobuf/<pluginId>}
+     * {@code ${project.build.directory}/generated-test-sources/protobuf/<pluginId>}
      */
     @Parameter(
             required = false,
@@ -168,6 +168,13 @@ public final class ProtocCompileCustomMojo extends AbstractProtocCompileMojo {
             protocBuilder.setNativePluginParameter(pluginParameter);
         }
         protocBuilder.setCustomOutputDirectory(getOutputDirectory());
+
+        // We need to add project output directory to the protobuf import paths,
+        // in case test protobuf definitions extend or depend on production ones
+        final File buildOutputDirectory = new File(project.getBuild().getOutputDirectory());
+        if (buildOutputDirectory.exists()) {
+            protocBuilder.addProtoPathElement(buildOutputDirectory);
+        }
     }
 
     @Override

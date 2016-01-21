@@ -1,4 +1,4 @@
-package com.google.protobuf.maven;
+package org.xolstice.maven.plugin.protobuf;
 
 /*
  * Copyright (c) 2016 Maven Protocol Buffers Plugin Authors. All rights reserved.
@@ -25,48 +25,35 @@ import org.apache.maven.plugins.annotations.ResolutionScope;
 import java.io.File;
 
 /**
- * This mojo executes the {@code protoc} compiler for generating main JavaNano sources
+ * This mojo executes the {@code protoc} compiler for generating main python sources
  * from protocol buffer definitions. It also searches dependency artifacts for
  * {@code .proto} files and includes them in the {@code proto_path} so that they can be
  * referenced. Finally, it adds the {@code .proto} files to the project as resources so
  * that they are included in the final artifact.
  *
- * @since 0.4.3
+ * @since 0.3.3
  */
 @Mojo(
-        name = "compile-javanano",
+        name = "compile-python",
         defaultPhase = LifecyclePhase.GENERATE_SOURCES,
         requiresDependencyResolution = ResolutionScope.COMPILE,
         threadSafe = true
 )
-public final class ProtocCompileJavaNanoMojo extends AbstractProtocCompileMojo {
+public final class ProtocCompilePythonMojo extends AbstractProtocCompileMojo {
 
     /**
-     * This is the directory into which the {@code .java} will be created.
+     * This is the directory into which the {@code .py} will be created.
      */
     @Parameter(
             required = true,
-            defaultValue = "${project.build.directory}/generated-sources/protobuf/javanano"
+            defaultValue = "${project.build.directory}/generated-sources/protobuf/python"
     )
     private File outputDirectory;
-
-    /**
-     * Additional comma-separated options to be passed to the JavaNano generator.
-     * <b>Cannot</b> contain colon (<tt>:</tt>) symbols.
-     */
-    @Parameter(
-            required = false,
-            property = "javaNanoOptions"
-    )
-    private String javaNanoOptions;
 
     @Override
     protected void addProtocBuilderParameters(final Protoc.Builder protocBuilder) throws MojoExecutionException {
         super.addProtocBuilderParameters(protocBuilder);
-        if (javaNanoOptions != null) {
-            protocBuilder.setNativePluginParameter(javaNanoOptions);
-        }
-        protocBuilder.setJavaNanoOutputDirectory(getOutputDirectory());
+        protocBuilder.setPythonOutputDirectory(getOutputDirectory());
     }
 
     @Override

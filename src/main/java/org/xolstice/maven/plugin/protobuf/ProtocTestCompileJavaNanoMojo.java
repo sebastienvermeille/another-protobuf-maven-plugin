@@ -1,4 +1,4 @@
-package com.google.protobuf.maven;
+package org.xolstice.maven.plugin.protobuf;
 
 /*
  * Copyright (c) 2016 Maven Protocol Buffers Plugin Authors. All rights reserved.
@@ -25,35 +25,48 @@ import org.apache.maven.plugins.annotations.ResolutionScope;
 import java.io.File;
 
 /**
- * This mojo executes the {@code protoc} compiler for generating test python sources
+ * This mojo executes the {@code protoc} compiler for generating test JavaNano sources
  * from protocol buffer definitions. It also searches dependency artifacts in the test scope for
  * {@code .proto} files and includes them in the {@code proto_path} so that they can be
  * referenced. Finally, it adds the {@code .proto} files to the project as test resources so
  * that they can be included in the test-jar artifact.
  *
- * @since 0.3.3
+ * @since 0.4.3
  */
 @Mojo(
-        name = "test-compile-python",
+        name = "test-compile-javanano",
         defaultPhase = LifecyclePhase.GENERATE_TEST_SOURCES,
         requiresDependencyResolution = ResolutionScope.TEST,
         threadSafe = true
 )
-public final class ProtocTestCompilePythonMojo extends AbstractProtocTestCompileMojo {
+public class ProtocTestCompileJavaNanoMojo extends AbstractProtocTestCompileMojo {
 
     /**
-     * This is the directory into which the {@code .py} test sources will be created.
+     * This is the directory into which the {@code .java} test sources will be created.
      */
     @Parameter(
             required = true,
-            defaultValue = "${project.build.directory}/generated-test-sources/protobuf/python"
+            defaultValue = "${project.build.directory}/generated-test-sources/protobuf/javanano"
     )
     private File outputDirectory;
+
+    /**
+     * Additional comma-separated options to be passed to the JavaNano generator.
+     * <b>Cannot</b> contain colon (<tt>:</tt>) symbols.
+     */
+    @Parameter(
+            required = false,
+            property = "javaNanoOptions"
+    )
+    private String javaNanoOptions;
 
     @Override
     protected void addProtocBuilderParameters(final Protoc.Builder protocBuilder) throws MojoExecutionException {
         super.addProtocBuilderParameters(protocBuilder);
-        protocBuilder.setPythonOutputDirectory(getOutputDirectory());
+        if (javaNanoOptions != null) {
+            protocBuilder.setNativePluginParameter(javaNanoOptions);
+        }
+        protocBuilder.setJavaNanoOutputDirectory(getOutputDirectory());
         // We need to add project output directory to the protobuf import paths,
         // in case test protobuf definitions extend or depend on production ones
         final File buildOutputDirectory = new File(project.getBuild().getOutputDirectory());

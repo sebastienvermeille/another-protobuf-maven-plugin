@@ -68,7 +68,7 @@
                                     <artifactId>test-protoc-plugin</artifactId>
                                     <!-- This is a knowingly non-existent version -->
                                     <version>2.0.0</version>
-                                    <mainClass>plugin.MinimalPlugin</mainClass>
+                                    <mainClass>org.xolstice.protobuf.plugin.minimal.MinimalPlugin</mainClass>
                                 </protocPlugin>
                             </protocPlugins>
                         </configuration>

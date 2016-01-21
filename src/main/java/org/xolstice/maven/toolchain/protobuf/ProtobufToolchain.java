@@ -1,4 +1,4 @@
-package com.google.protobuf.maven.toolchain;
+package org.xolstice.maven.toolchain.protobuf;
 
 /*
  * Copyright (c) 2016 Maven Protocol Buffers Plugin Authors. All rights reserved.
