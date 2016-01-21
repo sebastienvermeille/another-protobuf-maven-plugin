@@ -1,2 +1,2 @@
-com.google.protobuf.maven
-com.google.protobuf.maven.toolchain
+org.xolstice.maven.plugin.protobuf
+org.xolstice.maven.toolchain.protobuf
