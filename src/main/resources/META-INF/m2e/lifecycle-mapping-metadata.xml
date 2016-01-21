@@ -29,7 +29,6 @@
                     <goal>test-compile-python</goal>
                     <goal>compile-custom</goal>
                     <goal>test-compile-custom</goal>
-                    <goal>testCompile</goal>
                     <goal>compile-javanano</goal>
                     <goal>test-compile-javanano</goal>
                 </goals>
