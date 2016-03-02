@@ -4,6 +4,8 @@
 
 # Maven Protocol Buffers Plugin
 
+[![Join the chat at https://gitter.im/xolstice/protobuf-maven-plugin](https://badges.gitter.im/xolstice/protobuf-maven-plugin.svg)](https://gitter.im/xolstice/protobuf-maven-plugin?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 A plugin that integrates protocol buffers compiler (protoc) into Maven lifecycle.
 This is a continuation of `maven-protoc-plugin` that was started at Google
 and later developed by GitHub community.
