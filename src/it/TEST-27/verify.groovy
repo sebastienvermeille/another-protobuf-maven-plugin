@@ -18,13 +18,13 @@ outputDirectory = new File(basedir, 'target/generated-test-sources/protobuf/java
 assert outputDirectory.exists();
 assert outputDirectory.isDirectory();
 
-generatedJavaFile = new File(outputDirectory, 'test/TestProtos.java');
+generatedJavaFile = new File(outputDirectory, 'test/nano/TestProtos.java');
 assert generatedJavaFile.exists();
 assert generatedJavaFile.isFile();
 
 content = generatedJavaFile.text;
-assert content.contains('package test');
-assert content.contains('class Test');
+assert content.contains('package test.nano');
+assert content.contains('interface TestProtos');
 assert content.contains('class TestMessage');
 
 return true;

@@ -38,7 +38,7 @@ assert generatedJavaFile.isFile();
 content = generatedJavaFile.text;
 assert content.contains('package test');
 assert content.contains('class MyServiceGrpc');
-assert content.contains('interface MyService');
+assert content.contains('class MyServiceStub');
 
 
 return true;

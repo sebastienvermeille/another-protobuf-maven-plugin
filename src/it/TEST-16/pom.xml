@@ -35,18 +35,10 @@
 
     <properties>
         <!-- Peg to the same protobuf version as MinimalPlugin was compiled against -->
-        <protobufVersion>3.0.0-beta-2</protobufVersion>
+        <protobufVersion>3.4.0</protobufVersion>
     </properties>
 
     <build>
-        <extensions>
-            <extension>
-                <groupId>kr.motd.maven</groupId>
-                <artifactId>os-maven-plugin</artifactId>
-                <version>1.3.0.Final</version>
-            </extension>
-        </extensions>
-
         <plugins>
             <plugin>
                 <groupId>org.xolstice.maven.plugins</groupId>

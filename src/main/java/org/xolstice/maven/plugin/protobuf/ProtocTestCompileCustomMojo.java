@@ -77,7 +77,7 @@ public final class ProtocTestCompileCustomMojo extends AbstractProtocTestCompile
     /**
      * This is the directory where the generated code will be placed.
      * If this parameter is unspecified, then the default location is constructed as follows:<br>
-     * {@code ${project.build.directory}/generated-test-sources/protobuf/<pluginId>}
+     * <code>${project.build.directory}/generated-test-sources/protobuf/&lt;pluginId&gt;</code>
      */
     @Parameter(
             required = false,
