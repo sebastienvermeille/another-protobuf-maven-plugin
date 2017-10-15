@@ -12,3 +12,5 @@ and later developed by GitHub community.
 
 The latest plugin documentation is available here:
 https://www.xolstice.org/protobuf-maven-plugin/
+
+Please read [Contribution Guidelines](docs/CONTRIBUTING.md) and [Code of Conduct](docs/CODE_OF_CONDUCT.md) for this project.

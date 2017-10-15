@@ -40,10 +40,6 @@
             <item name="Custom Protoc Plugins" href="examples/protoc-plugin.html"/>
         </menu>
 
-        <menu name="Community">
-            <item name="How to Contribute" href="contributions.html"/>
-        </menu>
-
         <menu ref="reports"/>
     </body>
 </project>
