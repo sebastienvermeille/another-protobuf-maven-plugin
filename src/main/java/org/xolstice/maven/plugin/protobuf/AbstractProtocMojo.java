@@ -526,7 +526,7 @@ abstract class AbstractProtocMojo extends AbstractMojo {
 
                     getLog().info(format("Compiling %d proto file(s) to %s", protoFiles.size(), outputDirectory));
 
-                    final int exitStatus = protoc.execute();
+                    final int exitStatus = protoc.execute(getLog());
                     if (StringUtils.isNotBlank(protoc.getOutput())) {
                         getLog().info("PROTOC: " + protoc.getOutput());
                     }
@@ -549,6 +549,8 @@ abstract class AbstractProtocMojo extends AbstractMojo {
                 throw new MojoFailureException("protoc failed to execute because: " + e.getMessage(), e);
             } catch (CommandLineException e) {
                 throw new MojoExecutionException("An error occurred while invoking protoc.", e);
+            } catch (InterruptedException e) {
+                getLog().info("Process interrupted");
             }
         } else {
             getLog().info(format("%s does not exist. Review the configuration or consider disabling the plugin.",

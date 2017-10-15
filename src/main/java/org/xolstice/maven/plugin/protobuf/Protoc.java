@@ -126,7 +126,7 @@ final class Protoc {
      * @param descriptorSetFile The directory into which a descriptor set will be generated;
      *                          if {@code null}, no descriptor set will be written
      * @param includeImportsInDescriptorSet If {@code true}, dependencies will be included in the descriptor set.
-     * @param includeSourceInfoInDescriptorSet If {@code true}, source code information will be included 
+     * @param includeSourceInfoInDescriptorSet If {@code true}, source code information will be included
      *                                         in the descriptor set.
      * @param plugins a set of java protoc plugins.
      * @param pluginDirectory location of protoc plugins to be added to system path.
@@ -177,11 +177,25 @@ final class Protoc {
      * @return The exit status of {@code protoc}.
      * @throws CommandLineException if command line environment cannot be set up.
      */
-    public int execute() throws CommandLineException {
+    public int execute(final Log log) throws CommandLineException, InterruptedException {
         final Commandline cl = new Commandline();
         cl.setExecutable(executable);
         cl.addArguments(buildProtocCommand().toArray(new String[] {}));
-        return CommandLineUtils.executeCommandLine(cl, null, output, error);
+        // There is a race condition in JDK that may sporadically prevent process creation on Linux
+        // https://bugs.openjdk.java.net/browse/JDK-8068370
+        // In order to mitigate that, retry up to 2 more times before giving up
+        int attemptsLeft = 3;
+        while (true) {
+            try {
+                return CommandLineUtils.executeCommandLine(cl, null, output, error);
+            } catch (CommandLineException e) {
+                if (--attemptsLeft == 0 || e.getCause() == null) {
+                    throw e;
+                }
+                log.warn(LOG_PREFIX + "Unable to invoke protoc, will retry " + attemptsLeft + " time(s)", e);
+                Thread.sleep(1000L);
+            }
+        }
     }
 
     /**
