@@ -46,6 +46,7 @@ public final class ProtocCompileCppMojo extends AbstractProtocCompileMojo {
      */
     @Parameter(
             required = true,
+            property = "cppOutputDirectory",
             defaultValue = "${project.build.directory}/generated-sources/protobuf/cpp"
     )
     private File outputDirectory;

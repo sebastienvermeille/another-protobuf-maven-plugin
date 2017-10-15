@@ -44,6 +44,7 @@ public final class ProtocCompileMojo extends AbstractProtocCompileMojo {
      */
     @Parameter(
             required = true,
+            property = "javaOutputDirectory",
             defaultValue = "${project.build.directory}/generated-sources/protobuf/java"
     )
     private File outputDirectory;

@@ -46,6 +46,7 @@ public final class ProtocCompileJavaNanoMojo extends AbstractProtocCompileMojo {
      */
     @Parameter(
             required = true,
+            property = "javananoOutputDirectory",
             defaultValue = "${project.build.directory}/generated-sources/protobuf/javanano"
     )
     private File outputDirectory;

@@ -46,6 +46,7 @@ public final class ProtocTestCompileJavaNanoMojo extends AbstractProtocTestCompi
      */
     @Parameter(
             required = true,
+            property = "javananoTestOutputDirectory",
             defaultValue = "${project.build.directory}/generated-test-sources/protobuf/javanano"
     )
     private File outputDirectory;

@@ -46,6 +46,7 @@ public final class ProtocTestCompileMojo extends AbstractProtocTestCompileMojo {
      */
     @Parameter(
             required = true,
+            property = "javaTestOutputDirectory",
             defaultValue = "${project.build.directory}/generated-test-sources/protobuf/java"
     )
     private File outputDirectory;

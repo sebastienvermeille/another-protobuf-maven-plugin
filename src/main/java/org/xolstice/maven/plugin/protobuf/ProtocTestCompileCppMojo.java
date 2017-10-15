@@ -46,6 +46,7 @@ public final class ProtocTestCompileCppMojo extends AbstractProtocTestCompileMoj
      */
     @Parameter(
             required = true,
+            property = "cppTestOutputDirectory",
             defaultValue = "${project.build.directory}/generated-test-sources/protobuf/cpp"
     )
     private File outputDirectory;

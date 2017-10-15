@@ -46,6 +46,7 @@ public final class ProtocCompilePythonMojo extends AbstractProtocCompileMojo {
      */
     @Parameter(
             required = true,
+            property = "pythonOutputDirectory",
             defaultValue = "${project.build.directory}/generated-sources/protobuf/python"
     )
     private File outputDirectory;

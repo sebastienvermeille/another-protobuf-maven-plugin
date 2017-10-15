@@ -46,6 +46,7 @@ public final class ProtocTestCompilePythonMojo extends AbstractProtocTestCompile
      */
     @Parameter(
             required = true,
+            property = "pythonTestOutputDirectory",
             defaultValue = "${project.build.directory}/generated-test-sources/protobuf/python"
     )
     private File outputDirectory;
