@@ -12,4 +12,6 @@
 # Maven output
 target
 *.releaseBackup
+pom.xml.versionsBackup
 release.properties
+.mvn/timing.properties
