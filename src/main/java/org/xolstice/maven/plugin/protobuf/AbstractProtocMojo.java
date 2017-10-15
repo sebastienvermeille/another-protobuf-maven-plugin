@@ -333,8 +333,8 @@ abstract class AbstractProtocMojo extends AbstractMojo {
     protected boolean includeDependenciesInDescriptorSet;
 
     /**
-     * If {@code true} and {@code writeDescriptorSet} has been set, do not strip SourceCodeInfo 
-     * from the FileDescriptorProto. This results in vastly larger descriptors that include information 
+     * If {@code true} and {@code writeDescriptorSet} has been set, do not strip SourceCodeInfo
+     * from the FileDescriptorProto. This results in vastly larger descriptors that include information
      * about the original location of each decl in the source file as well as surrounding comments.
      *
      * @since 0.4.4
@@ -983,6 +983,11 @@ abstract class AbstractProtocMojo extends AbstractMojo {
             targetFileName = sourceFileName;
         }
         final File targetFile = new File(protocPluginDirectory, targetFileName);
+        if (targetFile.exists()) {
+            // The file must have already been copied in a prior plugin execution/invocation
+            getLog().debug("Executable file already exists: " + targetFile.getAbsolutePath());
+            return targetFile;
+        }
         try {
             FileUtils.forceMkdir(protocPluginDirectory);
         } catch (final IOException e) {
