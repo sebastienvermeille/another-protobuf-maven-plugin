@@ -174,6 +174,18 @@ abstract class AbstractProtocMojo extends AbstractMojo {
     private List<ArtifactRepository> remoteRepositories;
 
     /**
+     * A directory where temporary files will be generated.
+     *
+     * @since 0.6.0
+     */
+    @Parameter(
+            required = true,
+            readonly = true,
+            defaultValue = "${project.build.directory}"
+    )
+    private File tempDirectory;
+
+    /**
      * A directory where native launchers for java protoc plugins will be generated.
      *
      * @since 0.3.0
@@ -344,6 +356,19 @@ abstract class AbstractProtocMojo extends AbstractMojo {
             defaultValue = "false"
     )
     protected boolean includeSourceInfoInDescriptorSet;
+
+    /**
+     * If set to {@code true}, the arguments to protoc will be put in a file and run as an argument
+     * file.  This is helpful if you are getting Command line is too long errors
+     * This is only supported for protoc 3.5.0 and higher
+     *
+     * @since 0.6.0
+     */
+    @Parameter(
+            required = false,
+            defaultValue = "false"
+    )
+    protected boolean useArgumentFile;
 
     /**
      * Specifies one of more custom protoc plugins, written in Java
@@ -661,6 +686,8 @@ abstract class AbstractProtocMojo extends AbstractMojo {
                     includeDependenciesInDescriptorSet,
                     includeSourceInfoInDescriptorSet);
         }
+        protocBuilder.setTempDirectory(tempDirectory);
+        protocBuilder.useArgumentFile(useArgumentFile);
     }
 
     /**

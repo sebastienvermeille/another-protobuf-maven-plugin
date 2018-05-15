@@ -26,6 +26,9 @@ import org.codehaus.plexus.util.cli.CommandLineUtils.StringStreamConsumer;
 import org.codehaus.plexus.util.cli.Commandline;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.charset.Charset;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -113,6 +116,16 @@ final class Protoc {
     private final StringStreamConsumer error;
 
     /**
+     * A directory where temporary files will be generated.
+     */
+    private final File tempDirectory;
+
+    /**
+     * A boolean indicating if the parameters to protoc should be passed in an argument file.
+     */
+    private final boolean useArgumentFile;
+
+    /**
      * Constructs a new instance. This should only be used by the {@link Builder}.
      *
      * @param executable path to the {@code protoc} executable.
@@ -133,6 +146,8 @@ final class Protoc {
      * @param nativePluginId a unique id of a native plugin.
      * @param nativePluginExecutable path to the native plugin executable.
      * @param nativePluginParameter an optional parameter for a native plugin.
+     * @param tempDirectory a directory where temporary files will be generated.
+     * @param useArgumentFile If {@code true}, parameters to protoc will be put in an argument file
      */
     private Protoc(
             final String executable,
@@ -150,7 +165,9 @@ final class Protoc {
             final File pluginDirectory,
             final String nativePluginId,
             final String nativePluginExecutable,
-            final String nativePluginParameter) {
+            final String nativePluginParameter,
+            final File tempDirectory,
+            final boolean useArgumentFile) {
         this.executable = checkNotNull(executable, "executable");
         this.protoPathElements = checkNotNull(protoPath, "protoPath");
         this.protoFiles = checkNotNull(protoFiles, "protoFiles");
@@ -167,6 +184,8 @@ final class Protoc {
         this.nativePluginId = nativePluginId;
         this.nativePluginExecutable = nativePluginExecutable;
         this.nativePluginParameter = nativePluginParameter;
+        this.tempDirectory = tempDirectory;
+        this.useArgumentFile = useArgumentFile;
         this.error = new StringStreamConsumer();
         this.output = new StringStreamConsumer();
     }
@@ -174,13 +193,26 @@ final class Protoc {
     /**
      * Invokes the {@code protoc} compiler using the configuration specified at construction.
      *
+     * @param log logger instance.
      * @return The exit status of {@code protoc}.
      * @throws CommandLineException if command line environment cannot be set up.
+     * @throws InterruptedException if the execution was interrupted by the user.
      */
     public int execute(final Log log) throws CommandLineException, InterruptedException {
         final Commandline cl = new Commandline();
         cl.setExecutable(executable);
-        cl.addArguments(buildProtocCommand().toArray(new String[] {}));
+        String[] args = buildProtocCommand().toArray(new String[] {});
+        if (useArgumentFile) {
+            try {
+                File argumentsFile = createFileWithArguments(args);
+                log.debug(LOG_PREFIX + "Using arguments file " + argumentsFile.getPath());
+                cl.addArguments(new String[] {"@" + argumentsFile.getAbsolutePath()});
+            } catch (IOException e) {
+                log.error(LOG_PREFIX + "Error creating file with protoc arguments", e);
+            }
+        } else {
+            cl.addArguments(args);
+        }
         // There is a race condition in JDK that may sporadically prevent process creation on Linux
         // https://bugs.openjdk.java.net/browse/JDK-8068370
         // In order to mitigate that, retry up to 2 more times before giving up
@@ -334,14 +366,52 @@ final class Protoc {
      * @return the output
      */
     public String getOutput() {
-        return output.getOutput();
+        return fixUnicodeOutput(output.getOutput());
     }
 
     /**
      * @return the error
      */
     public String getError() {
-        return error.getOutput();
+        return fixUnicodeOutput(error.getOutput());
+    }
+
+    /**
+     * Transcodes the output from system default charset to UTF-8.
+     * Protoc emits messages in UTF-8, but they are captured into a stream that has a system-default encoding.
+     *
+     * @param message a UTF-8 message in system-default encoding.
+     * @return the same message converted into a unicode string.
+     */
+    private static String fixUnicodeOutput(final String message) {
+        return new String(message.getBytes(), Charset.forName("UTF-8"));
+    }
+
+    /**
+     * Put args into a temp file to be referenced using the @ option in protoc command line.
+     *
+     * @param args
+     * @return the temporary file wth the arguments
+     * @throws IOException
+     */
+    private File createFileWithArguments(String[] args) throws IOException {
+        PrintWriter writer = null;
+        try {
+            final File tempFile = File.createTempFile("protoc", null, tempDirectory);
+            tempFile.deleteOnExit();
+
+            writer = new PrintWriter(tempFile, "UTF-8");
+            for (final String arg : args) {
+                writer.println(arg);
+            }
+            writer.flush();
+
+            return tempFile;
+        } finally {
+            if (writer != null) {
+                writer.close();
+            }
+        }
     }
 
     /**
@@ -359,6 +429,8 @@ final class Protoc {
         private final Set<File> protoFiles;
 
         private final Set<ProtocPlugin> plugins;
+
+        private File tempDirectory;
 
         private File pluginDirectory;
 
@@ -403,6 +475,8 @@ final class Protoc {
 
         private boolean includeSourceInfoInDescriptorSet;
 
+        private boolean useArgumentFile;
+
         /**
          * Constructs a new builder.
          *
@@ -414,6 +488,13 @@ final class Protoc {
             this.protoFiles = new LinkedHashSet<File>();
             this.protopathElements = new LinkedHashSet<File>();
             this.plugins = new LinkedHashSet<ProtocPlugin>();
+        }
+
+        public Builder setTempDirectory(final File directory) {
+            checkNotNull(directory);
+            checkArgument(directory.isDirectory(), "Temp directory " + directory + "does not exist");
+            tempDirectory = directory;
+            return this;
         }
 
         /**
@@ -534,7 +615,7 @@ final class Protoc {
             return this;
         }
 
-        public void setNativePluginId(final String nativePluginId) {
+        public Builder setNativePluginId(final String nativePluginId) {
             checkNotNull(nativePluginId, "'nativePluginId' is null");
             checkArgument(!nativePluginId.isEmpty(), "'nativePluginId' is empty");
             checkArgument(
@@ -545,17 +626,20 @@ final class Protoc {
                             || nativePluginId.equals("descriptor_set")),
                     "'nativePluginId' matches one of the built-in protoc plugins");
             this.nativePluginId = nativePluginId;
+            return this;
         }
 
-        public void setNativePluginExecutable(final String nativePluginExecutable) {
+        public Builder setNativePluginExecutable(final String nativePluginExecutable) {
             checkNotNull(nativePluginExecutable, "'nativePluginExecutable' is null");
             this.nativePluginExecutable = nativePluginExecutable;
+            return this;
         }
 
-        public void setNativePluginParameter(final String nativePluginParameter) {
+        public Builder setNativePluginParameter(final String nativePluginParameter) {
             checkNotNull(nativePluginParameter, "'nativePluginParameter' is null");
             checkArgument(!nativePluginParameter.contains(":"), "'nativePluginParameter' contains illegal characters");
             this.nativePluginParameter = nativePluginParameter;
+            return this;
         }
 
         public Builder withDescriptorSetFile(
@@ -567,6 +651,11 @@ final class Protoc {
             this.descriptorSetFile = descriptorSetFile;
             this.includeImportsInDescriptorSet = includeImports;
             this.includeSourceInfoInDescriptorSet = includeSourceInfoInDescriptorSet;
+            return this;
+        }
+
+        public Builder useArgumentFile(final boolean useArgumentFile) {
+            this.useArgumentFile = useArgumentFile;
             return this;
         }
 
@@ -668,7 +757,9 @@ final class Protoc {
                     pluginDirectory,
                     nativePluginId,
                     nativePluginExecutable,
-                    nativePluginParameter);
+                    nativePluginParameter,
+                    tempDirectory,
+                    useArgumentFile);
         }
     }
 }
