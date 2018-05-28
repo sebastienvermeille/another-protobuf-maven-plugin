@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-  ~ Copyright (c) 2016 Maven Protocol Buffers Plugin Authors. All rights reserved.
+  ~ Copyright (c) 2018 Maven Protocol Buffers Plugin Authors. All rights reserved.
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -41,7 +41,7 @@
 
         <mavenVersion>3.0</mavenVersion>
 
-        <protobufVersion>[2.4,2.7)</protobufVersion>
+        <protobufVersion>[3.4.0,3.5.0)</protobufVersion>
     </properties>
 
     <build>

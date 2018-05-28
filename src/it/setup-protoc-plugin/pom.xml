@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-  ~ Copyright (c) 2016 Maven Protocol Buffers Plugin Authors. All rights reserved.
+  ~ Copyright (c) 2018 Maven Protocol Buffers Plugin Authors. All rights reserved.
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -65,7 +65,7 @@
             <!-- This should be excluded from runtime resolution scope -->
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.11</version>
+            <version>4.12</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

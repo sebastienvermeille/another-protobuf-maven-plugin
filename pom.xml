@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-  ~ Copyright (c) 2016 Maven Protocol Buffers Plugin Authors. All rights reserved.
+  ~ Copyright (c) 2018 Maven Protocol Buffers Plugin Authors. All rights reserved.
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -539,11 +539,14 @@
                         <artifactId>maven-invoker-plugin</artifactId>
                         <version>3.0.1</version>
                         <configuration>
-                            <debug>true</debug>
+                            <debug>false</debug>
                             <projectsDirectory>src/it</projectsDirectory>
                             <pomIncludes>
                                 <pomInclude>*/pom.xml</pomInclude>
                             </pomIncludes>
+                            <pomExcludes>
+                                <pomExclude>dependencies/pom.xml</pomExclude>
+                            </pomExcludes>
                             <setupIncludes>
                                 <setupInclude>setup*/pom.xml</setupInclude>
                             </setupIncludes>

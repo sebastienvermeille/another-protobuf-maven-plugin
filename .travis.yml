@@ -1,0 +1,28 @@
+dist: trusty
+sudo: false
+language: java
+addons:
+  apt:
+    packages:
+      - openjdk-6-jdk
+jdk: openjdk8
+before_install:
+  # Set up toolchains for java and protoc
+  # Protoc executables will be downloaded in the next phase
+  - mkdir -p $HOME/.m2
+  - cp .travis/toolchains.xml $HOME/.m2/
+install:
+  # Download all dependencies that integration tests might need later
+  - ./mvnw -B -V dependency:go-offline -f src/it/dependencies/pom.xml -P protoc-3.4.0
+  - ./mvnw -B -V dependency:go-offline -f src/it/dependencies/pom.xml -P protoc-3.5.1
+  - ./mvnw -B -V dependency:go-offline
+before_script:
+  # These protoc executables were downloaded in the previous phase and are being referenced in toolchains.xml
+  - chmod +x $HOME/.m2/repository/com/google/protobuf/protoc/3.4.0/protoc-3.4.0-linux-x86_64.exe
+  - chmod +x $HOME/.m2/repository/com/google/protobuf/protoc/3.5.1/protoc-3.5.1-linux-x86_64.exe
+script:
+  # Finally, run the build with integration tests
+  - ./mvnw -B -V clean verify -P run-its -Dinvoker.streamLogs=true
+cache:
+  directories:
+    - $HOME/.m2
