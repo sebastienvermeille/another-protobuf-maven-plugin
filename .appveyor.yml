@@ -1,0 +1,30 @@
+version: '{build}'
+
+skip_tags: true
+
+environment:
+  JAVA_HOME: 'C:\Program Files\Java\jdk1.8.0'
+
+install:
+  # Prepend Java entry to PATH
+  - cmd: SET PATH=%JAVA_HOME%\bin;%PATH%
+  - cmd: SET MAVEN_OPTS=-Xmx2g
+  - cmd: SET JAVA_OPTS=-Xmx2g
+  - cmd: java -version
+  # Set up toolchains for java and protoc
+  - cmd: if not exist %USERPROFILE%\.m2 mkdir %USERPROFILE%\.m2
+  - cmd: copy .appveyor\toolchains.xml %USERPROFILE%\.m2\
+  # Download all dependencies that integration tests might need later
+  # These include protoc and grpc plugin executables being referenced in toolchains.xml
+  - cmd: mvnw.cmd -B -V dependency:go-offline -f src/it/dependencies/pom.xml -P protoc-3.4.0
+  - cmd: mvnw.cmd -B -V dependency:go-offline -f src/it/dependencies/pom.xml -P protoc-3.5.1
+  - cmd: mvnw.cmd -B -V dependency:go-offline -P run-its
+
+build_script:
+  - cmd: mvnw.cmd -B -V clean package -Dmaven.test.skip=true
+
+test_script:
+  - cmd: mvnw.cmd -B -V verify -P run-its -Dinvoker.streamLogs=true
+
+cache:
+  - '%USERPROFILE%\.m2\'

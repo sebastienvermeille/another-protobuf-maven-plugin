@@ -21,29 +21,106 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
+
     <groupId>org.xolstice.maven.plugins.protobuf.its</groupId>
     <artifactId>test-protoc-plugin</artifactId>
-    <name>minimal protoc plugin</name>
     <version>1.0.5</version>
+    <packaging>jar</packaging>
+
+    <name>Minimal protoc plugin</name>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!-- JDK version -->
+        <java.sdk.version>1.6</java.sdk.version>
+        <!-- Settings for the java compiler -->
+        <java.compiler.compilerVersion>${java.sdk.version}</java.compiler.compilerVersion>
+        <java.compiler.source>${java.sdk.version}</java.compiler.source>
+        <java.compiler.target>${java.sdk.version}</java.compiler.target>
+
+        <protobufVersion>3.4.0</protobufVersion>
+    </properties>
+
     <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-enforcer-plugin</artifactId>
+                    <version>3.0.0-M1</version>
+                    <inherited>true</inherited>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-toolchains-plugin</artifactId>
+                    <version>1.1</version>
+                    <inherited>true</inherited>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>3.0.2</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.7.0</version>
+                    <inherited>true</inherited>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>3.0.2</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.7.0</version>
+                <artifactId>maven-toolchains-plugin</artifactId>
+                <inherited>true</inherited>
+                <executions>
+                    <execution>
+                        <id>default-toolchain</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>toolchain</goal>
+                        </goals>
+                    </execution>
+                </executions>
                 <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
+                    <toolchains>
+                        <jdk>
+                            <version>[${java.sdk.version},)</version>
+                        </jdk>
+                    </toolchains>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <fork>true</fork>
+                    <compilerVersion>${java.compiler.compilerVersion}</compilerVersion>
+                    <source>${java.compiler.source}</source>
+                    <target>${java.compiler.target}</target>
+                    <showDeprecation>true</showDeprecation>
+                    <showWarnings>true</showWarnings>
+                    <compilerArgument>-Xlint:all</compilerArgument>
+                    <testCompilerArgument>-Xlint:all</testCompilerArgument>
                 </configuration>
             </plugin>
         </plugins>
     </build>
+
     <dependencies>
         <dependency>
             <!-- This should be included into runtime resolution scope -->
             <groupId>com.google.protobuf</groupId>
             <artifactId>protobuf-java</artifactId>
-            <version>3.4.0</version>
+            <version>${protobufVersion}</version>
             <scope>compile</scope>
         </dependency>
         <!-- The following dependencies are only here for the purpose of testing scopes in dependency resolution -->
@@ -61,6 +138,7 @@
             <version>2.6</version>
             <scope>provided</scope>
         </dependency>
+        <!-- Test dependencies -->
         <dependency>
             <!-- This should be excluded from runtime resolution scope -->
             <groupId>junit</groupId>
