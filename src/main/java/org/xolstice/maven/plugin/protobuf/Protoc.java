@@ -1,7 +1,7 @@
 package org.xolstice.maven.plugin.protobuf;
 
 /*
- * Copyright (c) 2016 Maven Protocol Buffers Plugin Authors. All rights reserved.
+ * Copyright (c) 2018 Maven Protocol Buffers Plugin Authors. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,9 +33,6 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkNotNull;
-import static com.google.common.base.Preconditions.checkState;
 import static com.google.common.collect.Lists.newLinkedList;
 
 /**
@@ -167,10 +164,20 @@ final class Protoc {
             final String nativePluginExecutable,
             final String nativePluginParameter,
             final File tempDirectory,
-            final boolean useArgumentFile) {
-        this.executable = checkNotNull(executable, "executable");
-        this.protoPathElements = checkNotNull(protoPath, "protoPath");
-        this.protoFiles = checkNotNull(protoFiles, "protoFiles");
+            final boolean useArgumentFile
+    ) {
+        if (executable == null) {
+            throw new MojoConfigurationException("'executable' is null");
+        }
+        if (protoPath == null) {
+            throw new MojoConfigurationException("'protoPath' is null");
+        }
+        if (protoFiles == null) {
+            throw new MojoConfigurationException("'protoFiles' is null");
+        }
+        this.executable = executable;
+        this.protoPathElements = protoPath;
+        this.protoFiles = protoFiles;
         this.javaOutputDirectory = javaOutputDirectory;
         this.javaNanoOutputDirectory = javaNanoOutputDirectory;
         this.cppOutputDirectory = cppOutputDirectory;
@@ -207,8 +214,8 @@ final class Protoc {
                 File argumentsFile = createFileWithArguments(args);
                 log.debug(LOG_PREFIX + "Using arguments file " + argumentsFile.getPath());
                 cl.addArguments(new String[] {"@" + argumentsFile.getAbsolutePath()});
-            } catch (IOException e) {
-                log.error(LOG_PREFIX + "Error creating file with protoc arguments", e);
+            } catch (final IOException e) {
+                throw new CommandLineException("Error creating file with protoc arguments", e);
             }
         } else {
             cl.addArguments(args);
@@ -481,19 +488,26 @@ final class Protoc {
          * Constructs a new builder.
          *
          * @param executable The path to the {@code protoc} executable.
-         * @throws NullPointerException if {@code executable} is {@code null}.
          */
         Builder(final String executable) {
-            this.executable = checkNotNull(executable, "executable");
+            if (executable == null) {
+                throw new MojoConfigurationException("'executable' is null");
+            }
+            this.executable = executable;
             this.protoFiles = new LinkedHashSet<File>();
             this.protopathElements = new LinkedHashSet<File>();
             this.plugins = new LinkedHashSet<ProtocPlugin>();
         }
 
-        public Builder setTempDirectory(final File directory) {
-            checkNotNull(directory);
-            checkArgument(directory.isDirectory(), "Temp directory " + directory + "does not exist");
-            tempDirectory = directory;
+        public Builder setTempDirectory(final File tempDirectory) {
+            if (tempDirectory == null) {
+                throw new MojoConfigurationException("'tempDirectory' is null");
+            }
+            if (!tempDirectory.isDirectory()) {
+                throw new MojoConfigurationException(
+                        "'tempDirectory' is not a directory: " + tempDirectory.getAbsolutePath());
+            }
+            this.tempDirectory = tempDirectory;
             return this;
         }
 
@@ -502,14 +516,16 @@ final class Protoc {
          *
          * @param javaOutputDirectory a directory into which Java source files will be generated.
          * @return this builder instance.
-         * @throws NullPointerException if {@code javaOutputDirectory} is {@code null}.
-         * @throws IllegalArgumentException if {@code javaOutputDirectory} is not a directory.
          */
         public Builder setJavaOutputDirectory(final File javaOutputDirectory) {
-            this.javaOutputDirectory = checkNotNull(javaOutputDirectory, "'javaOutputDirectory' is null");
-            checkArgument(
-                    javaOutputDirectory.isDirectory(),
-                    "'javaOutputDirectory' is not a directory: " + javaOutputDirectory);
+            if (javaOutputDirectory == null) {
+                throw new MojoConfigurationException("'javaOutputDirectory' is null");
+            }
+            if (!javaOutputDirectory.isDirectory()) {
+                throw new MojoConfigurationException(
+                        "'javaOutputDirectory' is not a directory: " + javaOutputDirectory.getAbsolutePath());
+            }
+            this.javaOutputDirectory = javaOutputDirectory;
             return this;
         }
 
@@ -518,14 +534,16 @@ final class Protoc {
          *
          * @param javaNanoOutputDirectory a directory into which Java source files will be generated.
          * @return this builder instance.
-         * @throws NullPointerException if {@code javaNanoOutputDirectory} is {@code null}.
-         * @throws IllegalArgumentException if {@code javaNanoOutputDirectory} is not a directory.
          */
         public Builder setJavaNanoOutputDirectory(final File javaNanoOutputDirectory) {
-            this.javaNanoOutputDirectory = checkNotNull(javaNanoOutputDirectory, "'javaNanoOutputDirectory' is null");
-            checkArgument(
-                    javaNanoOutputDirectory.isDirectory(),
-                    "'javaNanoOutputDirectory' is not a directory: " + javaNanoOutputDirectory);
+            if (javaNanoOutputDirectory == null) {
+                throw new MojoConfigurationException("'javaNanoOutputDirectory' is null");
+            }
+            if (!javaNanoOutputDirectory.isDirectory()) {
+                throw new MojoConfigurationException(
+                        "'javaNanoOutputDirectory' is not a directory: " + javaNanoOutputDirectory.getAbsolutePath());
+            }
+            this.javaNanoOutputDirectory = javaNanoOutputDirectory;
             return this;
         }
 
@@ -534,14 +552,16 @@ final class Protoc {
          *
          * @param cppOutputDirectory a directory into which C++ source files will be generated.
          * @return this builder instance.
-         * @throws NullPointerException if {@code cppOutputDirectory} is {@code null}.
-         * @throws IllegalArgumentException if {@code cppOutputDirectory} is not a directory.
          */
         public Builder setCppOutputDirectory(final File cppOutputDirectory) {
-            this.cppOutputDirectory = checkNotNull(cppOutputDirectory, "'cppOutputDirectory' is null");
-            checkArgument(
-                    cppOutputDirectory.isDirectory(),
-                    "'cppOutputDirectory' is not a directory: " + cppOutputDirectory);
+            if (cppOutputDirectory == null) {
+                throw new MojoConfigurationException("'cppOutputDirectory' is null");
+            }
+            if (!cppOutputDirectory.isDirectory()) {
+                throw new MojoConfigurationException(
+                        "'cppOutputDirectory' is not a directory: " + cppOutputDirectory.getAbsolutePath());
+            }
+            this.cppOutputDirectory = cppOutputDirectory;
             return this;
         }
 
@@ -550,14 +570,16 @@ final class Protoc {
          *
          * @param pythonOutputDirectory a directory into which Python source files will be generated.
          * @return this builder instance.
-         * @throws NullPointerException if {@code pythonOutputDirectory} is {@code null}.
-         * @throws IllegalArgumentException if {@code pythonOutputDirectory} is not a directory.
          */
         public Builder setPythonOutputDirectory(final File pythonOutputDirectory) {
-            this.pythonOutputDirectory = checkNotNull(pythonOutputDirectory, "'pythonOutputDirectory' is null");
-            checkArgument(
-                    pythonOutputDirectory.isDirectory(),
-                    "'pythonOutputDirectory' is not a directory: " + pythonOutputDirectory);
+            if (pythonOutputDirectory == null) {
+                throw new MojoConfigurationException("'pythonOutputDirectory' is null");
+            }
+            if (!pythonOutputDirectory.isDirectory()) {
+                throw new MojoConfigurationException(
+                        "'pythonOutputDirectory' is not a directory: " + pythonOutputDirectory.getAbsolutePath());
+            }
+            this.pythonOutputDirectory = pythonOutputDirectory;
             return this;
         }
 
@@ -566,14 +588,16 @@ final class Protoc {
          *
          * @param customOutputDirectory a directory into which a custom protoc plugin will generate files.
          * @return this builder instance.
-         * @throws NullPointerException if {@code customOutputDirectory} is {@code null}.
-         * @throws IllegalArgumentException if {@code customOutputDirectory} is not a directory.
          */
         public Builder setCustomOutputDirectory(final File customOutputDirectory) {
-            this.customOutputDirectory = checkNotNull(customOutputDirectory, "'customOutputDirectory' is null");
-            checkArgument(
-                    customOutputDirectory.isDirectory(),
-                    "'customOutputDirectory' is not a directory: " + customOutputDirectory);
+            if (customOutputDirectory == null) {
+                throw new MojoConfigurationException("'customOutputDirectory' is null");
+            }
+            if (!customOutputDirectory.isDirectory()) {
+                throw new MojoConfigurationException(
+                        "'customOutputDirectory' is not a directory: " + customOutputDirectory.getAbsolutePath());
+            }
+            this.customOutputDirectory = customOutputDirectory;
             return this;
         }
 
@@ -584,14 +608,18 @@ final class Protoc {
          *
          * @param protoFile source protobuf definitions file.
          * @return The builder.
-         * @throws IllegalStateException If a proto file is added without first
-         * adding a parent directory to the protopath.
-         * @throws NullPointerException If {@code protoFile} is {@code null}.
          */
         public Builder addProtoFile(final File protoFile) {
-            checkNotNull(protoFile);
-            checkArgument(protoFile.isFile());
-            checkArgument(protoFile.getName().endsWith(".proto"));
+            if (protoFile == null) {
+                throw new MojoConfigurationException("'protoFile' is null");
+            }
+            if (!protoFile.isFile()) {
+                throw new MojoConfigurationException("Proto file is not a file: " + protoFile.getAbsolutePath());
+            }
+            if (!protoFile.getName().endsWith(".proto")) {
+                throw new MojoConfigurationException(
+                        "Invalid extension for proto file: " + protoFile.getAbsolutePath());
+            }
             checkProtoFileIsInProtopath(protoFile);
             protoFiles.add(protoFile);
             return this;
@@ -603,41 +631,55 @@ final class Protoc {
          * @return this builder instance.
          */
         public Builder addPlugin(final ProtocPlugin plugin) {
-            checkNotNull(plugin);
+            if (plugin == null) {
+                throw new MojoConfigurationException("'plugin' is null");
+            }
             plugins.add(plugin);
             return this;
         }
 
-        public Builder setPluginDirectory(final File directory) {
-            checkNotNull(directory);
-            checkArgument(directory.isDirectory(), "Plugin directory " + directory + "does not exist");
-            pluginDirectory = directory;
+        public Builder setPluginDirectory(final File pluginDirectory) {
+            if (pluginDirectory == null) {
+                throw new MojoConfigurationException("'pluginDirectory' is null");
+            }
+            if (!pluginDirectory.isDirectory()) {
+                throw new MojoConfigurationException(
+                        "'pluginDirectory' is not a directory: " + pluginDirectory.getAbsolutePath());
+            }
+            this.pluginDirectory = pluginDirectory;
             return this;
         }
 
         public Builder setNativePluginId(final String nativePluginId) {
-            checkNotNull(nativePluginId, "'nativePluginId' is null");
-            checkArgument(!nativePluginId.isEmpty(), "'nativePluginId' is empty");
-            checkArgument(
-                    !(nativePluginId.equals("java")
-                            || nativePluginId.equals("javanano")
-                            || nativePluginId.equals("python")
-                            || nativePluginId.equals("cpp")
-                            || nativePluginId.equals("descriptor_set")),
-                    "'nativePluginId' matches one of the built-in protoc plugins");
+            if (nativePluginId == null || nativePluginId.isEmpty()) {
+                throw new MojoConfigurationException("'nativePluginId' is null or empty");
+            }
+            if (nativePluginId.equals("java")
+                    || nativePluginId.equals("javanano")
+                    || nativePluginId.equals("python")
+                    || nativePluginId.equals("cpp")
+                    || nativePluginId.equals("descriptor_set")) {
+                throw new MojoConfigurationException("'nativePluginId' matches one of the built-in protoc plugins");
+            }
             this.nativePluginId = nativePluginId;
             return this;
         }
 
         public Builder setNativePluginExecutable(final String nativePluginExecutable) {
-            checkNotNull(nativePluginExecutable, "'nativePluginExecutable' is null");
+            if (nativePluginExecutable == null || nativePluginExecutable.isEmpty()) {
+                throw new MojoConfigurationException("'nativePluginExecutable' is null or empty");
+            }
             this.nativePluginExecutable = nativePluginExecutable;
             return this;
         }
 
         public Builder setNativePluginParameter(final String nativePluginParameter) {
-            checkNotNull(nativePluginParameter, "'nativePluginParameter' is null");
-            checkArgument(!nativePluginParameter.contains(":"), "'nativePluginParameter' contains illegal characters");
+            if (nativePluginParameter == null) {
+                throw new MojoConfigurationException("'nativePluginParameter' is null");
+            }
+            if (nativePluginParameter.contains(":")) {
+                throw new MojoConfigurationException("'nativePluginParameter' contains illegal characters");
+            }
             this.nativePluginParameter = nativePluginParameter;
             return this;
         }
@@ -645,9 +687,18 @@ final class Protoc {
         public Builder withDescriptorSetFile(
                 final File descriptorSetFile,
                 final boolean includeImports,
-                final boolean includeSourceInfoInDescriptorSet) {
-            checkNotNull(descriptorSetFile, "descriptorSetFile");
-            checkArgument(descriptorSetFile.getParentFile().isDirectory());
+                final boolean includeSourceInfoInDescriptorSet
+        ) {
+            if (descriptorSetFile == null) {
+                throw new MojoConfigurationException("'descriptorSetFile' is null");
+            }
+            final File descriptorSetFileParent = descriptorSetFile.getParentFile();
+            if (!descriptorSetFileParent.exists()) {
+                throw new MojoConfigurationException("Parent directory for 'descriptorSetFile' does not exist");
+            }
+            if (!descriptorSetFileParent.isDirectory()) {
+                throw new MojoConfigurationException("Parent for 'descriptorSetFile' is not a directory");
+            }
             this.descriptorSetFile = descriptorSetFile;
             this.includeImportsInDescriptorSet = includeImports;
             this.includeSourceInfoInDescriptorSet = includeSourceInfoInDescriptorSet;
@@ -660,18 +711,23 @@ final class Protoc {
         }
 
         private void checkProtoFileIsInProtopath(final File protoFile) {
-            assert protoFile.isFile();
-            checkState(checkProtoFileIsInProtopathHelper(protoFile.getParentFile()));
+            if (!protoFile.isFile()) {
+                throw new MojoConfigurationException("Not a regular file: " + protoFile.getAbsolutePath());
+            }
+            if (!checkProtoFileIsInProtopathHelper(protoFile.getParentFile())) {
+                throw new MojoConfigurationException("File is not in proto path: " + protoFile.getAbsolutePath());
+            }
         }
 
         private boolean checkProtoFileIsInProtopathHelper(final File directory) {
-            assert directory.isDirectory();
+            if (!directory.isDirectory()) {
+                throw new MojoConfigurationException("Not a directory: " + directory.getAbsolutePath());
+            }
             if (protopathElements.contains(directory)) {
                 return true;
-            } else {
-                final File parentDirectory = directory.getParentFile();
-                return parentDirectory != null && checkProtoFileIsInProtopathHelper(parentDirectory);
             }
+            final File parentDirectory = directory.getParentFile();
+            return parentDirectory != null && checkProtoFileIsInProtopathHelper(parentDirectory);
         }
 
         /**
@@ -693,13 +749,15 @@ final class Protoc {
          *
          * @param protopathElement A directory to be searched for imported protocol buffer definitions.
          * @return The builder.
-         * @throws NullPointerException If {@code protopathElement} is {@code null}.
-         * @throws IllegalArgumentException If {@code protpathElement} is not a
-         * directory.
          */
         public Builder addProtoPathElement(final File protopathElement) {
-            checkNotNull(protopathElement);
-            checkArgument(protopathElement.isDirectory());
+            if (protopathElement == null) {
+                throw new MojoConfigurationException("'protopathElement' is null");
+            }
+            if (!protopathElement.isDirectory()) {
+                throw new MojoConfigurationException(
+                        "Proto path element is not a directory: " + protopathElement.getAbsolutePath());
+            }
             protopathElements.add(protopathElement);
             return this;
         }
@@ -722,22 +780,24 @@ final class Protoc {
          * Validates the internal state for consistency and completeness.
          */
         private void validateState() {
-            checkState(!protoFiles.isEmpty());
-            checkState(javaOutputDirectory != null
-                            || javaNanoOutputDirectory != null
-                            || cppOutputDirectory != null
-                            || pythonOutputDirectory != null
-                            || customOutputDirectory != null,
-                    "At least one of these properties must be set: " +
-                            "'javaOutputDirectory', 'javaNanoOutputDirectory', 'cppOutputDirectory', " +
-                            "'pythonOutputDirectory' or 'customOutputDirectory'");
+            if (protoFiles.isEmpty()) {
+                throw new MojoConfigurationException("No proto files specified");
+            }
+            if (javaOutputDirectory == null
+                    && javaNanoOutputDirectory == null
+                    && cppOutputDirectory == null
+                    && pythonOutputDirectory == null
+                    && customOutputDirectory == null) {
+                throw new MojoConfigurationException("At least one of these properties must be set: " +
+                        "'javaOutputDirectory', 'javaNanoOutputDirectory', 'cppOutputDirectory', " +
+                        "'pythonOutputDirectory' or 'customOutputDirectory'");
+            }
         }
 
         /**
          * Builds and returns a fully configured instance of {@link Protoc} wrapper.
          *
          * @return a configured {@link Protoc} instance.
-         * @throws IllegalStateException if builder state is incomplete or inconsistent.
          */
         public Protoc build() {
             validateState();

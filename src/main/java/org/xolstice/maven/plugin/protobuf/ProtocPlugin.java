@@ -1,7 +1,7 @@
 package org.xolstice.maven.plugin.protobuf;
 
 /*
- * Copyright (c) 2016 Maven Protocol Buffers Plugin Authors. All rights reserved.
+ * Copyright (c) 2018 Maven Protocol Buffers Plugin Authors. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,8 +22,6 @@ import org.codehaus.plexus.util.Os;
 import java.io.File;
 import java.util.Collections;
 import java.util.List;
-
-import static com.google.common.base.Preconditions.checkState;
 
 /**
  * Describes a {@code protoc} plugin that is written in Java and
@@ -157,15 +155,26 @@ public class ProtocPlugin {
      * Validate the state of this plugin specification.
      *
      * @param log a logger instance for diagnostic output.
-     * @throws IllegalStateException if properties are incorrect or are missing
      */
     public void validate(final Log log) {
-        checkState(id != null, "id must be set in protocPlugin definition");
-        checkState(groupId != null, "groupId must be set in protocPlugin definition");
-        checkState(artifactId != null, "artifactId must be set in protocPlugin definition");
-        checkState(version != null, "version must be set in protocPlugin definition");
-        checkState(mainClass != null, "mainClass must be set in protocPlugin definition");
-        checkState(javaHome != null && new File(javaHome).isDirectory(), "javaHome is invalid: " + javaHome);
+        if (id == null) {
+            throw new MojoConfigurationException("id must be set in protocPlugin definition");
+        }
+        if (groupId == null) {
+            throw new MojoConfigurationException("groupId must be set in protocPlugin definition");
+        }
+        if (artifactId == null) {
+            throw new MojoConfigurationException("artifactId must be set in protocPlugin definition");
+        }
+        if (version == null) {
+            throw new MojoConfigurationException("version must be set in protocPlugin definition");
+        }
+        if (mainClass == null) {
+            throw new MojoConfigurationException("mainClass must be set in protocPlugin definition");
+        }
+        if (javaHome == null || !new File(javaHome).isDirectory()) {
+            throw new MojoConfigurationException("javaHome is invalid: " + javaHome);
+        }
         if (Os.isFamily(Os.FAMILY_WINDOWS)) {
 
             // If winJvmDataModel isn't set explicitly, try to guess the architecture
@@ -173,9 +182,9 @@ public class ProtocPlugin {
             // If that fails, try to figure out from the currently running JVM.
 
             if (winJvmDataModel != null) {
-                checkState(
-                        winJvmDataModel.equals(WIN_JVM_DATA_MODEL_32) || winJvmDataModel.equals(WIN_JVM_DATA_MODEL_64),
-                        "winJvmDataModel must be '32' or '64'");
+                if (!(winJvmDataModel.equals(WIN_JVM_DATA_MODEL_32) || winJvmDataModel.equals(WIN_JVM_DATA_MODEL_64))) {
+                    throw new MojoConfigurationException("winJvmDataModel must be '32' or '64'");
+                }
             } else if (archDirectoryExists("amd64")) {
                 winJvmDataModel = WIN_JVM_DATA_MODEL_64;
                 if (log.isDebugEnabled()) {

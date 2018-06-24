@@ -1,7 +1,7 @@
 package org.xolstice.maven.plugin.protobuf;
 
 /*
- * Copyright (c) 2016 Maven Protocol Buffers Plugin Authors. All rights reserved.
+ * Copyright (c) 2018 Maven Protocol Buffers Plugin Authors. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,6 @@ package org.xolstice.maven.plugin.protobuf;
  * limitations under the License.
  */
 
-import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
@@ -52,7 +51,7 @@ public final class ProtocCompileCppMojo extends AbstractProtocCompileMojo {
     private File outputDirectory;
 
     @Override
-    protected void addProtocBuilderParameters(final Protoc.Builder protocBuilder) throws MojoExecutionException {
+    protected void addProtocBuilderParameters(final Protoc.Builder protocBuilder) {
         super.addProtocBuilderParameters(protocBuilder);
         protocBuilder.setCppOutputDirectory(getOutputDirectory());
     }

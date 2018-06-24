@@ -1,7 +1,7 @@
 package org.xolstice.maven.plugin.protobuf;
 
 /*
- * Copyright (c) 2016 Maven Protocol Buffers Plugin Authors. All rights reserved.
+ * Copyright (c) 2018 Maven Protocol Buffers Plugin Authors. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,7 +26,6 @@ import org.apache.maven.artifact.resolver.ResolutionErrorHandler;
 import org.apache.maven.artifact.versioning.InvalidVersionSpecificationException;
 import org.apache.maven.artifact.versioning.VersionRange;
 import org.apache.maven.execution.MavenSession;
-import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.repository.RepositorySystem;
 import org.codehaus.plexus.util.FileUtils;
@@ -99,10 +98,8 @@ public class ProtocPluginAssembler {
 
     /**
      * Resolves the plugin's dependencies to the local Maven repository and builds the plugin executable.
-     *
-     * @throws MojoExecutionException if plugin executable could not be built.
      */
-    public void execute() throws MojoExecutionException {
+    public void execute() {
         pluginDefinition.validate(log);
 
         if (log.isDebugEnabled()) {
@@ -120,7 +117,7 @@ public class ProtocPluginAssembler {
         }
     }
 
-    private void buildWindowsPlugin() throws MojoExecutionException {
+    private void buildWindowsPlugin() {
         createPluginDirectory();
 
         // Try to locate jvm.dll based on pluginDefinition's javaHome property
@@ -171,7 +168,7 @@ public class ProtocPluginAssembler {
             out.println("[ErrorMessages]");
             out.println("show.popup=false");
         } catch (IOException e) {
-            throw new MojoExecutionException(
+            throw new MojoInitializationException(
                     "Could not write WinRun4J ini file: " + winRun4JIniFile.getAbsolutePath(), e);
         } finally {
             if (out != null) {
@@ -190,22 +187,22 @@ public class ProtocPluginAssembler {
         return null;
     }
 
-    private void copyWinRun4JExecutable() throws MojoExecutionException {
+    private void copyWinRun4JExecutable() {
         final String executablePath = getWinrun4jExecutablePath();
         final URL url = Thread.currentThread().getContextClassLoader().getResource(executablePath);
         if (url == null) {
-            throw new MojoExecutionException(
+            throw new MojoInitializationException(
                     "Could not locate WinRun4J executable at path: " + executablePath);
         }
         try {
             FileUtils.copyURLToFile(url, pluginExecutableFile);
         } catch (IOException e) {
-            throw new MojoExecutionException(
+            throw new MojoInitializationException(
                     "Could not copy WinRun4J executable to: " + pluginExecutableFile.getAbsolutePath(), e);
         }
     }
 
-    private void buildUnixPlugin() throws MojoExecutionException {
+    private void buildUnixPlugin() {
         createPluginDirectory();
 
         final File javaLocation = new File(pluginDefinition.getJavaHome(), "bin/java");
@@ -242,7 +239,7 @@ public class ProtocPluginAssembler {
                     + pluginDefinition.getMainClass() + " $ARGS");
             out.println();
         } catch (IOException e) {
-            throw new MojoExecutionException("Could not write plugin script file: " + pluginExecutableFile, e);
+            throw new MojoInitializationException("Could not write plugin script file: " + pluginExecutableFile, e);
         } finally {
             if (out != null) {
                 out.close();
@@ -250,21 +247,21 @@ public class ProtocPluginAssembler {
         }
     }
 
-    private void createPluginDirectory() throws MojoExecutionException {
+    private void createPluginDirectory() {
         pluginDirectory.mkdirs();
         if (!pluginDirectory.isDirectory()) {
-            throw new MojoExecutionException("Could not create protoc plugin directory: "
+            throw new MojoInitializationException("Could not create protoc plugin directory: "
                     + pluginDirectory.getAbsolutePath());
         }
     }
 
-    private void resolvePluginDependencies() throws MojoExecutionException {
+    private void resolvePluginDependencies() {
 
         final VersionRange versionSpec;
         try {
             versionSpec = VersionRange.createFromVersionSpec(pluginDefinition.getVersion());
         } catch (InvalidVersionSpecificationException e) {
-            throw new MojoExecutionException("Invalid plugin version specification", e);
+            throw new MojoConfigurationException("Invalid plugin version specification", e);
         }
         final Artifact protocPluginArtifact =
                 artifactFactory.createDependencyArtifact(
@@ -275,39 +272,39 @@ public class ProtocPluginAssembler {
                         pluginDefinition.getClassifier(),
                         Artifact.SCOPE_RUNTIME);
 
+        final ArtifactResolutionRequest request = new ArtifactResolutionRequest()
+                .setArtifact(rootResolutionArtifact)
+                .setResolveRoot(false)
+                .setArtifactDependencies(Collections.singleton(protocPluginArtifact))
+                .setManagedVersionMap(Collections.emptyMap())
+                .setLocalRepository(localRepository)
+                .setRemoteRepositories(remoteRepositories)
+                .setOffline(session.isOffline())
+                .setForceUpdate(session.getRequest().isUpdateSnapshots())
+                .setServers(session.getRequest().getServers())
+                .setMirrors(session.getRequest().getMirrors())
+                .setProxies(session.getRequest().getProxies());
+
+        final ArtifactResolutionResult result = repositorySystem.resolve(request);
+
         try {
-            final ArtifactResolutionRequest request = new ArtifactResolutionRequest()
-                    .setArtifact(rootResolutionArtifact)
-                    .setResolveRoot(false)
-                    .setArtifactDependencies(Collections.singleton(protocPluginArtifact))
-                    .setManagedVersionMap(Collections.emptyMap())
-                    .setLocalRepository(localRepository)
-                    .setRemoteRepositories(remoteRepositories)
-                    .setOffline(session.isOffline())
-                    .setForceUpdate(session.getRequest().isUpdateSnapshots())
-                    .setServers(session.getRequest().getServers())
-                    .setMirrors(session.getRequest().getMirrors())
-                    .setProxies(session.getRequest().getProxies());
-
-            final ArtifactResolutionResult result = repositorySystem.resolve(request);
-
             resolutionErrorHandler.throwErrors(request, result);
+        } catch (ArtifactResolutionException e) {
+            throw new MojoInitializationException("Unable to resolve plugin artifact: " + e.getMessage(), e);
+        }
 
-            final Set<Artifact> artifacts = result.getArtifacts();
+        final Set<Artifact> artifacts = result.getArtifacts();
 
-            if (artifacts == null || artifacts.isEmpty()) {
-                throw new MojoExecutionException("Unable to resolve plugin artifact");
-            }
+        if (artifacts == null || artifacts.isEmpty()) {
+            throw new MojoInitializationException("Unable to resolve plugin artifact");
+        }
 
-            for (final Artifact artifact : artifacts) {
-                resolvedJars.add(artifact.getFile());
-            }
+        for (final Artifact artifact : artifacts) {
+            resolvedJars.add(artifact.getFile());
+        }
 
-            if (log.isDebugEnabled()) {
-                log.debug("Resolved jars: " + resolvedJars);
-            }
-        } catch (final ArtifactResolutionException e) {
-            throw new MojoExecutionException(e.getMessage(), e);
+        if (log.isDebugEnabled()) {
+            log.debug("Resolved jars: " + resolvedJars);
         }
     }
 

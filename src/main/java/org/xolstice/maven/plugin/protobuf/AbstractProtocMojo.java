@@ -1,7 +1,7 @@
 package org.xolstice.maven.plugin.protobuf;
 
 /*
- * Copyright (c) 2016 Maven Protocol Buffers Plugin Authors. All rights reserved.
+ * Copyright (c) 2018 Maven Protocol Buffers Plugin Authors. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -49,6 +49,7 @@ import org.sonatype.plexus.build.incremental.BuildContext;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Collections;
@@ -59,9 +60,6 @@ import java.util.Set;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
-import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkNotNull;
-import static com.google.common.base.Preconditions.checkState;
 import static java.lang.Math.max;
 import static java.lang.String.format;
 import static java.util.Arrays.asList;
@@ -459,7 +457,14 @@ abstract class AbstractProtocMojo extends AbstractMojo {
             return;
         }
 
-        checkParameters();
+        try {
+            checkParameters();
+        } catch (final MojoConfigurationException e) {
+            throw new MojoExecutionException("Configuration error: " + e.getMessage(), e);
+        } catch (final MojoInitializationException e) {
+            throw new MojoExecutionException(e.getMessage(), e);
+        }
+
         final File protoSourceRoot = getProtoSourceRoot();
         if (protoSourceRoot.exists()) {
             try {
@@ -481,20 +486,27 @@ abstract class AbstractProtocMojo extends AbstractMojo {
                     FileUtils.mkdir(outputDirectory.getAbsolutePath());
 
                     if (clearOutputDirectory) {
-                        cleanDirectory(outputDirectory);
+                        try {
+                            cleanDirectory(outputDirectory);
+                        } catch (final IOException e) {
+                            throw new MojoInitializationException("Unable to clean output directory", e);
+                        }
                     }
 
                     if (writeDescriptorSet) {
                         final File descriptorSetOutputDirectory = getDescriptorSetOutputDirectory();
                         FileUtils.mkdir(descriptorSetOutputDirectory.getAbsolutePath());
                         if (clearOutputDirectory) {
-                            cleanDirectory(descriptorSetOutputDirectory);
+                            try {
+                                cleanDirectory(descriptorSetOutputDirectory);
+                            } catch (final IOException e) {
+                                throw new MojoInitializationException(
+                                        "Unable to clean descriptor set output directory", e);
+                            }
                         }
                     }
 
-                    if (protocPlugins != null) {
-                        createProtocPlugins();
-                    }
+                    createProtocPlugins();
 
                     //get toolchain from context
                     final Toolchain tc = toolchainManager.getToolchainFromBuildContext("protobuf", session); //NOI18N
@@ -568,13 +580,13 @@ abstract class AbstractProtocMojo extends AbstractMojo {
                     }
                     doAttachFiles();
                 }
-            } catch (IOException e) {
-                throw new MojoExecutionException("An IO error occured", e);
-            } catch (IllegalArgumentException e) {
-                throw new MojoFailureException("protoc failed to execute because: " + e.getMessage(), e);
-            } catch (CommandLineException e) {
-                throw new MojoExecutionException("An error occurred while invoking protoc.", e);
-            } catch (InterruptedException e) {
+            } catch (final MojoConfigurationException e) {
+                throw new MojoExecutionException("Configuration error: " + e.getMessage(), e);
+            } catch (final MojoInitializationException e) {
+                throw new MojoExecutionException(e.getMessage(), e);
+            } catch (final CommandLineException e) {
+                throw new MojoExecutionException("An error occurred while invoking protoc: " + e.getMessage(), e);
+            } catch (final InterruptedException e) {
                 getLog().info("Process interrupted");
             }
         } else {
@@ -587,11 +599,12 @@ abstract class AbstractProtocMojo extends AbstractMojo {
      * Generates native launchers for java protoc plugins.
      * These launchers will later be added as parameters for protoc compiler.
      *
-     * @throws MojoExecutionException if plugins launchers could not be created.
-     *
      * @since 0.3.0
      */
-    protected void createProtocPlugins() throws MojoExecutionException {
+    protected void createProtocPlugins() {
+        if (protocPlugins == null) {
+            return;
+        }
         final String javaHome = detectJavaHome();
 
         for (final ProtocPlugin plugin : protocPlugins) {
@@ -667,9 +680,8 @@ abstract class AbstractProtocMojo extends AbstractMojo {
      * Adds mojo-specific parameters to the protoc builder.
      *
      * @param protocBuilder the builder to be modified.
-     * @throws MojoExecutionException if parameters cannot be resolved or configured.
      */
-    protected void addProtocBuilderParameters(final Protoc.Builder protocBuilder) throws MojoExecutionException {
+    protected void addProtocBuilderParameters(final Protoc.Builder protocBuilder) {
         if (protocPlugins != null) {
             for (final ProtocPlugin plugin : protocPlugins) {
                 protocBuilder.addPlugin(plugin);
@@ -717,12 +729,17 @@ abstract class AbstractProtocMojo extends AbstractMojo {
         return false;
     }
 
-    protected static ImmutableSet<File> findGeneratedFilesInDirectory(final File directory) throws IOException {
+    protected static ImmutableSet<File> findGeneratedFilesInDirectory(final File directory) {
         if (directory == null || !directory.isDirectory()) {
             return ImmutableSet.of();
         }
 
-        final List<File> generatedFilesInDirectory = getFiles(directory, "**/*", getDefaultExcludesAsString());
+        final List<File> generatedFilesInDirectory;
+        try {
+            generatedFilesInDirectory = getFiles(directory, "**/*", getDefaultExcludesAsString());
+        } catch (final IOException e) {
+            throw new MojoInitializationException("Unable to scan output directory", e);
+        }
         return ImmutableSet.copyOf(generatedFilesInDirectory);
     }
 
@@ -769,16 +786,32 @@ abstract class AbstractProtocMojo extends AbstractMojo {
     }
 
     protected void checkParameters() {
-        checkNotNull(project, "project");
-        checkNotNull(projectHelper, "projectHelper");
+        if (project == null) {
+            throw new MojoConfigurationException("'project' is null");
+        }
+        if (projectHelper == null) {
+            throw new MojoConfigurationException("'projectHelper' is null");
+        }
         final File protoSourceRoot = getProtoSourceRoot();
-        checkNotNull(protoSourceRoot);
-        checkArgument(!protoSourceRoot.isFile(), "protoSourceRoot is a file, not a directory");
-        checkNotNull(temporaryProtoFileDirectory, "temporaryProtoFileDirectory");
-        checkState(!temporaryProtoFileDirectory.isFile(), "temporaryProtoFileDirectory is a file, not a directory");
+        if (protoSourceRoot == null) {
+            throw new MojoConfigurationException("'protoSourceRoot' is null");
+        }
+        if (protoSourceRoot.isFile()) {
+            throw new MojoConfigurationException("'protoSourceRoot' is a file, not a directory");
+        }
+        if (temporaryProtoFileDirectory == null) {
+            throw new MojoConfigurationException("'temporaryProtoFileDirectory' is null");
+        }
+        if (temporaryProtoFileDirectory.isFile()) {
+            throw new MojoConfigurationException("'temporaryProtoFileDirectory' is a file, not a directory");
+        }
         final File outputDirectory = getOutputDirectory();
-        checkNotNull(outputDirectory);
-        checkState(!outputDirectory.isFile(), "the outputDirectory is a file, not a directory");
+        if (outputDirectory == null) {
+            throw new MojoConfigurationException("'outputDirectory' is null");
+        }
+        if (outputDirectory.isFile()) {
+            throw new MojoConfigurationException("'outputDirectory' is a file, not a directory");
+        }
     }
 
     protected abstract File getProtoSourceRoot();
@@ -843,22 +876,26 @@ abstract class AbstractProtocMojo extends AbstractMojo {
      *
      * @param temporaryProtoFileDirectory temporary directory to serve as root for unpacked structure.
      * @param classpathElementFiles classpath elements, can be either jar files or directories.
-     * @throws IOException if one of the file operations fails.
-     * @throws MojoExecutionException if an internal error happens.
      * @return a set of import roots for protobuf compiler
      *         (these will all be subdirectories of the temporary directory).
      */
     protected ImmutableSet<File> makeProtoPathFromJars(
             final File temporaryProtoFileDirectory,
-            final Iterable<File> classpathElementFiles)
-            throws IOException, MojoExecutionException {
-        checkNotNull(classpathElementFiles, "classpathElementFiles");
+            final Iterable<File> classpathElementFiles
+    ) {
+        if (classpathElementFiles == null) {
+            throw new MojoConfigurationException("'classpathElementFiles' is null");
+        }
         if (!classpathElementFiles.iterator().hasNext()) {
             return ImmutableSet.of(); // Return an empty set
         }
         // clean the temporary directory to ensure that stale files aren't used
         if (temporaryProtoFileDirectory.exists()) {
-            cleanDirectory(temporaryProtoFileDirectory);
+            try {
+                cleanDirectory(temporaryProtoFileDirectory);
+            } catch (IOException e) {
+                throw new MojoInitializationException("Unable to clean up temporary proto file directory", e);
+            }
         }
         final Set<File> protoDirectories = new LinkedHashSet<File>();
         for (final File classpathElementFile : classpathElementFiles) {
@@ -871,9 +908,9 @@ abstract class AbstractProtocMojo extends AbstractMojo {
                 final JarFile classpathJar;
                 try {
                     classpathJar = new JarFile(classpathElementFile);
-                } catch (IOException e) {
-                    throw new IllegalArgumentException(format(
-                            "%s was not a readable artifact", classpathElementFile), e);
+                } catch (final IOException e) {
+                    throw new MojoInitializationException(
+                            "Not a readable JAR artifact: " + classpathElementFile.getAbsolutePath(), e);
                 }
                 final Enumeration<JarEntry> jarEntries = classpathJar.entries();
                 while (jarEntries.hasMoreElements()) {
@@ -881,18 +918,28 @@ abstract class AbstractProtocMojo extends AbstractMojo {
                     final String jarEntryName = jarEntry.getName();
                     // TODO try using org.codehaus.plexus.util.SelectorUtils.matchPath() with DEFAULT_INCLUDES
                     if (jarEntryName.endsWith(PROTO_FILE_SUFFIX)) {
-                        final File jarDirectory =
-                                new File(temporaryProtoFileDirectory, truncatePath(classpathJar.getName()));
-                        final File uncompressedCopy = new File(jarDirectory, jarEntryName);
-                        FileUtils.mkdir(uncompressedCopy.getParentFile().getAbsolutePath());
-                        copyStreamToFile(
-                                new RawInputStreamFacade(classpathJar.getInputStream(jarEntry)),
-                                uncompressedCopy);
+                        final File jarDirectory;
+                        try {
+                            jarDirectory = new File(temporaryProtoFileDirectory, truncatePath(classpathJar.getName()));
+                            final File uncompressedCopy = new File(jarDirectory, jarEntryName);
+                            FileUtils.mkdir(uncompressedCopy.getParentFile().getAbsolutePath());
+                            copyStreamToFile(
+                                    new RawInputStreamFacade(classpathJar.getInputStream(jarEntry)),
+                                    uncompressedCopy);
+                        } catch (final IOException e) {
+                            throw new MojoInitializationException("Unable to unpack proto files", e);
+                        }
                         protoDirectories.add(jarDirectory);
                     }
                 }
             } else if (classpathElementFile.isDirectory()) {
-                final List<File> protoFiles = getFiles(classpathElementFile, DEFAULT_INCLUDES, null);
+                final List<File> protoFiles;
+                try {
+                    protoFiles = getFiles(classpathElementFile, DEFAULT_INCLUDES, null);
+                } catch (final IOException e) {
+                    throw new MojoInitializationException(
+                            "Unable to scan for proto files in: " + classpathElementFile.getAbsolutePath(), e);
+                }
                 if (!protoFiles.isEmpty()) {
                     protoDirectories.add(classpathElementFile);
                 }
@@ -901,17 +948,27 @@ abstract class AbstractProtocMojo extends AbstractMojo {
         return ImmutableSet.copyOf(protoDirectories);
     }
 
-    protected ImmutableSet<File> findProtoFilesInDirectory(final File directory) throws IOException {
-        checkNotNull(directory);
-        checkArgument(directory.isDirectory(), "%s is not a directory", directory);
+    protected ImmutableSet<File> findProtoFilesInDirectory(final File directory) {
+        if (directory == null) {
+            throw new MojoConfigurationException("'directory' is null");
+        }
+        if (!directory.isDirectory()) {
+            throw new MojoConfigurationException(format("%s is not a directory", directory));
+        }
         final Joiner joiner = Joiner.on(',');
-        final List<File> protoFilesInDirectory =
-                getFiles(directory, joiner.join(getIncludes()), joiner.join(getExcludes()));
+        final List<File> protoFilesInDirectory;
+        try {
+            protoFilesInDirectory = getFiles(directory, joiner.join(getIncludes()), joiner.join(getExcludes()));
+        } catch (IOException e) {
+            throw new MojoInitializationException("Unable to retrieve the list of files: " + e.getMessage(), e);
+        }
         return ImmutableSet.copyOf(protoFilesInDirectory);
     }
 
-    protected ImmutableSet<File> findProtoFilesInDirectories(final Iterable<File> directories) throws IOException {
-        checkNotNull(directories);
+    protected ImmutableSet<File> findProtoFilesInDirectories(final Iterable<File> directories) {
+        if (directories == null) {
+            throw new MojoConfigurationException("'directories' is null");
+        }
         final Set<File> protoFiles = new LinkedHashSet<File>();
         for (final File directory : directories) {
             protoFiles.addAll(findProtoFilesInDirectory(directory));
@@ -924,16 +981,11 @@ abstract class AbstractProtocMojo extends AbstractMojo {
      *
      * @param jarPath the full path of a jar file.
      * @return the truncated path relative to the local repository or root of the drive.
-     * @throws MojoExecutionException if an internal error happens.
      */
-    protected String truncatePath(final String jarPath) throws MojoExecutionException {
+    protected String truncatePath(final String jarPath) {
 
         if (hashDependentPaths) {
-            try {
-                return toHexString(MessageDigest.getInstance("MD5").digest(jarPath.getBytes()));
-            } catch (NoSuchAlgorithmException e) {
-                throw new MojoExecutionException("Failed to expand dependent jar", e);
-            }
+            return md5Hash(jarPath);
         }
 
         String repository = localRepository.getBasedir().replace('\\', '/');
@@ -957,6 +1009,17 @@ abstract class AbstractProtocMojo extends AbstractMojo {
         return path;
     }
 
+    private static String md5Hash(final String string) {
+        final MessageDigest digest;
+        try {
+            digest = MessageDigest.getInstance("MD5");
+        } catch (final NoSuchAlgorithmException e) {
+            throw new MojoInitializationException("Unable to create MD5 digest", e);
+        }
+        final byte[] input = string.getBytes(Charset.forName("UTF-8"));
+        return toHexString(digest.digest(input));
+    }
+
     private static final char[] HEX_CHARS = "0123456789abcdef".toCharArray();
 
     protected static String toHexString(final byte[] byteArray) {
@@ -967,7 +1030,7 @@ abstract class AbstractProtocMojo extends AbstractMojo {
         return hexString.toString();
     }
 
-    protected File resolveBinaryArtifact(final Artifact artifact) throws MojoExecutionException {
+    protected File resolveBinaryArtifact(final Artifact artifact) {
         final ArtifactResolutionResult result;
         try {
             final ArtifactResolutionRequest request = new ArtifactResolutionRequest()
@@ -988,13 +1051,13 @@ abstract class AbstractProtocMojo extends AbstractMojo {
 
             resolutionErrorHandler.throwErrors(request, result);
         } catch (final ArtifactResolutionException e) {
-            throw new MojoExecutionException(e.getMessage(), e);
+            throw new MojoInitializationException("Unable to resolve artifact: " + e.getMessage(), e);
         }
 
         final Set<Artifact> artifacts = result.getArtifacts();
 
         if (artifacts == null || artifacts.isEmpty()) {
-            throw new MojoExecutionException("Unable to resolve plugin artifact");
+            throw new MojoInitializationException("Unable to resolve artifact");
         }
 
         final Artifact resolvedBinaryArtifact = artifacts.iterator().next();
@@ -1020,12 +1083,12 @@ abstract class AbstractProtocMojo extends AbstractMojo {
         try {
             FileUtils.forceMkdir(protocPluginDirectory);
         } catch (final IOException e) {
-            throw new MojoExecutionException("Unable to create directory " + protocPluginDirectory, e);
+            throw new MojoInitializationException("Unable to create directory " + protocPluginDirectory, e);
         }
         try {
             FileUtils.copyFile(sourceFile, targetFile);
         } catch (final IOException e) {
-            throw new MojoExecutionException("Unable to copy the file to " + protocPluginDirectory, e);
+            throw new MojoInitializationException("Unable to copy the file to " + protocPluginDirectory, e);
         }
         if (!Os.isFamily(Os.FAMILY_WINDOWS)) {
             targetFile.setExecutable(true);
@@ -1043,12 +1106,11 @@ abstract class AbstractProtocMojo extends AbstractMojo {
      *
      * @param artifactSpec artifact specification.
      * @return artifact object instance.
-     * @throws MojoExecutionException if artifact specification cannot be parsed.
      */
-    protected Artifact createDependencyArtifact(final String artifactSpec) throws MojoExecutionException {
+    protected Artifact createDependencyArtifact(final String artifactSpec) {
         final String[] parts = artifactSpec.split(":");
         if (parts.length < 3 || parts.length > 5) {
-            throw new MojoExecutionException(
+            throw new MojoConfigurationException(
                     "Invalid artifact specification format"
                             + ", expected: groupId:artifactId:version[:type[:classifier]]"
                             + ", actual: " + artifactSpec);
@@ -1064,12 +1126,12 @@ abstract class AbstractProtocMojo extends AbstractMojo {
             final String version,
             final String type,
             final String classifier
-    ) throws MojoExecutionException {
+    ) {
         final VersionRange versionSpec;
         try {
             versionSpec = VersionRange.createFromVersionSpec(version);
         } catch (final InvalidVersionSpecificationException e) {
-            throw new MojoExecutionException("Invalid version specification", e);
+            throw new MojoConfigurationException("Invalid version specification", e);
         }
         return artifactFactory.createDependencyArtifact(
                 groupId,

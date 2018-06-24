@@ -3,6 +3,7 @@
 [![Bintray](https://img.shields.io/bintray/v/xolstice/maven/protobuf-maven-plugin.svg)](https://bintray.com/xolstice/maven/protobuf-maven-plugin/)
 [![Build Status](https://travis-ci.com/xolstice/protobuf-maven-plugin.svg?branch=master)](https://travis-ci.com/xolstice/protobuf-maven-plugin)
 [![Build status](https://ci.appveyor.com/api/projects/status/u8mxkjcs1xl1s3om/branch/master?svg=true)](https://ci.appveyor.com/project/xolstice/protobuf-maven-plugin/branch/master)
+[![Known Vulnerabilities](https://snyk.io/test/github/xolstice/protobuf-maven-plugin/badge.svg)](https://snyk.io/test/github/xolstice/protobuf-maven-plugin)
 
 # Maven Protocol Buffers Plugin
 
