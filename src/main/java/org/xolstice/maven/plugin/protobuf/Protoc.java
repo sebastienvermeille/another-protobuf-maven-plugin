@@ -16,9 +16,6 @@ package org.xolstice.maven.plugin.protobuf;
  * limitations under the License.
  */
 
-import com.google.common.base.Joiner;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableSet;
 import org.apache.maven.plugin.logging.Log;
 import org.codehaus.plexus.util.cli.CommandLineException;
 import org.codehaus.plexus.util.cli.CommandLineUtils;
@@ -29,11 +26,10 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.charset.Charset;
-import java.util.LinkedHashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
-import static com.google.common.collect.Lists.newLinkedList;
+import static org.codehaus.plexus.util.StringUtils.join;
 
 /**
  * This class represents an invokable configuration of the {@code protoc} compiler.
@@ -54,12 +50,12 @@ final class Protoc {
     /**
      * A set of directories in which to search for definition imports.
      */
-    private final ImmutableSet<File> protoPathElements;
+    private final List<File> protoPathElements;
 
     /**
      * A set of protobuf definitions to process.
      */
-    private final ImmutableSet<File> protoFiles;
+    private final List<File> protoFiles;
 
     /**
      * A directory into which Java source files will be generated.
@@ -71,7 +67,7 @@ final class Protoc {
      */
     private final File javaNanoOutputDirectory;
 
-    private final ImmutableSet<ProtocPlugin> plugins;
+    private final List<ProtocPlugin> plugins;
 
     private final File pluginDirectory;
 
@@ -148,8 +144,8 @@ final class Protoc {
      */
     private Protoc(
             final String executable,
-            final ImmutableSet<File> protoPath,
-            final ImmutableSet<File> protoFiles,
+            final List<File> protoPath,
+            final List<File> protoFiles,
             final File javaOutputDirectory,
             final File javaNanoOutputDirectory,
             final File cppOutputDirectory,
@@ -158,7 +154,7 @@ final class Protoc {
             final File descriptorSetFile,
             final boolean includeImportsInDescriptorSet,
             final boolean includeSourceInfoInDescriptorSet,
-            final ImmutableSet<ProtocPlugin> plugins,
+            final List<ProtocPlugin> plugins,
             final File pluginDirectory,
             final String nativePluginId,
             final String nativePluginExecutable,
@@ -244,8 +240,8 @@ final class Protoc {
      *
      * @return A list consisting of the executable followed by any arguments.
      */
-    public ImmutableList<String> buildProtocCommand() {
-        final List<String> command = newLinkedList();
+    public List<String> buildProtocCommand() {
+        final List<String> command = new ArrayList<String>();
         // add the executable
         for (final File protoPathElement : protoPathElements) {
             command.add("--proto_path=" + protoPathElement);
@@ -298,7 +294,7 @@ final class Protoc {
                 command.add("--include_source_info");
             }
         }
-        return ImmutableList.copyOf(command);
+        return command;
     }
 
     /**
@@ -364,7 +360,7 @@ final class Protoc {
             final List<String> cl = buildProtocCommand();
             if (cl != null && !cl.isEmpty()) {
                 log.debug(LOG_PREFIX + "Command line options:");
-                log.debug(LOG_PREFIX + Joiner.on(' ').join(cl));
+                log.debug(LOG_PREFIX + join(cl.iterator(), " "));
             }
         }
     }
@@ -431,11 +427,11 @@ final class Protoc {
          */
         private final String executable;
 
-        private final Set<File> protopathElements;
+        private final List<File> protopathElements;
 
-        private final Set<File> protoFiles;
+        private final List<File> protoFiles;
 
-        private final Set<ProtocPlugin> plugins;
+        private final List<ProtocPlugin> plugins;
 
         private File tempDirectory;
 
@@ -494,9 +490,9 @@ final class Protoc {
                 throw new MojoConfigurationException("'executable' is null");
             }
             this.executable = executable;
-            this.protoFiles = new LinkedHashSet<File>();
-            this.protopathElements = new LinkedHashSet<File>();
-            this.plugins = new LinkedHashSet<ProtocPlugin>();
+            protoFiles = new ArrayList<File>();
+            protopathElements = new ArrayList<File>();
+            plugins = new ArrayList<ProtocPlugin>();
         }
 
         public Builder setTempDirectory(final File tempDirectory) {
@@ -803,8 +799,8 @@ final class Protoc {
             validateState();
             return new Protoc(
                     executable,
-                    ImmutableSet.copyOf(protopathElements),
-                    ImmutableSet.copyOf(protoFiles),
+                    protopathElements,
+                    protoFiles,
                     javaOutputDirectory,
                     javaNanoOutputDirectory,
                     cppOutputDirectory,
@@ -813,7 +809,7 @@ final class Protoc {
                     descriptorSetFile,
                     includeImportsInDescriptorSet,
                     includeSourceInfoInDescriptorSet,
-                    ImmutableSet.copyOf(plugins),
+                    plugins,
                     pluginDirectory,
                     nativePluginId,
                     nativePluginExecutable,

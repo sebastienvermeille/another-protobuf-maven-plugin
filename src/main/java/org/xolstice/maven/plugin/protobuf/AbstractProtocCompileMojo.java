@@ -16,12 +16,13 @@ package org.xolstice.maven.plugin.protobuf;
  * limitations under the License.
  */
 
-import com.google.common.collect.ImmutableList;
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.plugins.annotations.Parameter;
 
 import java.io.File;
 import java.util.List;
+
+import static java.util.Arrays.asList;
 
 /**
  * An abstract base mojo configuration for using {@code protoc} compiler with the main sources.
@@ -63,7 +64,7 @@ public abstract class AbstractProtocCompileMojo extends AbstractProtocMojo {
     @Override
     protected void doAttachProtoSources() {
         projectHelper.addResource(project, getProtoSourceRoot().getAbsolutePath(),
-                ImmutableList.copyOf(getIncludes()), ImmutableList.copyOf(getExcludes()));
+                asList(getIncludes()), asList(getExcludes()));
     }
 
     @Override

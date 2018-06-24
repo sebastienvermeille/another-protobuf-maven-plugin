@@ -16,8 +16,6 @@ package org.xolstice.maven.plugin.protobuf;
  * limitations under the License.
  */
 
-import com.google.common.base.Joiner;
-import com.google.common.collect.ImmutableSet;
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.artifact.factory.ArtifactFactory;
 import org.apache.maven.artifact.repository.ArtifactRepository;
@@ -52,9 +50,8 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.jar.JarEntry;
@@ -63,10 +60,14 @@ import java.util.jar.JarFile;
 import static java.lang.Math.max;
 import static java.lang.String.format;
 import static java.util.Arrays.asList;
+import static java.util.Collections.emptyList;
+import static java.util.Collections.emptyMap;
+import static java.util.Collections.singleton;
 import static org.codehaus.plexus.util.FileUtils.cleanDirectory;
 import static org.codehaus.plexus.util.FileUtils.copyStreamToFile;
 import static org.codehaus.plexus.util.FileUtils.getDefaultExcludesAsString;
 import static org.codehaus.plexus.util.FileUtils.getFiles;
+import static org.codehaus.plexus.util.StringUtils.join;
 
 /**
  * Abstract Mojo implementation.
@@ -263,7 +264,7 @@ abstract class AbstractProtocMojo extends AbstractMojo {
     @Parameter(
             required = false
     )
-    private Set<String> includes = ImmutableSet.of(DEFAULT_INCLUDES);
+    private String[] includes = {DEFAULT_INCLUDES};
 
     /**
      * A list of &lt;exclude&gt; elements specifying the protobuf definition files (by pattern)
@@ -277,7 +278,7 @@ abstract class AbstractProtocMojo extends AbstractMojo {
     @Parameter(
             required = false
     )
-    private Set<String> excludes = ImmutableSet.of();
+    private String[] excludes = {};
 
     /**
      * If set to {@code true}, then the specified protobuf source files from this project will be attached
@@ -468,9 +469,9 @@ abstract class AbstractProtocMojo extends AbstractMojo {
         final File protoSourceRoot = getProtoSourceRoot();
         if (protoSourceRoot.exists()) {
             try {
-                final ImmutableSet<File> protoFiles = findProtoFilesInDirectory(protoSourceRoot);
+                final List<File> protoFiles = findProtoFilesInDirectory(protoSourceRoot);
                 final File outputDirectory = getOutputDirectory();
-                final ImmutableSet<File> outputFiles = findGeneratedFilesInDirectory(getOutputDirectory());
+                final List<File> outputFiles = findGeneratedFilesInDirectory(getOutputDirectory());
 
                 if (protoFiles.isEmpty()) {
                     getLog().info("No proto files to compile.");
@@ -481,7 +482,7 @@ abstract class AbstractProtocMojo extends AbstractMojo {
                     getLog().info("Skipping compilation because target directory newer than sources.");
                     doAttachFiles();
                 } else {
-                    final ImmutableSet<File> derivedProtoPathElements =
+                    final List<File> derivedProtoPathElements =
                             makeProtoPathFromJars(temporaryProtoFileDirectory, getDependencyArtifactFiles());
                     FileUtils.mkdir(outputDirectory.getAbsolutePath());
 
@@ -729,9 +730,9 @@ abstract class AbstractProtocMojo extends AbstractMojo {
         return false;
     }
 
-    protected static ImmutableSet<File> findGeneratedFilesInDirectory(final File directory) {
+    protected static List<File> findGeneratedFilesInDirectory(final File directory) {
         if (directory == null || !directory.isDirectory()) {
-            return ImmutableSet.of();
+            return emptyList();
         }
 
         final List<File> generatedFilesInDirectory;
@@ -740,17 +741,17 @@ abstract class AbstractProtocMojo extends AbstractMojo {
         } catch (final IOException e) {
             throw new MojoInitializationException("Unable to scan output directory", e);
         }
-        return ImmutableSet.copyOf(generatedFilesInDirectory);
+        return generatedFilesInDirectory;
     }
 
     /**
      * Returns timestamp for the most recently modified file in the given set.
      *
-     * @param files a set of file descriptors.
+     * @param files a collection of file descriptors.
      * @return timestamp of the most recently modified file.
      */
-    protected static long lastModified(final ImmutableSet<File> files) {
-        long result = 0;
+    protected static long lastModified(final Iterable<File> files) {
+        long result = 0L;
         for (final File file : files) {
             result = max(result, file.lastModified());
         }
@@ -760,11 +761,11 @@ abstract class AbstractProtocMojo extends AbstractMojo {
     /**
      * Checks that the source files don't have modification time that is later than the target files.
      *
-     * @param sourceFiles a set of source files.
-     * @param targetFiles a set of target files.
+     * @param sourceFiles a collection of source files.
+     * @param targetFiles a collection of target files.
      * @return {@code true}, if source files are not later than the target files; {@code false}, otherwise.
      */
-    protected boolean checkFilesUpToDate(final ImmutableSet<File> sourceFiles, final ImmutableSet<File> targetFiles) {
+    protected boolean checkFilesUpToDate(final Iterable<File> sourceFiles, final Iterable<File> targetFiles) {
         return lastModified(sourceFiles) + staleMillis < lastModified(targetFiles);
     }
 
@@ -776,7 +777,7 @@ abstract class AbstractProtocMojo extends AbstractMojo {
      *
      * @since 0.3.0
      */
-    protected boolean hasDelta(final ImmutableSet<File> files) {
+    protected boolean hasDelta(final Iterable<File> files) {
         for (final File file : files) {
             if (buildContext.hasDelta(file)) {
                 return true;
@@ -816,11 +817,11 @@ abstract class AbstractProtocMojo extends AbstractMojo {
 
     protected abstract File getProtoSourceRoot();
 
-    protected Set<String> getIncludes() {
+    protected String[] getIncludes() {
         return includes;
     }
 
-    protected Set<String> getExcludes() {
+    protected String[] getExcludes() {
         return excludes;
     }
 
@@ -860,14 +861,18 @@ abstract class AbstractProtocMojo extends AbstractMojo {
     /**
      * Gets the {@link File} for each dependency artifact.
      *
-     * @return A set of all dependency artifacts.
+     * @return A list of all dependency artifacts.
      */
-    protected ImmutableSet<File> getDependencyArtifactFiles() {
-        final Set<File> dependencyArtifactFiles = new LinkedHashSet<File>();
-        for (final Artifact artifact : getDependencyArtifacts()) {
+    protected List<File> getDependencyArtifactFiles() {
+        final List<Artifact> dependencyArtifacts = getDependencyArtifacts();
+        if (dependencyArtifacts.isEmpty()) {
+            return emptyList();
+        }
+        final List<File> dependencyArtifactFiles = new ArrayList<File>(dependencyArtifacts.size());
+        for (final Artifact artifact : dependencyArtifacts) {
             dependencyArtifactFiles.add(artifact.getFile());
         }
-        return ImmutableSet.copyOf(dependencyArtifactFiles);
+        return dependencyArtifactFiles;
     }
 
     /**
@@ -876,10 +881,10 @@ abstract class AbstractProtocMojo extends AbstractMojo {
      *
      * @param temporaryProtoFileDirectory temporary directory to serve as root for unpacked structure.
      * @param classpathElementFiles classpath elements, can be either jar files or directories.
-     * @return a set of import roots for protobuf compiler
+     * @return a list of import roots for protobuf compiler
      *         (these will all be subdirectories of the temporary directory).
      */
-    protected ImmutableSet<File> makeProtoPathFromJars(
+    protected List<File> makeProtoPathFromJars(
             final File temporaryProtoFileDirectory,
             final Iterable<File> classpathElementFiles
     ) {
@@ -887,7 +892,7 @@ abstract class AbstractProtocMojo extends AbstractMojo {
             throw new MojoConfigurationException("'classpathElementFiles' is null");
         }
         if (!classpathElementFiles.iterator().hasNext()) {
-            return ImmutableSet.of(); // Return an empty set
+            return emptyList();
         }
         // clean the temporary directory to ensure that stale files aren't used
         if (temporaryProtoFileDirectory.exists()) {
@@ -897,7 +902,7 @@ abstract class AbstractProtocMojo extends AbstractMojo {
                 throw new MojoInitializationException("Unable to clean up temporary proto file directory", e);
             }
         }
-        final Set<File> protoDirectories = new LinkedHashSet<File>();
+        final List<File> protoDirectories = new ArrayList<File>();
         for (final File classpathElementFile : classpathElementFiles) {
             // for some reason under IAM, we receive poms as dependent files
             // I am excluding .xml rather than including .jar as there may be other extensions in use (sar, har, zip)
@@ -945,35 +950,36 @@ abstract class AbstractProtocMojo extends AbstractMojo {
                 }
             }
         }
-        return ImmutableSet.copyOf(protoDirectories);
+        return protoDirectories;
     }
 
-    protected ImmutableSet<File> findProtoFilesInDirectory(final File directory) {
+    protected List<File> findProtoFilesInDirectory(final File directory) {
         if (directory == null) {
             throw new MojoConfigurationException("'directory' is null");
         }
         if (!directory.isDirectory()) {
             throw new MojoConfigurationException(format("%s is not a directory", directory));
         }
-        final Joiner joiner = Joiner.on(',');
         final List<File> protoFilesInDirectory;
         try {
-            protoFilesInDirectory = getFiles(directory, joiner.join(getIncludes()), joiner.join(getExcludes()));
+            final String includes = join(getIncludes(), ",");
+            final String excludes = join(getExcludes(), ",");
+            protoFilesInDirectory = getFiles(directory, includes, excludes);
         } catch (IOException e) {
             throw new MojoInitializationException("Unable to retrieve the list of files: " + e.getMessage(), e);
         }
-        return ImmutableSet.copyOf(protoFilesInDirectory);
+        return protoFilesInDirectory;
     }
 
-    protected ImmutableSet<File> findProtoFilesInDirectories(final Iterable<File> directories) {
+    protected List<File> findProtoFilesInDirectories(final Iterable<File> directories) {
         if (directories == null) {
             throw new MojoConfigurationException("'directories' is null");
         }
-        final Set<File> protoFiles = new LinkedHashSet<File>();
+        final List<File> protoFiles = new ArrayList<File>();
         for (final File directory : directories) {
             protoFiles.addAll(findProtoFilesInDirectory(directory));
         }
-        return ImmutableSet.copyOf(protoFiles);
+        return protoFiles;
     }
 
     /**
@@ -1037,8 +1043,8 @@ abstract class AbstractProtocMojo extends AbstractMojo {
                     .setArtifact(project.getArtifact())
                     .setResolveRoot(false)
                     .setResolveTransitively(false)
-                    .setArtifactDependencies(Collections.singleton(artifact))
-                    .setManagedVersionMap(Collections.emptyMap())
+                    .setArtifactDependencies(singleton(artifact))
+                    .setManagedVersionMap(emptyMap())
                     .setLocalRepository(localRepository)
                     .setRemoteRepositories(remoteRepositories)
                     .setOffline(session.isOffline())
