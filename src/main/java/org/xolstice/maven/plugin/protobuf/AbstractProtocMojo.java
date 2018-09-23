@@ -926,7 +926,16 @@ abstract class AbstractProtocMojo extends AbstractMojo {
                         final File jarDirectory;
                         try {
                             jarDirectory = new File(temporaryProtoFileDirectory, truncatePath(classpathJar.getName()));
+                            // Check for Zip Slip vulnerability
+                            // https://snyk.io/research/zip-slip-vulnerability
+                            final String canonicalJarDirectoryPath = jarDirectory.getCanonicalPath();
                             final File uncompressedCopy = new File(jarDirectory, jarEntryName);
+                            final String canonicalUncompressedCopyPath = uncompressedCopy.getCanonicalPath();
+                            if (!canonicalUncompressedCopyPath.startsWith(canonicalJarDirectoryPath + File.separator)) {
+                                throw new MojoInitializationException(
+                                        "ZIP SLIP: Entry " + jarEntry.getName() +
+                                                " in " + classpathJar.getName() + " is outside of the target dir");
+                            }
                             FileUtils.mkdir(uncompressedCopy.getParentFile().getAbsolutePath());
                             copyStreamToFile(
                                     new RawInputStreamFacade(classpathJar.getInputStream(jarEntry)),
