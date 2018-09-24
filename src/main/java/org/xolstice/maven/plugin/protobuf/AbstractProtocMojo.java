@@ -357,9 +357,11 @@ abstract class AbstractProtocMojo extends AbstractMojo {
     protected boolean includeSourceInfoInDescriptorSet;
 
     /**
-     * If set to {@code true}, the arguments to protoc will be put in a file and run as an argument
-     * file.  This is helpful if you are getting Command line is too long errors
-     * This is only supported for protoc 3.5.0 and higher
+     * If set to {@code true}, all command line arguments to protoc will be written to a file,
+     * and only a path to that file will be passed to protoc on the command line.
+     * This helps prevent <i>Command line is too long</i> errors when the number of {@code .proto} files is large.
+     *
+     * <p><b>NOTE:</b> This is only supported for protoc 3.5.0 and higher.</p>
      *
      * @since 0.6.0
      */

@@ -23,6 +23,18 @@
 
     <body>
 
+        <release version="0.6.0" date="Pending" description="Additional protoc options">
+            <action dev="sergei-ivanov" type="update" issue="43">
+                Address vulnerabilities reported by Snyk.
+            </action>
+            <action dev="sergei-ivanov" type="add" issue="5" due-to="Chris Heisterkamp (cheister)">
+                Add useArgumentFile option to help with "Command line is too long" error.
+            </action>
+            <action dev="sergei-ivanov" type="add">
+                Added CI configurations.
+            </action>
+        </release>
+
         <release version="0.5.0" date="2016-01-28" description="Rebranding">
             <action dev="sergei-ivanov" type="add">
                 Added licence and copyright information and prepared for the first release into Maven Central.
