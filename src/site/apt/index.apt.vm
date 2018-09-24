@@ -1,5 +1,5 @@
 ~~
-~~ Copyright (c) 2016 Maven Protocol Buffers Plugin Authors. All rights reserved.
+~~ Copyright (c) 2018 Maven Protocol Buffers Plugin Authors. All rights reserved.
 ~~
 ~~ Licensed under the Apache License, Version 2.0 (the "License");
 ~~ you may not use this file except in compliance with the License.
@@ -55,6 +55,12 @@ ${project.name}
 
   * {{{./test-compile-python-mojo.html}${goalPrefix}:test-compile-python}}
     compiles test <<<.proto>>> definitions into Python files and attaches the generated Python test sources to the project.
+
+  * {{{./compile-csharp-mojo.html}${goalPrefix}:compile-csharp}}
+    compiles main <<<.proto>>> definitions into C# files and attaches the generated C# sources to the project.
+
+  * {{{./test-compile-csharp-mojo.html}${goalPrefix}:test-compile-csharp}}
+    compiles test <<<.proto>>> definitions into C# files and attaches the generated C# test sources to the project.
 
   * {{{./compile-javanano-mojo.html}${goalPrefix}:compile-javanano}}
     uses JavaNano generator (requires protobuf compiler version 3 or above) to

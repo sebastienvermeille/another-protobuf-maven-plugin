@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-  ~ Copyright (c) 2016 Maven Protocol Buffers Plugin Authors. All rights reserved.
+  ~ Copyright (c) 2018 Maven Protocol Buffers Plugin Authors. All rights reserved.
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -27,6 +27,8 @@
                     <goal>test-compile-cpp</goal>
                     <goal>compile-python</goal>
                     <goal>test-compile-python</goal>
+                    <goal>compile-csharp</goal>
+                    <goal>test-compile-csharp</goal>
                     <goal>compile-custom</goal>
                     <goal>test-compile-custom</goal>
                     <goal>compile-javanano</goal>

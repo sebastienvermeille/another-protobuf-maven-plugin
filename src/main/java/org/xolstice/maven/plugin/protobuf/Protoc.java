@@ -88,6 +88,11 @@ final class Protoc {
     private final File pythonOutputDirectory;
 
     /**
+     * A directory into which C# source files will be generated.
+     */
+    private final File csharpOutputDirectory;
+
+    /**
      *  A directory into which a custom protoc plugin will generate files.
      */
     private final File customOutputDirectory;
@@ -128,6 +133,7 @@ final class Protoc {
      * @param javaNanoOutputDirectory a directory into which JavaNano source files will be generated.
      * @param cppOutputDirectory a directory into which C++ source files will be generated.
      * @param pythonOutputDirectory a directory into which Python source files will be generated.
+     * @param csharpOutputDirectory a directory into which C# source files will be generated.
      * @param customOutputDirectory a directory into which a custom protoc plugin will generate files.
      * @param descriptorSetFile The directory into which a descriptor set will be generated;
      *                          if {@code null}, no descriptor set will be written
@@ -150,6 +156,7 @@ final class Protoc {
             final File javaNanoOutputDirectory,
             final File cppOutputDirectory,
             final File pythonOutputDirectory,
+            final File csharpOutputDirectory,
             final File customOutputDirectory,
             final File descriptorSetFile,
             final boolean includeImportsInDescriptorSet,
@@ -178,6 +185,7 @@ final class Protoc {
         this.javaNanoOutputDirectory = javaNanoOutputDirectory;
         this.cppOutputDirectory = cppOutputDirectory;
         this.pythonOutputDirectory = pythonOutputDirectory;
+        this.csharpOutputDirectory = csharpOutputDirectory;
         this.customOutputDirectory = customOutputDirectory;
         this.descriptorSetFile = descriptorSetFile;
         this.includeImportsInDescriptorSet = includeImportsInDescriptorSet;
@@ -270,6 +278,9 @@ final class Protoc {
         if (pythonOutputDirectory != null) {
             command.add("--python_out=" + pythonOutputDirectory);
         }
+        if (csharpOutputDirectory != null) {
+            command.add("--csharp_out=" + csharpOutputDirectory);
+        }
         if (customOutputDirectory != null) {
             if (nativePluginExecutable != null) {
                 command.add("--plugin=protoc-gen-" + nativePluginId + '=' + nativePluginExecutable);
@@ -343,6 +354,10 @@ final class Protoc {
             if (pythonOutputDirectory != null) {
                 log.debug(LOG_PREFIX + "Python output directory:");
                 log.debug(LOG_PREFIX + ' ' + pythonOutputDirectory);
+            }
+            if (csharpOutputDirectory != null) {
+                log.debug(LOG_PREFIX + "C# output directory:");
+                log.debug(LOG_PREFIX + ' ' + csharpOutputDirectory);
             }
 
             if (descriptorSetFile != null) {
@@ -468,6 +483,11 @@ final class Protoc {
         private File pythonOutputDirectory;
 
         /**
+         * A directory into which C# source files will be generated.
+         */
+        private File csharpOutputDirectory;
+
+        /**
          * A directory into which a custom protoc plugin will generate files.
          */
         private File customOutputDirectory;
@@ -580,6 +600,24 @@ final class Protoc {
         }
 
         /**
+         * Sets the directory into which C# source files will be generated.
+         *
+         * @param csharpOutputDirectory a directory into which C# source files will be generated.
+         * @return this builder instance.
+         */
+        public Builder setCsharpOutputDirectory(final File csharpOutputDirectory) {
+            if (csharpOutputDirectory == null) {
+                throw new MojoConfigurationException("'csharpOutputDirectory' is null");
+            }
+            if (!csharpOutputDirectory.isDirectory()) {
+                throw new MojoConfigurationException(
+                        "'csharpOutputDirectory' is not a directory: " + csharpOutputDirectory.getAbsolutePath());
+            }
+            this.csharpOutputDirectory = csharpOutputDirectory;
+            return this;
+        }
+
+        /**
          * Sets the directory into which a custom protoc plugin will generate files.
          *
          * @param customOutputDirectory a directory into which a custom protoc plugin will generate files.
@@ -653,6 +691,7 @@ final class Protoc {
             if (nativePluginId.equals("java")
                     || nativePluginId.equals("javanano")
                     || nativePluginId.equals("python")
+                    || nativePluginId.equals("csharp")
                     || nativePluginId.equals("cpp")
                     || nativePluginId.equals("descriptor_set")) {
                 throw new MojoConfigurationException("'nativePluginId' matches one of the built-in protoc plugins");
@@ -783,10 +822,11 @@ final class Protoc {
                     && javaNanoOutputDirectory == null
                     && cppOutputDirectory == null
                     && pythonOutputDirectory == null
+                    && csharpOutputDirectory == null
                     && customOutputDirectory == null) {
                 throw new MojoConfigurationException("At least one of these properties must be set: " +
                         "'javaOutputDirectory', 'javaNanoOutputDirectory', 'cppOutputDirectory', " +
-                        "'pythonOutputDirectory' or 'customOutputDirectory'");
+                        "'pythonOutputDirectory', 'csharpOutputDirectory', or 'customOutputDirectory'");
             }
         }
 
@@ -805,6 +845,7 @@ final class Protoc {
                     javaNanoOutputDirectory,
                     cppOutputDirectory,
                     pythonOutputDirectory,
+                    csharpOutputDirectory,
                     customOutputDirectory,
                     descriptorSetFile,
                     includeImportsInDescriptorSet,
