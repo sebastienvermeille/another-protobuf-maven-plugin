@@ -16,9 +16,9 @@ before_install:
 
 install:
   # Download all dependencies that integration tests might need later
-  - ./mvnw -B -V dependency:go-offline -f src/it/dependencies/pom.xml -P protoc-3.4.0
-  - ./mvnw -B -V dependency:go-offline -f src/it/dependencies/pom.xml -P protoc-3.5.1
-  - ./mvnw -B -V dependency:go-offline -P run-its
+  - ./mvnw -B -V -Dstyle.color=always dependency:go-offline -f src/it/dependencies/pom.xml -P protoc-3.4.0
+  - ./mvnw -B -V -Dstyle.color=always dependency:go-offline -f src/it/dependencies/pom.xml -P protoc-3.5.1
+  - ./mvnw -B -V -Dstyle.color=always dependency:go-offline -P run-its
 
 before_script:
   # These protoc executables were downloaded in the previous phase and are being referenced in toolchains.xml
@@ -27,7 +27,7 @@ before_script:
 
 script:
   # Finally, run the build with integration tests
-  - ./mvnw -B -V clean verify -P run-its -Dinvoker.streamLogs=true
+  - ./mvnw -B -V -Dstyle.color=always clean verify -P run-its -Dinvoker.streamLogs=true
 
 cache:
   directories:
