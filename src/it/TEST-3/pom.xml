@@ -33,6 +33,10 @@
 
     <name>Integration Test 3</name>
 
+    <properties>
+        <protobufVersion>[3.4.0,3.5.0)</protobufVersion>
+    </properties>
+
     <build>
         <plugins>
             <plugin>

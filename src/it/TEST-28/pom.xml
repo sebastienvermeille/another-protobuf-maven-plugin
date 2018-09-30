@@ -34,7 +34,6 @@
     <name>Integration Test 28</name>
 
     <properties>
-        <protobufVersion>3.4.0</protobufVersion>
         <grpcVersion>1.7.0</grpcVersion>
     </properties>
 
@@ -63,10 +62,12 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <protocArtifact>com.google.protobuf:protoc:${protobufVersion}:exe:${os.detected.classifier}
+                    <protocArtifact>
+                        com.google.protobuf:protoc:${protobufVersion}:exe:${os.detected.classifier}
                     </protocArtifact>
                     <pluginId>grpc</pluginId>
-                    <pluginArtifact>io.grpc:protoc-gen-grpc-java:${grpcVersion}:exe:${os.detected.classifier}
+                    <pluginArtifact>
+                        io.grpc:protoc-gen-grpc-java:${grpcVersion}:exe:${os.detected.classifier}
                     </pluginArtifact>
                 </configuration>
             </plugin>

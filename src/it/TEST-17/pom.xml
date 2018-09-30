@@ -51,8 +51,6 @@
                             <goal>compile</goal>
                         </goals>
                         <configuration>
-                            <protocArtifact>com.google.protobuf:protoc:${protobufVersion}:exe:${os.detected.classifier}
-                            </protocArtifact>
                             <protocPlugins>
                                 <protocPlugin>
                                     <id>missing</id>
@@ -66,6 +64,11 @@
                         </configuration>
                     </execution>
                 </executions>
+                <configuration>
+                    <protocArtifact>
+                        com.google.protobuf:protoc:${protobufVersion}:exe:${os.detected.classifier}
+                    </protocArtifact>
+                </configuration>
             </plugin>
         </plugins>
     </build>

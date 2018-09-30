@@ -41,7 +41,7 @@
 
         <mavenVersion>3.0</mavenVersion>
 
-        <protobufVersion>[3.4.0,3.5.0)</protobufVersion>
+        <protobufVersion>3.6.1</protobufVersion>
     </properties>
 
     <build>
@@ -49,7 +49,7 @@
             <extension>
                 <groupId>kr.motd.maven</groupId>
                 <artifactId>os-maven-plugin</artifactId>
-                <version>1.5.0.Final</version>
+                <version>1.6.0</version>
             </extension>
         </extensions>
 

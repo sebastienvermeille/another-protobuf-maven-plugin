@@ -49,12 +49,15 @@
                             <goal>test-compile-javanano</goal>
                         </goals>
                         <configuration>
-                            <protocArtifact>com.google.protobuf:protoc:${protobufVersion}:exe:${os.detected.classifier}
-                            </protocArtifact>
                             <javaNanoOptions>parcelable_messages=true</javaNanoOptions>
                         </configuration>
                     </execution>
                 </executions>
+                <configuration>
+                    <protocArtifact>
+                        com.google.protobuf:protoc:${protobufVersion}:exe:${os.detected.classifier}
+                    </protocArtifact>
+                </configuration>
             </plugin>
         </plugins>
     </build>
