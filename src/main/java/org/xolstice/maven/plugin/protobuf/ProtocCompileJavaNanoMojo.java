@@ -30,6 +30,9 @@ import java.io.File;
  * referenced. Finally, it adds the {@code .proto} files to the project as resources so
  * that they are included in the final artifact.
  *
+ * @deprecated JavaNano has been deprecated in favour of Java Lite.
+ *             Please see Protocol Buffers documentation for details.
+ *
  * @since 0.4.3
  */
 @Mojo(
@@ -38,6 +41,7 @@ import java.io.File;
         requiresDependencyResolution = ResolutionScope.COMPILE,
         threadSafe = true
 )
+@Deprecated
 public final class ProtocCompileJavaNanoMojo extends AbstractProtocCompileMojo {
 
     /**

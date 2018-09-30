@@ -30,6 +30,9 @@ import java.io.File;
  * referenced. Finally, it adds the {@code .proto} files to the project as test resources so
  * that they can be included in the test-jar artifact.
  *
+ * @deprecated JavaNano has been deprecated in favour of Java Lite.
+ *             Please see Protocol Buffers documentation for details.
+ *
  * @since 0.4.3
  */
 @Mojo(
@@ -38,6 +41,7 @@ import java.io.File;
         requiresDependencyResolution = ResolutionScope.TEST,
         threadSafe = true
 )
+@Deprecated
 public final class ProtocTestCompileJavaNanoMojo extends AbstractProtocTestCompileMojo {
 
     /**

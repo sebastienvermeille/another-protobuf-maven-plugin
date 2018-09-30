@@ -49,6 +49,8 @@ public final class ProtocTestCompileCustomMojo extends AbstractProtocTestCompile
      * <ul>
      *     <li>java</li>
      *     <li>javanano</li>
+     *     <li>js</li>
+     *     <li>csharp</li>
      *     <li>cpp</li>
      *     <li>python</li>
      *     <li>descriptor-set</li>
