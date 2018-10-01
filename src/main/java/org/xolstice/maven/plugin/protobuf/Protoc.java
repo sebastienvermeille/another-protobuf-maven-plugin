@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 import static org.codehaus.plexus.util.StringUtils.join;
@@ -93,6 +94,11 @@ final class Protoc {
     private final File csharpOutputDirectory;
 
     /**
+     * A directory into which JavaScript source files will be generated.
+     */
+    private final File javaScriptOutputDirectory;
+
+    /**
      *  A directory into which a custom protoc plugin will generate files.
      */
     private final File customOutputDirectory;
@@ -134,6 +140,7 @@ final class Protoc {
      * @param cppOutputDirectory a directory into which C++ source files will be generated.
      * @param pythonOutputDirectory a directory into which Python source files will be generated.
      * @param csharpOutputDirectory a directory into which C# source files will be generated.
+     * @param javaScriptOutputDirectory a directory into which JavaScript source files will be generated.
      * @param customOutputDirectory a directory into which a custom protoc plugin will generate files.
      * @param descriptorSetFile The directory into which a descriptor set will be generated;
      *                          if {@code null}, no descriptor set will be written
@@ -157,6 +164,7 @@ final class Protoc {
             final File cppOutputDirectory,
             final File pythonOutputDirectory,
             final File csharpOutputDirectory,
+            final File javaScriptOutputDirectory,
             final File customOutputDirectory,
             final File descriptorSetFile,
             final boolean includeImportsInDescriptorSet,
@@ -186,6 +194,7 @@ final class Protoc {
         this.cppOutputDirectory = cppOutputDirectory;
         this.pythonOutputDirectory = pythonOutputDirectory;
         this.csharpOutputDirectory = csharpOutputDirectory;
+        this.javaScriptOutputDirectory = javaScriptOutputDirectory;
         this.customOutputDirectory = customOutputDirectory;
         this.descriptorSetFile = descriptorSetFile;
         this.includeImportsInDescriptorSet = includeImportsInDescriptorSet;
@@ -281,6 +290,14 @@ final class Protoc {
         if (csharpOutputDirectory != null) {
             command.add("--csharp_out=" + csharpOutputDirectory);
         }
+        if (javaScriptOutputDirectory != null) {
+            String outputOption = "--js_out=";
+            if (nativePluginParameter != null) {
+                outputOption += nativePluginParameter + ':';
+            }
+            outputOption += javaScriptOutputDirectory;
+            command.add(outputOption);
+        }
         if (customOutputDirectory != null) {
             if (nativePluginExecutable != null) {
                 command.add("--plugin=protoc-gen-" + nativePluginId + '=' + nativePluginExecutable);
@@ -358,6 +375,10 @@ final class Protoc {
             if (csharpOutputDirectory != null) {
                 log.debug(LOG_PREFIX + "C# output directory:");
                 log.debug(LOG_PREFIX + ' ' + csharpOutputDirectory);
+            }
+            if (javaScriptOutputDirectory != null) {
+                log.debug(LOG_PREFIX + "JavaScript output directory:");
+                log.debug(LOG_PREFIX + ' ' + javaScriptOutputDirectory);
             }
 
             if (descriptorSetFile != null) {
@@ -442,7 +463,7 @@ final class Protoc {
          */
         private final String executable;
 
-        private final List<File> protopathElements;
+        private final LinkedHashSet<File> protopathElements;
 
         private final List<File> protoFiles;
 
@@ -488,6 +509,11 @@ final class Protoc {
         private File csharpOutputDirectory;
 
         /**
+         * A directory into which JavaScript source files will be generated.
+         */
+        private File javaScriptOutputDirectory;
+
+        /**
          * A directory into which a custom protoc plugin will generate files.
          */
         private File customOutputDirectory;
@@ -511,7 +537,7 @@ final class Protoc {
             }
             this.executable = executable;
             protoFiles = new ArrayList<File>();
-            protopathElements = new ArrayList<File>();
+            protopathElements = new LinkedHashSet<File>();
             plugins = new ArrayList<ProtocPlugin>();
         }
 
@@ -618,6 +644,25 @@ final class Protoc {
         }
 
         /**
+         * Sets the directory into which JavaScript source files will be generated.
+         *
+         * @param javaScriptOutputDirectory a directory into which JavaScript source files will be generated.
+         * @return this builder instance.
+         */
+        public Builder setJavaScriptOutputDirectory(final File javaScriptOutputDirectory) {
+            if (javaScriptOutputDirectory == null) {
+                throw new MojoConfigurationException("'javaScriptOutputDirectory' is null");
+            }
+            if (!javaScriptOutputDirectory.isDirectory()) {
+                throw new MojoConfigurationException(
+                        "'javaScriptOutputDirectory' is not a directory: "
+                                + javaScriptOutputDirectory.getAbsolutePath());
+            }
+            this.javaScriptOutputDirectory = javaScriptOutputDirectory;
+            return this;
+        }
+
+        /**
          * Sets the directory into which a custom protoc plugin will generate files.
          *
          * @param customOutputDirectory a directory into which a custom protoc plugin will generate files.
@@ -690,6 +735,7 @@ final class Protoc {
             }
             if (nativePluginId.equals("java")
                     || nativePluginId.equals("javanano")
+                    || nativePluginId.equals("js")
                     || nativePluginId.equals("python")
                     || nativePluginId.equals("csharp")
                     || nativePluginId.equals("cpp")
@@ -823,10 +869,12 @@ final class Protoc {
                     && cppOutputDirectory == null
                     && pythonOutputDirectory == null
                     && csharpOutputDirectory == null
+                    && javaScriptOutputDirectory == null
                     && customOutputDirectory == null) {
-                throw new MojoConfigurationException("At least one of these properties must be set: " +
-                        "'javaOutputDirectory', 'javaNanoOutputDirectory', 'cppOutputDirectory', " +
-                        "'pythonOutputDirectory', 'csharpOutputDirectory', or 'customOutputDirectory'");
+                throw new MojoConfigurationException("At least one of these properties must be set:" +
+                        " 'javaOutputDirectory', 'javaNanoOutputDirectory', 'cppOutputDirectory'," +
+                        " 'pythonOutputDirectory', 'csharpOutputDirectory', 'javaScriptOutputDirectory'," +
+                        " or 'customOutputDirectory'");
             }
         }
 
@@ -839,13 +887,14 @@ final class Protoc {
             validateState();
             return new Protoc(
                     executable,
-                    protopathElements,
+                    new ArrayList<File>(protopathElements),
                     protoFiles,
                     javaOutputDirectory,
                     javaNanoOutputDirectory,
                     cppOutputDirectory,
                     pythonOutputDirectory,
                     csharpOutputDirectory,
+                    javaScriptOutputDirectory,
                     customOutputDirectory,
                     descriptorSetFile,
                     includeImportsInDescriptorSet,

@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-outputDirectory = new File(basedir, 'target/generated-sources/protobuf/csharp');
+outputDirectory = new File(basedir, 'target/generated-test-sources/protobuf/js');
 assert outputDirectory.exists();
 assert outputDirectory.isDirectory();
 
-generatedFile = new File(outputDirectory, 'Test.cs');
+generatedFile = new File(outputDirectory, 'testmessage.js');
 assert generatedFile.exists();
 assert generatedFile.isFile();
 

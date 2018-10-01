@@ -18,11 +18,11 @@ outputDirectory = new File(basedir, 'target/generated-test-sources/protobuf/csha
 assert outputDirectory.exists();
 assert outputDirectory.isDirectory();
 
-generatedPythonFile = new File(outputDirectory, 'Test.cs');
-assert generatedPythonFile.exists();
-assert generatedPythonFile.isFile();
+generatedFile = new File(outputDirectory, 'Test.cs');
+assert generatedFile.exists();
+assert generatedFile.isFile();
 
-content = generatedPythonFile.text;
+content = generatedFile.text;
 assert content.contains('TestMessage');
 assert content.contains('NestedMessage');
 

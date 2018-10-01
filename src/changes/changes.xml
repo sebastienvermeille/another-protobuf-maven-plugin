@@ -23,7 +23,7 @@
 
     <body>
 
-        <release version="0.6.0" date="Pending" description="Additional protoc options">
+        <release version="0.6.0" date="2018-10-01" description="Additional protoc options">
             <action dev="sergei-ivanov" type="update" issue="43">
                 Address vulnerabilities reported by Snyk.
             </action>
@@ -35,6 +35,9 @@
             </action>
             <action dev="sergei-ivanov" type="add" issue="1">
                 Added new goals to generate C# sources from protobuf definitions.
+            </action>
+            <action dev="sergei-ivanov" type="add" issue="4">
+                Added new goals to generate JavaScript sources from protobuf definitions.
             </action>
         </release>
 
