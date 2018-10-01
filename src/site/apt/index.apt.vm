@@ -62,6 +62,12 @@ ${project.name}
   * {{{./test-compile-csharp-mojo.html}${goalPrefix}:test-compile-csharp}}
     compiles test <<<.proto>>> definitions into C# files and attaches the generated C# test sources to the project.
 
+  * {{{./compile-js-mojo.html}${goalPrefix}:compile-js}}
+    compiles main <<<.proto>>> definitions into JavaScript files and attaches the generated JavaScript sources to the project.
+
+  * {{{./test-compile-js-mojo.html}${goalPrefix}:test-compile-js}}
+    compiles test <<<.proto>>> definitions into JavaScript files and attaches the generated JavaScript test sources to the project.
+
   * {{{./compile-javanano-mojo.html}${goalPrefix}:compile-javanano}}
     uses JavaNano generator (requires protobuf compiler version 3 or above) to
     compile main <<<.proto>>> definitions into Java files and attaches the generated Java sources to the project.

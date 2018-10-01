@@ -29,6 +29,8 @@
                     <goal>test-compile-python</goal>
                     <goal>compile-csharp</goal>
                     <goal>test-compile-csharp</goal>
+                    <goal>compile-js</goal>
+                    <goal>test-compile-js</goal>
                     <goal>compile-custom</goal>
                     <goal>test-compile-custom</goal>
                     <goal>compile-javanano</goal>
