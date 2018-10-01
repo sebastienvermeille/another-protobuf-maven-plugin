@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-  ~ Copyright (c) 2016 Maven Protocol Buffers Plugin Authors. All rights reserved.
+  ~ Copyright (c) 2018 Maven Protocol Buffers Plugin Authors. All rights reserved.
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -47,6 +47,10 @@
                 There is a limited support in the plugin for integration with M2E 1.5 and later.
                 Versions of M2E prior to 1.5 will fail to work with the plugin because of a
                 <a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=422106">class loading bug</a>.
+
+                <p>Also, if using <code>os-maven-plugin</code> to help resolve binary artifacts,
+                please make sure that you have read
+                <a href="https://github.com/trustin/os-maven-plugin/blob/master/README.md#issues-with-eclipse-m2e-or-other-ides">these important notes</a>.</p>
             </answer>
         </faq>
 

@@ -1,5 +1,5 @@
 ~~
-~~ Copyright (c) 2016 Maven Protocol Buffers Plugin Authors. All rights reserved.
+~~ Copyright (c) 2018 Maven Protocol Buffers Plugin Authors. All rights reserved.
 ~~
 ~~ Licensed under the Apache License, Version 2.0 (the "License");
 ~~ you may not use this file except in compliance with the License.
@@ -58,18 +58,17 @@ Resolving Protoc Artifact From Maven Central Repo
         <groupId>${project.groupId}</groupId>
         <artifactId>${project.artifactId}</artifactId>
         <version>${project.version}</version>
-        <extensions>true</extensions>
         <executions>
           <execution>
             <goals>
               <goal>compile</goal>
               <goal>test-compile</goal>
             </goals>
-            <configuration>
-              <protocArtifact>com.google.protobuf:protoc:3.4.0:exe:${os.detected.classifier}</protocArtifact>
-            </configuration>
           </execution>
         </executions>
+        <configuration>
+          <protocArtifact>com.google.protobuf:protoc:3.4.0:exe:${os.detected.classifier}</protocArtifact>
+        </configuration>
       </plugin>
       ...
     </plugins>
@@ -79,3 +78,6 @@ Resolving Protoc Artifact From Maven Central Repo
 </project>
 
 +-----+
+
+  Eclipse users, please also read
+  {{{https://github.com/trustin/os-maven-plugin/blob/master/README.md#issues-with-eclipse-m2e-or-other-ides}the following notes}}.
