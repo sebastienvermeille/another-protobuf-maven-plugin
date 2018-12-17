@@ -23,7 +23,13 @@
 
     <body>
 
-        <release version="0.6.0" date="2018-10-01" description="Additional protoc options">
+        <release version="0.7.0" date="Pending" description="TBD">
+            <action dev="sergei-ivanov" type="update" issue="47" due-to="Cosmin Lehene (clehene)">
+                More detailed error message.
+            </action>
+        </release>
+
+        <release version="0.6.1" date="2018-10-01" description="Additional protoc options">
             <action dev="sergei-ivanov" type="update" issue="43">
                 Address vulnerabilities reported by Snyk.
             </action>
