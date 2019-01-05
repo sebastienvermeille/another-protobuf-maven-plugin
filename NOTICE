@@ -13,3 +13,7 @@ http://www.eclipse.org/legal/cpl-v10.html
 Additional information about WinRun4J is available on
 the project's home page:
 http://winrun4j.sourceforge.net/
+
+For information about the bundled versions of the binaries
+please read src/main/resources/winrun4j/README.txt
+inside this git repository.
