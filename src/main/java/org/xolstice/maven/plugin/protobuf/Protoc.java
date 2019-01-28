@@ -1,7 +1,7 @@
 package org.xolstice.maven.plugin.protobuf;
 
 /*
- * Copyright (c) 2018 Maven Protocol Buffers Plugin Authors. All rights reserved.
+ * Copyright (c) 2019 Maven Protocol Buffers Plugin Authors. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -41,7 +41,7 @@ final class Protoc {
     /**
      * Prefix for logging the debug messages.
      */
-    private static final String LOG_PREFIX = "[PROTOC] ";
+    public static final String LOG_PREFIX = "[PROTOC] ";
 
     /**
      * Path to the {@code protoc} executable.
@@ -327,7 +327,7 @@ final class Protoc {
 
     /**
      * Logs execution parameters on debug level to the specified logger.
-     * All log messages will be prefixed with "{@value #LOG_PREFIX}".
+     * All log messages will be prefixed with {@value #LOG_PREFIX}.
      *
      * @param log a logger.
      */

@@ -106,6 +106,8 @@ ${project.name}
   To provide you with better understanding of some usages of ${project.name},
   you can take a look into the following examples:
 
+  * {{{./examples/protobuf-dependencies.html} Resolving Protobuf Dependencies}}
+
   * {{{./examples/protobuf-toolchain.html} Using Protobuf Toolchain}}
 
   * {{{./examples/protoc-artifact.html} Resolving Protoc Artifact From Maven Central Repo}}
