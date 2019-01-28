@@ -24,6 +24,9 @@
     <body>
 
         <release version="0.7.0" date="Pending" description="TBD">
+            <action dev="sergei-ivanov" type="update" issue="51" due-to="Cosmin Lehene (clehene)">
+                Use pb instead of protobin as file extension for binary descriptors.
+            </action>
             <action dev="sergei-ivanov" type="update" issue="48">
                 Set clearOutputDirectory parameter to false by default.
             </action>
