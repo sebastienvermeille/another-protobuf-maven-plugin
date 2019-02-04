@@ -63,11 +63,6 @@ final class Protoc {
      */
     private final File javaOutputDirectory;
 
-    /**
-     * A directory into which JavaNano source files will be generated.
-     */
-    private final File javaNanoOutputDirectory;
-
     private final List<ProtocPlugin> plugins;
 
     private final File pluginDirectory;
@@ -136,7 +131,6 @@ final class Protoc {
      * @param protoPath a set of directories in which to search for definition imports.
      * @param protoFiles a set of protobuf definitions to process.
      * @param javaOutputDirectory a directory into which Java source files will be generated.
-     * @param javaNanoOutputDirectory a directory into which JavaNano source files will be generated.
      * @param cppOutputDirectory a directory into which C++ source files will be generated.
      * @param pythonOutputDirectory a directory into which Python source files will be generated.
      * @param csharpOutputDirectory a directory into which C# source files will be generated.
@@ -160,7 +154,6 @@ final class Protoc {
             final List<File> protoPath,
             final List<File> protoFiles,
             final File javaOutputDirectory,
-            final File javaNanoOutputDirectory,
             final File cppOutputDirectory,
             final File pythonOutputDirectory,
             final File csharpOutputDirectory,
@@ -190,7 +183,6 @@ final class Protoc {
         this.protoPathElements = protoPath;
         this.protoFiles = protoFiles;
         this.javaOutputDirectory = javaOutputDirectory;
-        this.javaNanoOutputDirectory = javaNanoOutputDirectory;
         this.cppOutputDirectory = cppOutputDirectory;
         this.pythonOutputDirectory = pythonOutputDirectory;
         this.csharpOutputDirectory = csharpOutputDirectory;
@@ -273,14 +265,6 @@ final class Protoc {
                 command.add("--" + plugin.getId() + "_out=" + javaOutputDirectory);
             }
         }
-        if (javaNanoOutputDirectory != null) {
-            String outputOption = "--javanano_out=";
-            if (nativePluginParameter != null) {
-                outputOption += nativePluginParameter + ':';
-            }
-            outputOption += javaNanoOutputDirectory;
-            command.add(outputOption);
-        }
         if (cppOutputDirectory != null) {
             command.add("--cpp_out=" + cppOutputDirectory);
         }
@@ -360,10 +344,6 @@ final class Protoc {
                 log.debug(LOG_PREFIX + ' ' + pluginDirectory);
             }
 
-            if (javaNanoOutputDirectory != null) {
-                log.debug(LOG_PREFIX + "Java Nano output directory:");
-                log.debug(LOG_PREFIX + ' ' + javaNanoOutputDirectory);
-            }
             if (cppOutputDirectory != null) {
                 log.debug(LOG_PREFIX + "C++ output directory:");
                 log.debug(LOG_PREFIX + ' ' + cppOutputDirectory);
@@ -489,11 +469,6 @@ final class Protoc {
         private File javaOutputDirectory;
 
         /**
-         * A directory into which Java Nano source files will be generated.
-         */
-        private File javaNanoOutputDirectory;
-
-        /**
          * A directory into which C++ source files will be generated.
          */
         private File cppOutputDirectory;
@@ -568,24 +543,6 @@ final class Protoc {
                         "'javaOutputDirectory' is not a directory: " + javaOutputDirectory.getAbsolutePath());
             }
             this.javaOutputDirectory = javaOutputDirectory;
-            return this;
-        }
-
-        /**
-         * Sets the directory into which JavaNano source files will be generated.
-         *
-         * @param javaNanoOutputDirectory a directory into which Java source files will be generated.
-         * @return this builder instance.
-         */
-        public Builder setJavaNanoOutputDirectory(final File javaNanoOutputDirectory) {
-            if (javaNanoOutputDirectory == null) {
-                throw new MojoConfigurationException("'javaNanoOutputDirectory' is null");
-            }
-            if (!javaNanoOutputDirectory.isDirectory()) {
-                throw new MojoConfigurationException(
-                        "'javaNanoOutputDirectory' is not a directory: " + javaNanoOutputDirectory.getAbsolutePath());
-            }
-            this.javaNanoOutputDirectory = javaNanoOutputDirectory;
             return this;
         }
 
@@ -734,7 +691,6 @@ final class Protoc {
                 throw new MojoConfigurationException("'nativePluginId' is null or empty");
             }
             if (nativePluginId.equals("java")
-                    || nativePluginId.equals("javanano")
                     || nativePluginId.equals("js")
                     || nativePluginId.equals("python")
                     || nativePluginId.equals("csharp")
@@ -866,14 +822,13 @@ final class Protoc {
                 throw new MojoConfigurationException("No proto files specified");
             }
             if (javaOutputDirectory == null
-                    && javaNanoOutputDirectory == null
                     && cppOutputDirectory == null
                     && pythonOutputDirectory == null
                     && csharpOutputDirectory == null
                     && javaScriptOutputDirectory == null
                     && customOutputDirectory == null) {
                 throw new MojoConfigurationException("At least one of these properties must be set:" +
-                        " 'javaOutputDirectory', 'javaNanoOutputDirectory', 'cppOutputDirectory'," +
+                        " 'javaOutputDirectory', 'cppOutputDirectory'," +
                         " 'pythonOutputDirectory', 'csharpOutputDirectory', 'javaScriptOutputDirectory'," +
                         " or 'customOutputDirectory'");
             }
@@ -891,7 +846,6 @@ final class Protoc {
                     new ArrayList<>(protopathElements),
                     protoFiles,
                     javaOutputDirectory,
-                    javaNanoOutputDirectory,
                     cppOutputDirectory,
                     pythonOutputDirectory,
                     csharpOutputDirectory,

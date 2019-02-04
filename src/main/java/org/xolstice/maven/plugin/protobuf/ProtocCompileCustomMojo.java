@@ -1,7 +1,7 @@
 package org.xolstice.maven.plugin.protobuf;
 
 /*
- * Copyright (c) 2018 Maven Protocol Buffers Plugin Authors. All rights reserved.
+ * Copyright (c) 2019 Maven Protocol Buffers Plugin Authors. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -48,7 +48,6 @@ public final class ProtocCompileCustomMojo extends AbstractProtocCompileMojo {
      * <strong>Cannot</strong> be one of the built-in protoc plugins:
      * <ul>
      *     <li>java</li>
-     *     <li>javanano</li>
      *     <li>js</li>
      *     <li>csharp</li>
      *     <li>cpp</li>

@@ -68,14 +68,6 @@ ${project.name}
   * {{{./test-compile-js-mojo.html}${goalPrefix}:test-compile-js}}
     compiles test <<<.proto>>> definitions into JavaScript files and attaches the generated JavaScript test sources to the project.
 
-  * {{{./compile-javanano-mojo.html}${goalPrefix}:compile-javanano}}
-    uses JavaNano generator (requires protobuf compiler version 3 or above) to
-    compile main <<<.proto>>> definitions into Java files and attaches the generated Java sources to the project.
-
-  * {{{./test-compile-javanano-mojo.html}${goalPrefix}:test-compile-javanano}}
-    uses JavaNano generator (requires protobuf compiler version 3 or above) to
-    compile test <<<.proto>>> definitions into Java files and attaches the generated Java test sources to the project.
-
   * {{{./compile-custom-mojo.html}${goalPrefix}:compile-custom}}
     compiles main <<<.proto>>> definitions using a custom <<<protoc>>> plugin.
 

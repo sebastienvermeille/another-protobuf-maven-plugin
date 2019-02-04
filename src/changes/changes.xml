@@ -24,6 +24,12 @@
     <body>
 
         <release version="0.7.0" date="Pending" description="TBD">
+            <action dev="sergei-ivanov" type="remove" issue="52">
+                Removed support for JavaNano generator.
+            </action>
+            <action dev="sergei-ivanov" type="add" issue="53">
+                Provided origin information for WinRun4J binaries.
+            </action>
             <action dev="sergei-ivanov" type="update" issue="51" due-to="Cosmin Lehene (clehene)">
                 Use pb instead of protobin as file extension for binary descriptors.
             </action>
