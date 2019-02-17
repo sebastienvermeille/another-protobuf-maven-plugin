@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-outputDirectory = new File(basedir, 'project2/target/dependency')
+outputDirectory = new File(basedir, 'target/generated-test-resources/protobuf/descriptor-sets')
 assert outputDirectory.exists()
 assert outputDirectory.isDirectory()
 
-generatedDescriptorFile = new File(outputDirectory, 'test-24-project1-1.0.0.pb')
+generatedDescriptorFile = new File(outputDirectory, 'test-26-1.0.0.pb')
 assert generatedDescriptorFile.exists()
 assert generatedDescriptorFile.isFile()
 

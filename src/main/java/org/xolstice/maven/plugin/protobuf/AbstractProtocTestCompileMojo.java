@@ -1,7 +1,7 @@
 package org.xolstice.maven.plugin.protobuf;
 
 /*
- * Copyright (c) 2016 Maven Protocol Buffers Plugin Authors. All rights reserved.
+ * Copyright (c) 2019 Maven Protocol Buffers Plugin Authors. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -40,28 +40,6 @@ public abstract class AbstractProtocTestCompileMojo extends AbstractProtocMojo {
     )
     private File protoTestSourceRoot;
 
-    /**
-     * This is the directory into which the (optional) descriptor set file will be created.
-     *
-     * @since 0.3.0
-     */
-    @Parameter(
-            required = true,
-            defaultValue = "${project.build.directory}/generated-test-resources/protobuf/descriptor-sets"
-    )
-    private File descriptorSetOutputDirectory;
-
-    /**
-     * If generated descriptor set is to be attached to the build, specifies an optional classifier.
-     *
-     * @since 0.4.1
-     */
-    @Parameter(
-            required = false,
-            defaultValue = "test"
-    )
-    protected String descriptorSetClassifier;
-
     @Override
     protected void doAttachProtoSources() {
         projectHelper.addTestResource(project, getProtoSourceRoot().getAbsolutePath(),
@@ -72,21 +50,12 @@ public abstract class AbstractProtocTestCompileMojo extends AbstractProtocMojo {
     protected void doAttachGeneratedFiles() {
         final File outputDirectory = getOutputDirectory();
         project.addTestCompileSourceRoot(outputDirectory.getAbsolutePath());
-        if (writeDescriptorSet) {
-            final File descriptorSetFile = new File(getDescriptorSetOutputDirectory(), descriptorSetFileName);
-            projectHelper.attachArtifact(project, "test-pb", descriptorSetClassifier, descriptorSetFile);
-        }
         buildContext.refresh(outputDirectory);
     }
 
     @Override
     protected List<Artifact> getDependencyArtifacts() {
         return project.getTestArtifacts();
-    }
-
-    @Override
-    protected File getDescriptorSetOutputDirectory() {
-        return descriptorSetOutputDirectory;
     }
 
     @Override

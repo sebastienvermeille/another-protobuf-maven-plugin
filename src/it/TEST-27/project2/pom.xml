@@ -24,13 +24,13 @@
 
     <parent>
         <groupId>org.xolstice.maven.plugins.protobuf.its</groupId>
-        <artifactId>test-24-parent</artifactId>
+        <artifactId>test-27-parent</artifactId>
         <version>1.0.0</version>
     </parent>
 
-    <artifactId>test-24-project2</artifactId>
+    <artifactId>test-27-project2</artifactId>
 
-    <name>Integration Test 24 (2)</name>
+    <name>Integration Test 27 (2)</name>
 
     <build>
         <extensions>
@@ -53,8 +53,8 @@
                         </goals>
                         <configuration>
                             <includeGroupIds>${project.groupId}</includeGroupIds>
-                            <includeArtifactIds>test-24-project1</includeArtifactIds>
-                            <includeTypes>pb</includeTypes>
+                            <includeArtifactIds>test-27-project1</includeArtifactIds>
+                            <includeTypes>test-pb</includeTypes>
                         </configuration>
                     </execution>
                 </executions>
@@ -65,9 +65,11 @@
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>test-24-project1</artifactId>
+            <artifactId>test-27-project1</artifactId>
             <version>1.0.0</version>
-            <type>pb</type>
+            <type>test-pb</type>
+            <classifier>test</classifier>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 </project>

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Maven Protocol Buffers Plugin Authors. All rights reserved.
+ * Copyright (c) 2019 Maven Protocol Buffers Plugin Authors. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-outputDirectory = new File(basedir, 'target/generated-resources/protobuf/descriptor-sets');
-assert outputDirectory.exists();
-assert outputDirectory.isDirectory();
+outputDirectory = new File(basedir, 'target/generated-resources/protobuf/descriptor-sets')
+assert outputDirectory.exists()
+assert outputDirectory.isDirectory()
 
-generatedJavaFile = new File(outputDirectory, 'test-15-1.0.0.pb');
-assert generatedJavaFile.exists();
-assert generatedJavaFile.isFile();
+generatedDescriptorFile = new File(outputDirectory, 'test-15-1.0.0.pb')
+assert generatedDescriptorFile.exists()
+assert generatedDescriptorFile.isFile()
 
-return true;
+return true

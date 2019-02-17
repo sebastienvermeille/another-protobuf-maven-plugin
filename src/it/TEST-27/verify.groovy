@@ -18,7 +18,7 @@ outputDirectory = new File(basedir, 'project2/target/dependency')
 assert outputDirectory.exists()
 assert outputDirectory.isDirectory()
 
-generatedDescriptorFile = new File(outputDirectory, 'test-24-project1-1.0.0.pb')
+generatedDescriptorFile = new File(outputDirectory, 'test-27-project1-1.0.0-test.pb')
 assert generatedDescriptorFile.exists()
 assert generatedDescriptorFile.isFile()
 

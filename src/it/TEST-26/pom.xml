@@ -24,50 +24,34 @@
 
     <parent>
         <groupId>org.xolstice.maven.plugins.protobuf.its</groupId>
-        <artifactId>test-24-parent</artifactId>
+        <artifactId>it-parent</artifactId>
         <version>1.0.0</version>
     </parent>
 
-    <artifactId>test-24-project2</artifactId>
+    <artifactId>test-26</artifactId>
+    <version>1.0.0</version>
 
-    <name>Integration Test 24 (2)</name>
+    <name>Integration Test 26</name>
 
     <build>
-        <extensions>
-            <extension>
+        <plugins>
+            <plugin>
                 <groupId>org.xolstice.maven.plugins</groupId>
                 <artifactId>protobuf-maven-plugin</artifactId>
                 <version>@project.version@</version>
-            </extension>
-        </extensions>
-
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>3.1.1</version>
                 <executions>
                     <execution>
                         <goals>
-                            <goal>copy-dependencies</goal>
+                            <goal>test-compile-descriptor-set</goal>
                         </goals>
-                        <configuration>
-                            <includeGroupIds>${project.groupId}</includeGroupIds>
-                            <includeArtifactIds>test-24-project1</includeArtifactIds>
-                            <includeTypes>pb</includeTypes>
-                        </configuration>
                     </execution>
                 </executions>
+                <configuration>
+                    <protocArtifact>
+                        com.google.protobuf:protoc:${protobufVersion}:exe:${os.detected.classifier}
+                    </protocArtifact>
+                </configuration>
             </plugin>
         </plugins>
     </build>
-
-    <dependencies>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>test-24-project1</artifactId>
-            <version>1.0.0</version>
-            <type>pb</type>
-        </dependency>
-    </dependencies>
 </project>

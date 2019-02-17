@@ -24,50 +24,30 @@
 
     <parent>
         <groupId>org.xolstice.maven.plugins.protobuf.its</groupId>
-        <artifactId>test-24-parent</artifactId>
+        <artifactId>test-27-parent</artifactId>
         <version>1.0.0</version>
     </parent>
 
-    <artifactId>test-24-project2</artifactId>
+    <artifactId>test-27-project1</artifactId>
 
-    <name>Integration Test 24 (2)</name>
+    <name>Integration Test 27 (1)</name>
 
     <build>
-        <extensions>
-            <extension>
-                <groupId>org.xolstice.maven.plugins</groupId>
-                <artifactId>protobuf-maven-plugin</artifactId>
-                <version>@project.version@</version>
-            </extension>
-        </extensions>
-
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>3.1.1</version>
+                <groupId>org.xolstice.maven.plugins</groupId>
+                <artifactId>protobuf-maven-plugin</artifactId>
                 <executions>
                     <execution>
                         <goals>
-                            <goal>copy-dependencies</goal>
+                            <goal>test-compile-descriptor-set</goal>
                         </goals>
                         <configuration>
-                            <includeGroupIds>${project.groupId}</includeGroupIds>
-                            <includeArtifactIds>test-24-project1</includeArtifactIds>
-                            <includeTypes>pb</includeTypes>
+                            <attach>true</attach>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
         </plugins>
     </build>
-
-    <dependencies>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>test-24-project1</artifactId>
-            <version>1.0.0</version>
-            <type>pb</type>
-        </dependency>
-    </dependencies>
 </project>

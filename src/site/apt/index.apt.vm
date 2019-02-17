@@ -68,6 +68,12 @@ ${project.name}
   * {{{./test-compile-js-mojo.html}${goalPrefix}:test-compile-js}}
     compiles test <<<.proto>>> definitions into JavaScript files and attaches the generated JavaScript test sources to the project.
 
+  * {{{./compile-descriptor-set-mojo.html}${goalPrefix}:compile-descriptor-set}}
+    generates a descriptor set from main <<<.proto>>> definitions.
+
+  * {{{./test-compile-descriptor-set-mojo.html}${goalPrefix}:test-compile-descriptor-set}}
+    generates a descriptor set from test <<<.proto>>> definitions.
+
   * {{{./compile-custom-mojo.html}${goalPrefix}:compile-custom}}
     compiles main <<<.proto>>> definitions using a custom <<<protoc>>> plugin.
 

@@ -298,65 +298,6 @@ abstract class AbstractProtocMojo extends AbstractMojo {
     protected boolean attachProtoSources;
 
     /**
-     * The descriptor set file name. Only used if {@code writeDescriptorSet} is set to {@code true}.
-     *
-     * @since 0.3.0
-     */
-    @Parameter(
-            required = true,
-            defaultValue = "${project.build.finalName}.pb"
-    )
-    protected String descriptorSetFileName;
-
-    /**
-     * If set to {@code true}, the compiler will generate a binary descriptor set file for the
-     * specified {@code .proto} files.
-     *
-     * @since 0.3.0
-     */
-    @Parameter(
-            required = true,
-            defaultValue = "false"
-    )
-    protected boolean writeDescriptorSet;
-
-    /**
-     * If set to {@code true}, the generated descriptor set will be attached to the build.
-     *
-     * @since 0.4.1
-     */
-    @Parameter(
-            required = true,
-            defaultValue = "false"
-    )
-    protected boolean attachDescriptorSet;
-
-    /**
-     * If {@code true} and {@code writeDescriptorSet} has been set, the compiler will include
-     * all dependencies in the descriptor set making it "self-contained".
-     *
-     * @since 0.3.0
-     */
-    @Parameter(
-            required = false,
-            defaultValue = "false"
-    )
-    protected boolean includeDependenciesInDescriptorSet;
-
-    /**
-     * If {@code true} and {@code writeDescriptorSet} has been set, do not strip SourceCodeInfo
-     * from the FileDescriptorProto. This results in vastly larger descriptors that include information
-     * about the original location of each decl in the source file as well as surrounding comments.
-     *
-     * @since 0.4.4
-     */
-    @Parameter(
-            required = false,
-            defaultValue = "false"
-    )
-    protected boolean includeSourceInfoInDescriptorSet;
-
-    /**
      * If set to {@code true}, all command line arguments to protoc will be written to a file,
      * and only a path to that file will be passed to protoc on the command line.
      * This helps prevent <i>Command line is too long</i> errors when the number of {@code .proto} files is large.
@@ -494,19 +435,6 @@ abstract class AbstractProtocMojo extends AbstractMojo {
                             cleanDirectory(outputDirectory);
                         } catch (final IOException e) {
                             throw new MojoInitializationException("Unable to clean output directory", e);
-                        }
-                    }
-
-                    if (writeDescriptorSet) {
-                        final File descriptorSetOutputDirectory = getDescriptorSetOutputDirectory();
-                        FileUtils.mkdir(descriptorSetOutputDirectory.getAbsolutePath());
-                        if (clearOutputDirectory) {
-                            try {
-                                cleanDirectory(descriptorSetOutputDirectory);
-                            } catch (final IOException e) {
-                                throw new MojoInitializationException(
-                                        "Unable to clean descriptor set output directory", e);
-                            }
                         }
                     }
 
@@ -693,15 +621,6 @@ abstract class AbstractProtocMojo extends AbstractMojo {
             protocPluginDirectory.mkdirs();
             protocBuilder.setPluginDirectory(protocPluginDirectory);
         }
-        if (writeDescriptorSet) {
-            final File descriptorSetFile = new File(getDescriptorSetOutputDirectory(), descriptorSetFileName);
-            getLog().info("Will write descriptor set:");
-            getLog().info(" " + descriptorSetFile.getAbsolutePath());
-            protocBuilder.withDescriptorSetFile(
-                    descriptorSetFile,
-                    includeDependenciesInDescriptorSet,
-                    includeSourceInfoInDescriptorSet);
-        }
         protocBuilder.setTempDirectory(tempDirectory);
         protocBuilder.useArgumentFile(useArgumentFile);
     }
@@ -839,16 +758,6 @@ abstract class AbstractProtocMojo extends AbstractMojo {
      * @return output directory for generated sources.
      */
     protected abstract File getOutputDirectory();
-
-    /**
-     * Returns output directory for descriptor set file. Depends on build phase so must
-     * be defined in concrete implementation.
-     *
-     * @return output directory for generated descriptor set.
-     *
-     * @since 0.3.0
-     */
-    protected abstract File getDescriptorSetOutputDirectory();
 
     protected void doAttachFiles() {
         if (attachProtoSources) {

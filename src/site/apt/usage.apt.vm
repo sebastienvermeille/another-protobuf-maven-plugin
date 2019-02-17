@@ -235,24 +235,6 @@ mvn toolchains:toolchain ${goalPrefix}:test-compile
   The default type and extension for descriptor sets is <<<pb>>>, and the plugin extensions need
   to be enabled in order to support the correct resolution of those dependencies in downstream projects.
 
-  The following plugin options configure descriptor set output:
-
-  * <<<writeDescriptorSet>>> - determines if a descriptor set is written; default is <<<false>>>.
-
-  * <<<includeDependenciesInDescriptorSet>>> - if <<<true>>>, all imports are included in the descriptor set; default
-    is <<<false>>>.
-
-  * <<<includeSourceInfoInDescriptorSet>>> - if <<<true>>>, source code information will be included in the
-    descriptor set; default is <<<false>>>. Please note that the size of the description set may increase significantly
-    if this option is enabled.
-
-  * <<<descriptorSetFileName>>> - the file name of the descriptor set; default is the artifact name with
-    the <<<.pb>>> extension.
-
-  * <<<descriptorSetOutputDirectory>>> - the directory where the descriptor set file will be created
-
-  * <<<attachDescriptorSet>>> - attach the generated descriptor set as an artifact to the build
-
-  * <<<descriptorSetClassifier>>> - an optional artifact classifier for the attached descriptor
-
-  []
+  Please see documentation for the following goals:
+  {{{./compile-descriptor-set-mojo.html}compile-descriptor-set}} and
+  {{{./test-compile-descriptor-set-mojo.html}test-compile-descriptor-set}}.

@@ -24,6 +24,10 @@
     <body>
 
         <release version="0.7.0" date="Pending" description="TBD">
+            <action dev="sergei-ivanov" type="update" issue="54">
+                Removed common goal properties and logic for generating descriptor sets.
+                Instead, two additional goals were introduced for descriptor set generation.
+            </action>
             <action dev="sergei-ivanov" type="remove" issue="52">
                 Removed support for JavaNano generator.
             </action>

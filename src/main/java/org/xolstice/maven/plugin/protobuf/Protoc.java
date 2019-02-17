@@ -826,11 +826,12 @@ final class Protoc {
                     && pythonOutputDirectory == null
                     && csharpOutputDirectory == null
                     && javaScriptOutputDirectory == null
-                    && customOutputDirectory == null) {
+                    && customOutputDirectory == null
+                    && descriptorSetFile == null) {
                 throw new MojoConfigurationException("At least one of these properties must be set:" +
                         " 'javaOutputDirectory', 'cppOutputDirectory'," +
                         " 'pythonOutputDirectory', 'csharpOutputDirectory', 'javaScriptOutputDirectory'," +
-                        " or 'customOutputDirectory'");
+                        " 'customOutputDirectory', or 'descriptorSetFile'");
             }
         }
 

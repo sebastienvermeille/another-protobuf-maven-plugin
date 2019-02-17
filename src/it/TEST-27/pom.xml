@@ -28,30 +28,31 @@
         <version>1.0.0</version>
     </parent>
 
-    <artifactId>test-15</artifactId>
+    <artifactId>test-27-parent</artifactId>
     <version>1.0.0</version>
+    <packaging>pom</packaging>
 
-    <name>Integration Test 15</name>
+    <name>Integration Test 27 (Parent)</name>
+
+    <modules>
+        <module>project1</module>
+        <module>project2</module>
+    </modules>
 
     <build>
-        <plugins>
-            <plugin>
-                <groupId>org.xolstice.maven.plugins</groupId>
-                <artifactId>protobuf-maven-plugin</artifactId>
-                <version>@project.version@</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>compile-descriptor-set</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <protocArtifact>
-                        com.google.protobuf:protoc:${protobufVersion}:exe:${os.detected.classifier}
-                    </protocArtifact>
-                </configuration>
-            </plugin>
-        </plugins>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.xolstice.maven.plugins</groupId>
+                    <artifactId>protobuf-maven-plugin</artifactId>
+                    <version>@project.version@</version>
+                    <configuration>
+                        <protocArtifact>
+                            com.google.protobuf:protoc:${protobufVersion}:exe:${os.detected.classifier}
+                        </protocArtifact>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
 </project>
