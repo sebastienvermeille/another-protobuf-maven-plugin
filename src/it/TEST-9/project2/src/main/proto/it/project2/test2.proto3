@@ -18,7 +18,7 @@ syntax = "proto3";
 
 package it.project2;
 
-import "it/project1/test1.proto";
+import "it/project1/test1.proto3";
 
 option java_package = "it.project2.messages";
 option java_outer_classname = "TestProtos";

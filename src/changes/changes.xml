@@ -24,6 +24,10 @@
     <body>
 
         <release version="0.7.0" date="Pending" description="TBD">
+            <action dev="sergei-ivanov" type="update" issue="57" due-to="David Reichert (davidmreichert)">
+                Allowed more flexibility in specifying input proto files.
+                Versioned file extensions (e.g. .proto2, .proto3) can be used.
+            </action>
             <action dev="sergei-ivanov" type="update" issue="54">
                 Removed common goal properties and logic for generating descriptor sets.
                 Instead, two additional goals were introduced for descriptor set generation.

@@ -40,6 +40,7 @@ import org.apache.maven.toolchain.ToolchainManager;
 import org.apache.maven.toolchain.java.DefaultJavaToolChain;
 import org.codehaus.plexus.util.FileUtils;
 import org.codehaus.plexus.util.Os;
+import org.codehaus.plexus.util.SelectorUtils;
 import org.codehaus.plexus.util.StringUtils;
 import org.codehaus.plexus.util.cli.CommandLineException;
 import org.codehaus.plexus.util.io.RawInputStreamFacade;
@@ -66,6 +67,7 @@ import static java.util.Collections.singleton;
 import static org.codehaus.plexus.util.FileUtils.cleanDirectory;
 import static org.codehaus.plexus.util.FileUtils.copyStreamToFile;
 import static org.codehaus.plexus.util.FileUtils.getDefaultExcludesAsString;
+import static org.codehaus.plexus.util.FileUtils.getFileNames;
 import static org.codehaus.plexus.util.FileUtils.getFiles;
 import static org.codehaus.plexus.util.StringUtils.join;
 
@@ -78,9 +80,7 @@ import static org.codehaus.plexus.util.StringUtils.join;
  */
 abstract class AbstractProtocMojo extends AbstractMojo {
 
-    private static final String PROTO_FILE_SUFFIX = ".proto";
-
-    private static final String DEFAULT_INCLUDES = "**/*" + PROTO_FILE_SUFFIX;
+    private static final String DEFAULT_INCLUDES = "**/*.proto*";
 
     /**
      * The current Maven project.
@@ -833,8 +833,7 @@ abstract class AbstractProtocMojo extends AbstractMojo {
                 while (jarEntries.hasMoreElements()) {
                     final JarEntry jarEntry = jarEntries.nextElement();
                     final String jarEntryName = jarEntry.getName();
-                    // TODO try using org.codehaus.plexus.util.SelectorUtils.matchPath() with DEFAULT_INCLUDES
-                    if (jarEntryName.endsWith(PROTO_FILE_SUFFIX)) {
+                    if (!jarEntry.isDirectory() && SelectorUtils.matchPath(DEFAULT_INCLUDES, jarEntryName, "/", true)) {
                         final File jarDirectory;
                         try {
                             jarDirectory = new File(temporaryProtoFileDirectory, truncatePath(classpathJar.getName()));
@@ -859,9 +858,9 @@ abstract class AbstractProtocMojo extends AbstractMojo {
                     }
                 }
             } else if (classpathElementFile.isDirectory()) {
-                final List<File> protoFiles;
+                final List<String> protoFiles;
                 try {
-                    protoFiles = getFiles(classpathElementFile, DEFAULT_INCLUDES, null);
+                    protoFiles = getFileNames(classpathElementFile, DEFAULT_INCLUDES, null, true);
                 } catch (final IOException e) {
                     throw new MojoInitializationException(
                             "Unable to scan for proto files in: " + classpathElementFile.getAbsolutePath(), e);

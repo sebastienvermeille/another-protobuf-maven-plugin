@@ -652,10 +652,6 @@ final class Protoc {
             if (!protoFile.isFile()) {
                 throw new MojoConfigurationException("Proto file is not a file: " + protoFile.getAbsolutePath());
             }
-            if (!protoFile.getName().endsWith(".proto")) {
-                throw new MojoConfigurationException(
-                        "Invalid extension for proto file: " + protoFile.getAbsolutePath());
-            }
             checkProtoFileIsInProtopath(protoFile);
             protoFiles.add(protoFile);
             return this;
