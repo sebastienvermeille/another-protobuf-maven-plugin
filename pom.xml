@@ -41,7 +41,7 @@
 
         <mavenVersion>3.3.9</mavenVersion>
         <plexusComponentVersion>2.0.0</plexusComponentVersion>
-        <plexusUtilsVersion>3.1.1</plexusUtilsVersion>
+        <plexusUtilsVersion>3.2.0</plexusUtilsVersion>
         <pluginToolsVersion>3.6.0</pluginToolsVersion>
 
         <goalPrefix>protobuf</goalPrefix>
@@ -148,7 +148,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.8.0</version>
+                    <version>3.8.1</version>
                 </plugin>
 
                 <plugin>
@@ -172,7 +172,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-jar-plugin</artifactId>
-                    <version>3.1.1</version>
+                    <version>3.1.2</version>
                 </plugin>
 
                 <plugin>
@@ -184,7 +184,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-javadoc-plugin</artifactId>
-                    <version>3.0.1</version>
+                    <version>3.1.0</version>
                     <configuration>
                         <minmemory>128m</minmemory>
                         <maxmemory>512m</maxmemory>
@@ -478,7 +478,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.0.1</version>
+                <version>3.1.0</version>
                 <configuration>
                     <minmemory>128m</minmemory>
                     <maxmemory>512m</maxmemory>
