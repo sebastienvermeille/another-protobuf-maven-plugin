@@ -115,8 +115,10 @@ public final class ProtocCompileDescriptorSetMojo extends AbstractProtocCompileM
     @Override
     protected void doAttachGeneratedFiles() {
         final File outputDirectory = getOutputDirectory();
-        final File descriptorSetFile = new File(getOutputDirectory(), descriptorSetFileName);
-        projectHelper.attachArtifact(project, "pb", classifier, descriptorSetFile);
+        if (attach) {
+            final File descriptorSetFile = new File(getOutputDirectory(), descriptorSetFileName);
+            projectHelper.attachArtifact(project, "pb", classifier, descriptorSetFile);
+        }
         buildContext.refresh(outputDirectory);
     }
 }

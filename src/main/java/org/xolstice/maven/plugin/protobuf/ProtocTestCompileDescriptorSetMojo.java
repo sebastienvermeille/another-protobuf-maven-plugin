@@ -122,8 +122,10 @@ public final class ProtocTestCompileDescriptorSetMojo extends AbstractProtocTest
     @Override
     protected void doAttachGeneratedFiles() {
         final File outputDirectory = getOutputDirectory();
-        final File descriptorSetFile = new File(getOutputDirectory(), descriptorSetFileName);
-        projectHelper.attachArtifact(project, "test-pb", classifier, descriptorSetFile);
+        if (attach) {
+            final File descriptorSetFile = new File(getOutputDirectory(), descriptorSetFileName);
+            projectHelper.attachArtifact(project, "test-pb", classifier, descriptorSetFile);
+        }
         buildContext.refresh(outputDirectory);
     }
 }
