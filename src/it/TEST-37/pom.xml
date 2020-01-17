@@ -28,10 +28,10 @@
         <version>1.0.0</version>
     </parent>
 
-    <artifactId>test-36</artifactId>
+    <artifactId>test-37</artifactId>
     <version>1.0.0</version>
 
-    <name>Integration Test 36</name>
+    <name>Integration Test 37</name>
 
     <properties>
         <protobufJavaArtifact>protobuf-javalite</protobufJavaArtifact>
@@ -46,7 +46,7 @@
                 <executions>
                     <execution>
                         <goals>
-                            <goal>compile</goal>
+                            <goal>test-compile</goal>
                         </goals>
                         <configuration>
                             <javaOptions>lite</javaOptions>

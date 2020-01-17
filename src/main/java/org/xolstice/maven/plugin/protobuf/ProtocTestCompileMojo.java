@@ -1,7 +1,7 @@
 package org.xolstice.maven.plugin.protobuf;
 
 /*
- * Copyright (c) 2018 Maven Protocol Buffers Plugin Authors. All rights reserved.
+ * Copyright (c) 2019 Maven Protocol Buffers Plugin Authors. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -49,10 +49,11 @@ public final class ProtocTestCompileMojo extends AbstractProtocTestCompileMojo {
             defaultValue = "${project.build.directory}/generated-test-sources/protobuf/java"
     )
     private File outputDirectory;
-    
+
     /**
      * Additional comma-separated options to be passed to the Java generator.
      * <b>Cannot</b> contain colon (<tt>:</tt>) symbols.
+     *
      * @since 0.7.0
      */
     @Parameter(
@@ -65,7 +66,7 @@ public final class ProtocTestCompileMojo extends AbstractProtocTestCompileMojo {
     protected void addProtocBuilderParameters(final Protoc.Builder protocBuilder) {
         super.addProtocBuilderParameters(protocBuilder);
         if (javaOptions != null) {
-          protocBuilder.setNativePluginParameter(javaOptions);
+            protocBuilder.setNativePluginParameter(javaOptions);
         }
         protocBuilder.setJavaOutputDirectory(getOutputDirectory());
         // We need to add project output directory to the protobuf import paths,
