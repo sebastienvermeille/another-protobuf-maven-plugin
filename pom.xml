@@ -40,8 +40,8 @@
         <java.compiler.target>${java.sdk.version}</java.compiler.target>
 
         <mavenVersion>3.3.9</mavenVersion>
-        <plexusComponentVersion>2.0.0</plexusComponentVersion>
-        <plexusUtilsVersion>3.2.0</plexusUtilsVersion>
+        <plexusComponentVersion>2.1.0</plexusComponentVersion>
+        <plexusUtilsVersion>3.3.0</plexusUtilsVersion>
         <pluginToolsVersion>3.6.0</pluginToolsVersion>
 
         <goalPrefix>protobuf</goalPrefix>
@@ -118,7 +118,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-enforcer-plugin</artifactId>
-                    <version>3.0.0-M2</version>
+                    <version>3.0.0-M3</version>
                 </plugin>
 
                 <plugin>
@@ -154,7 +154,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
-                    <version>3.0.0-M3</version>
+                    <version>3.0.0-M4</version>
                 </plugin>
 
                 <plugin>
@@ -172,19 +172,19 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-jar-plugin</artifactId>
-                    <version>3.1.2</version>
+                    <version>3.2.0</version>
                 </plugin>
 
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-source-plugin</artifactId>
-                    <version>3.1.0</version>
+                    <version>3.2.1</version>
                 </plugin>
 
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-javadoc-plugin</artifactId>
-                    <version>3.1.0</version>
+                    <version>3.1.1</version>
                     <configuration>
                         <minmemory>128m</minmemory>
                         <maxmemory>512m</maxmemory>
@@ -197,7 +197,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-site-plugin</artifactId>
-                    <version>3.7.1</version>
+                    <version>3.8.2</version>
                 </plugin>
 
                 <plugin>
@@ -215,7 +215,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-release-plugin</artifactId>
-                    <version>2.5.3</version>
+                    <version>3.0.0-M1</version>
                 </plugin>
 
                 <plugin>
@@ -478,7 +478,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.1.0</version>
+                <version>3.1.1</version>
                 <configuration>
                     <minmemory>128m</minmemory>
                     <maxmemory>512m</maxmemory>
@@ -548,7 +548,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-invoker-plugin</artifactId>
-                        <version>3.2.0</version>
+                        <version>3.2.1</version>
                         <configuration>
                             <debug>false</debug>
                             <projectsDirectory>src/it</projectsDirectory>
@@ -588,7 +588,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-invoker-plugin</artifactId>
-                        <version>3.2.0</version>
+                        <version>3.2.1</version>
                     </plugin>
                 </plugins>
             </reporting>
