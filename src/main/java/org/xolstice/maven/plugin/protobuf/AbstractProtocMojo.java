@@ -542,7 +542,7 @@ abstract class AbstractProtocMojo extends AbstractMojo {
         for (final ProtocPlugin plugin : protocPlugins) {
 
             if (plugin.getJavaHome() != null) {
-                getLog().debug("Using javaHome defined in plugin definition: " + javaHome);
+                getLog().debug("Using javaHome defined in plugin definition: " + plugin.getJavaHome());
             } else {
                 getLog().debug("Setting javaHome for plugin: " + javaHome);
                 plugin.setJavaHome(javaHome);
@@ -958,23 +958,23 @@ abstract class AbstractProtocMojo extends AbstractMojo {
 
     protected File resolveBinaryArtifact(final Artifact artifact) {
         final ArtifactResolutionResult result;
+        final ArtifactResolutionRequest request = new ArtifactResolutionRequest()
+                .setArtifact(project.getArtifact())
+                .setResolveRoot(false)
+                .setResolveTransitively(false)
+                .setArtifactDependencies(singleton(artifact))
+                .setManagedVersionMap(emptyMap())
+                .setLocalRepository(localRepository)
+                .setRemoteRepositories(remoteRepositories)
+                .setOffline(session.isOffline())
+                .setForceUpdate(session.getRequest().isUpdateSnapshots())
+                .setServers(session.getRequest().getServers())
+                .setMirrors(session.getRequest().getMirrors())
+                .setProxies(session.getRequest().getProxies());
+
+        result = repositorySystem.resolve(request);
+
         try {
-            final ArtifactResolutionRequest request = new ArtifactResolutionRequest()
-                    .setArtifact(project.getArtifact())
-                    .setResolveRoot(false)
-                    .setResolveTransitively(false)
-                    .setArtifactDependencies(singleton(artifact))
-                    .setManagedVersionMap(emptyMap())
-                    .setLocalRepository(localRepository)
-                    .setRemoteRepositories(remoteRepositories)
-                    .setOffline(session.isOffline())
-                    .setForceUpdate(session.getRequest().isUpdateSnapshots())
-                    .setServers(session.getRequest().getServers())
-                    .setMirrors(session.getRequest().getMirrors())
-                    .setProxies(session.getRequest().getProxies());
-
-            result = repositorySystem.resolve(request);
-
             resolutionErrorHandler.throwErrors(request, result);
         } catch (final ArtifactResolutionException e) {
             throw new MojoInitializationException("Unable to resolve artifact: " + e.getMessage(), e);

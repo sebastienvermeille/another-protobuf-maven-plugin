@@ -1,7 +1,7 @@
 package org.xolstice.maven.plugin.protobuf;
 
 /*
- * Copyright (c) 2018 Maven Protocol Buffers Plugin Authors. All rights reserved.
+ * Copyright (c) 2019 Maven Protocol Buffers Plugin Authors. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,6 +22,8 @@ package org.xolstice.maven.plugin.protobuf;
  * @since 0.6.0
  */
 public final class MojoConfigurationException extends RuntimeException {
+
+    private static final long serialVersionUID = 6662087467815362518L;
 
     public MojoConfigurationException(final String message) {
         super(message);
