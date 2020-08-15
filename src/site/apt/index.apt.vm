@@ -1,5 +1,5 @@
 ~~
-~~ Copyright (c) 2018 Maven Protocol Buffers Plugin Authors. All rights reserved.
+~~ Copyright (c) 2020 Maven Protocol Buffers Plugin Authors. All rights reserved.
 ~~
 ~~ Licensed under the Apache License, Version 2.0 (the "License");
 ~~ you may not use this file except in compliance with the License.
@@ -91,12 +91,12 @@ ${project.name}
   ~~ TODO add mailing lists / newsgroups / wiki
 
   If you feel like the plugin is missing a feature or has a defect, you can fill a feature request or bug report in our
-  {{{./issue-tracking.html}issue tracker}}. When creating a new issue, please provide a comprehensive description of your
+  {{{./issue-management.html}issue tracker}}. When creating a new issue, please provide a comprehensive description of your
   concern. Especially for fixing bugs it is crucial that the developers can reproduce your problem. For this reason,
   entire debug logs, POMs or most preferably little demo projects attached to the issue are very much appreciated.
 
   Of course, patches and pull requests are welcome, too. Contributors can check out the project from the
-  {{{./source-repository.html}source repository}} and will find supplementary information in the
+  {{{./scm.html}source repository}} and will find supplementary information in the
   contributor's guide available there.
 
 * Examples
