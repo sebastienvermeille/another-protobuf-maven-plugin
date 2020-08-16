@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-  ~ Copyright (c) 2019 Maven Protocol Buffers Plugin Authors. All rights reserved.
+  ~ Copyright (c) 2020 Maven Protocol Buffers Plugin Authors. All rights reserved.
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -24,7 +24,10 @@
     <body>
 
         <release version="0.7.0" date="Pending" description="TBD">
-            <action dev="henryju" type="add" issue="64" due-to="Julien Henry (henryju)">
+            <action dev="sergei-ivanov" type="fix" issue="72" due-to="Laurent Goujon (laurentgo)">
+                Fix file descriptor leak.
+            </action>
+            <action dev="sergei-ivanov" type="add" issue="64" due-to="Julien Henry (henryju)">
                 Support passing options to the Java compiler.
             </action>
             <action dev="sergei-ivanov" type="update" issue="57" due-to="David Reichert (davidmreichert)">
