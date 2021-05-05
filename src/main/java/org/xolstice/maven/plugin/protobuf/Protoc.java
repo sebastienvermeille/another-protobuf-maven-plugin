@@ -73,6 +73,8 @@ final class Protoc {
 
     private final String nativePluginParameter;
 
+    private final String extraArgs;
+
     /**
      * A directory into which C++ source files will be generated.
      */
@@ -146,6 +148,7 @@ final class Protoc {
      * @param nativePluginId a unique id of a native plugin.
      * @param nativePluginExecutable path to the native plugin executable.
      * @param nativePluginParameter an optional parameter for a native plugin.
+     * @param extraArgs an optional parameter to let configure extra args passed with the command protoc
      * @param tempDirectory a directory where temporary files will be generated.
      * @param useArgumentFile If {@code true}, parameters to protoc will be put in an argument file
      */
@@ -167,6 +170,7 @@ final class Protoc {
             final String nativePluginId,
             final String nativePluginExecutable,
             final String nativePluginParameter,
+            final String extraArgs,
             final File tempDirectory,
             final boolean useArgumentFile
     ) {
@@ -196,6 +200,7 @@ final class Protoc {
         this.nativePluginId = nativePluginId;
         this.nativePluginExecutable = nativePluginExecutable;
         this.nativePluginParameter = nativePluginParameter;
+        this.extraArgs = extraArgs;
         this.tempDirectory = tempDirectory;
         this.useArgumentFile = useArgumentFile;
         this.error = new StringStreamConsumer();
@@ -296,9 +301,15 @@ final class Protoc {
             if (nativePluginParameter != null) {
                 outputOption += nativePluginParameter + ':';
             }
+
             outputOption += customOutputDirectory;
             command.add(outputOption);
         }
+
+        if(extraArgs != null){
+            command.add(extraArgs);
+        }
+
         for (final File protoFile : protoFiles) {
             command.add(protoFile.toString());
         }
@@ -467,6 +478,8 @@ final class Protoc {
         private String nativePluginExecutable;
 
         private String nativePluginParameter;
+
+        private String extraArgs;
 
         /**
          * A directory into which Java source files will be generated.
@@ -723,6 +736,14 @@ final class Protoc {
             return this;
         }
 
+        public Builder setExtraArgs(final String extraArgs) {
+            if (extraArgs == null) {
+                throw new MojoConfigurationException("'extraArgs' is null");
+            }
+            this.extraArgs = extraArgs;
+            return this;
+        }
+
         public Builder withDescriptorSetFile(
                 final File descriptorSetFile,
                 final boolean includeImports,
@@ -861,6 +882,7 @@ final class Protoc {
                     nativePluginId,
                     nativePluginExecutable,
                     nativePluginParameter,
+                    extraArgs,
                     tempDirectory,
                     useArgumentFile);
         }

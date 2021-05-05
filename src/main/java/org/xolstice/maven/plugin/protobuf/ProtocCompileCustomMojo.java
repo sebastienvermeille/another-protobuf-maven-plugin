@@ -106,6 +106,16 @@ public final class ProtocCompileCustomMojo extends AbstractProtocCompileMojo {
     private String pluginParameter;
 
     /**
+     * An optional parameter to be passed to the plugin.
+     * When this parameter is set, the provided args will be appended to the protoc command.
+     */
+    @Parameter(
+            required = false,
+            property = "protocExtraArgs"
+    )
+    private String extraArgs;
+
+    /**
      * A name of an optional custom toolchain that can be used to locate the plugin executable.
      * The toolchain must be registered as a build extension and initialised properly.
      */
@@ -166,6 +176,9 @@ public final class ProtocCompileCustomMojo extends AbstractProtocCompileMojo {
         }
         if (pluginParameter != null) {
             protocBuilder.setNativePluginParameter(pluginParameter);
+        }
+        if (extraArgs != null){
+            protocBuilder.setExtraArgs(extraArgs);
         }
         protocBuilder.setCustomOutputDirectory(getOutputDirectory());
     }
