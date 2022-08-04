@@ -34,4 +34,4 @@ jobs:
         distribution: 'temurin'
         cache: maven        
     - name: Build and deploy to gh-pages
-      run: mvn -B site-deploy --file pom.xml
+      run: mvn -B -X site-deploy --file pom.xml
