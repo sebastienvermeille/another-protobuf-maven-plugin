@@ -34,4 +34,4 @@ jobs:
           ]
         output_file: .m2/settings.xml        
     - name: Build and deploy to gh-pages
-      run: mvn -B -X site-deploy --file pom.xml
+      run: mvn -B -X site-deploy --file pom.xml --settings /home/runner/.m2/settings.xml
