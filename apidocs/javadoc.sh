@@ -1,0 +1,1 @@
+/home/svermeille/App/JDK/jdk-1.8/bin/javadoc -J-Xmx512m -J-Xms128m @options @packages
