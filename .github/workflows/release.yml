@@ -18,17 +18,15 @@ jobs:
     - name: maven-settings-xml-action
       uses: whelk-io/maven-settings-xml-action@v4
       with:
-        repositories: '[{ "id": "fix_world", "url": "https://maven.pkg.github.com/joshjohanning-org/sherlock-heroku-poc-mvn-package" }]'
         servers: '[{ "id": "github", "username": "", "password": "${{ secrets.OAUTH_GITHUB_PAGES_PASS }}" }]'
 
     - name: View settings.xml
       run: cat ~/.m2/settings.xml     
-    - name: Set up JDK 8
-      uses: actions/setup-java@v3
-      with:
-        java-version: '8'
-        distribution: 'temurin'
-        cache: maven
-      
+#     - name: Set up JDK 8
+#       uses: actions/setup-java@v3
+#       with:
+#         java-version: '8'
+#         distribution: 'temurin'
+#         cache: maven
     - name: Build and deploy to gh-pages
-      run: mvn -B -X site-deploy --file pom.xml --settings /home/runner/.m2/settings.xml
+      run: mvn -B site-deploy --file pom.xml
