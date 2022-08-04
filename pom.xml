@@ -21,7 +21,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>dev.cookiecode</groupId>
-    <artifactId>protobuf-maven-plugin</artifactId>
+    <artifactId>another-protobuf-maven-plugin</artifactId>
     <packaging>maven-plugin</packaging>
     <name>Another Maven Protocol Buffers Plugin</name>
     <version>0.7.2-SNAPSHOT</version>
