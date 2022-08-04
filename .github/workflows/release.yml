@@ -15,6 +15,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+    - name: Set up JDK 8
+      uses: actions/setup-java@v3
+      with:
+        java-version: '8'
+        distribution: 'temurin'
+        cache: maven
     - name: maven-settings-xml-action
       uses: whelk-io/maven-settings-xml-action@v4
       with:
@@ -26,12 +32,6 @@ jobs:
               "password": "${env.OAUTH_GITHUB_PAGES_PASS}"
             }
           ]
-        output_file: .m2/settings.xml
-    - name: Set up JDK 8
-      uses: actions/setup-java@v3
-      with:
-        java-version: '8'
-        distribution: 'temurin'
-        cache: maven     
+        output_file: .m2/settings.xml        
     - name: Build and deploy to gh-pages
       run: mvn -B -X site-deploy --file pom.xml
