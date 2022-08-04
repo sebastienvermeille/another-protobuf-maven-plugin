@@ -4,13 +4,6 @@
 
 This project and everyone participating in it is governed by the [Code of Conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code.
 
-## I don't want to read this whole thing I just have a question!!!
-
-> **Note:** Please don't file an issue to ask a question. 
-> You'll usually get faster feedback on Gitter.
-
-Join the chat on [Gitter](https://gitter.im/xolstice/protobuf-maven-plugin) and post your question there.
-
 ## How you can help
 
   As with any open source project, there are several ways you can help:

@@ -6,8 +6,6 @@ about: Create a report to help us improve
 
 **Before submitting a bug report**
 - [ ] Check the existing issues, please avoid submitting duplicates
-- [ ] Check the [FAQ](https://www.xolstice.org/protobuf-maven-plugin/faq.html) for known problems
-- [ ] Try asking on [Gitter](https://gitter.im/xolstice/protobuf-maven-plugin)
 
 **Describe the bug**
 <!-- A clear and concise description of what the bug is -->

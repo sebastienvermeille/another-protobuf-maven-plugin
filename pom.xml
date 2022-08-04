@@ -20,24 +20,24 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.xolstice.maven.plugins</groupId>
-    <artifactId>protobuf-maven-plugin</artifactId>
+    <groupId>dev.cookiecode</groupId>
+    <artifactId>another-protobuf-maven-plugin</artifactId>
     <packaging>maven-plugin</packaging>
-    <name>Maven Protocol Buffers Plugin</name>
-    <version>0.7.0-SNAPSHOT</version>
-    <url>https://www.xolstice.org/protobuf-maven-plugin</url>
+    <name>Another Maven Protocol Buffers Plugin</name>
+    <version>0.7.2-SNAPSHOT</version>
+    <url>https://another-protobuf-maven-plugin.cookiecode.dev</url>
     <description>Maven Plugin that executes the Protocol Buffers (protoc) compiler</description>
-    <inceptionYear>2016</inceptionYear>
+    <inceptionYear>2021</inceptionYear>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <!-- JDK version -->
-        <java.sdk.version>1.8</java.sdk.version>
+        <jdk.version>1.8</jdk.version>
         <!-- Settings for the java compiler -->
-        <java.compiler.compilerVersion>${java.sdk.version}</java.compiler.compilerVersion>
-        <java.compiler.source>${java.sdk.version}</java.compiler.source>
-        <java.compiler.target>${java.sdk.version}</java.compiler.target>
+        <java.compiler.compilerVersion>${jdk.version}</java.compiler.compilerVersion>
+        <java.compiler.source>${jdk.version}</java.compiler.source>
+        <java.compiler.target>${jdk.version}</java.compiler.target>
 
         <mavenVersion>3.3.9</mavenVersion>
         <plexusComponentVersion>2.1.0</plexusComponentVersion>
@@ -53,7 +53,7 @@
 
     <organization>
         <name>Maven Protocol Buffers Plugin Authors</name>
-        <url>https://github.com/xolstice/protobuf-maven-plugin/blob/master/AUTHORS</url>
+        <url>https://github.com/sebastienvermeille/another-protobuf-maven-plugin/blob/master/AUTHORS</url>
     </organization>
 
     <licenses>
@@ -66,24 +66,25 @@
 
     <developers>
         <developer>
-            <id>sergei-ivanov</id>
-            <name>Sergei Ivanov</name>
-            <email>sergei@xolstice.org</email>
-            <url>https://github.com/sergei-ivanov</url>
-            <organization>Xolstice Ltd.</organization>
-            <organizationUrl>https://www.xolstice.org</organizationUrl>
-            <timezone>0</timezone>
+            <id>svermeille</id>
+            <name>Sebastien Vermeille</name>
+            <email>sebastien.vermeille@gmail.com</email>
+            <url>https://github.com/sebastienvermeille</url>
+            <organization>CookieCode.dev</organization>
+            <organizationUrl>https://cookiecode.dev</organizationUrl>
+            <timezone>2</timezone>
         </developer>
     </developers>
 
     <scm>
-        <url>https://github.com/xolstice/protobuf-maven-plugin</url>
-        <connection>scm:git:git://github.com/xolstice/protobuf-maven-plugin.git</connection>
-        <developerConnection>scm:git:ssh://git@github.com/xolstice/protobuf-maven-plugin.git</developerConnection>
+        <url>https://github.com/sebastienvermeille/another-protobuf-maven-plugin</url>
+        <connection>scm:git:git://github.com/sebastienvermeille/another-protobuf-maven-plugin.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/sebastienvermeille/another-protobuf-maven-plugin.git</developerConnection>
         <tag>HEAD</tag>
     </scm>
 
     <distributionManagement>
+<!--        TODO: update this-->
         <downloadUrl>https://bintray.com/xolstice/maven/protobuf-maven-plugin/view</downloadUrl>
         <site>
             <!--
@@ -102,7 +103,7 @@
 
     <issueManagement>
         <system>Github</system>
-        <url>https://github.com/xolstice/protobuf-maven-plugin/issues/</url>
+        <url>https://github.com/sebastienvermeille/another-protobuf-maven-plugin/issues</url>
     </issueManagement>
 
     <build>
@@ -244,7 +245,7 @@
                                     <version>[${mavenVersion},)</version>
                                 </requireMavenVersion>
                                 <requireJavaVersion>
-                                    <version>[${java.sdk.version},)</version>
+                                    <version>[${jdk.version},)</version>
                                 </requireJavaVersion>
                             </rules>
                             <fail>true</fail>
@@ -316,7 +317,7 @@
                 <configuration>
                     <toolchains>
                         <jdk>
-                            <version>[${java.sdk.version},)</version>
+                            <version>[${jdk.version},)</version>
                         </jdk>
                     </toolchains>
                 </configuration>
@@ -446,6 +447,8 @@
                             <merge>false</merge>
                             <noJekyll>true</noJekyll>
                             <server>github</server>
+                            <repositoryName>another-protobuf-maven-plugin</repositoryName>
+                            <repositoryOwner>sebastienvermeille</repositoryOwner>
                         </configuration>
                     </execution>
                 </executions>
