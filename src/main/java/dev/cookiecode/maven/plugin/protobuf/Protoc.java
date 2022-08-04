@@ -25,11 +25,11 @@ import org.codehaus.plexus.util.cli.Commandline;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.codehaus.plexus.util.StringUtils.join;
 
 /**
@@ -419,7 +419,7 @@ final class Protoc {
      * @return the same message converted into a unicode string.
      */
     private static String fixUnicodeOutput(final String message) {
-        return new String(message.getBytes(), Charset.forName("UTF-8"));
+        return new String(message.getBytes(), UTF_8);
     }
 
     /**

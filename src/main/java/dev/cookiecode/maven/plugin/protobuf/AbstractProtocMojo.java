@@ -48,7 +48,6 @@ import org.sonatype.plexus.build.incremental.BuildContext;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -60,6 +59,7 @@ import java.util.jar.JarFile;
 
 import static java.lang.Math.max;
 import static java.lang.String.format;
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.emptyMap;
@@ -940,7 +940,7 @@ abstract class AbstractProtocMojo extends AbstractMojo {
         } catch (final NoSuchAlgorithmException e) {
             throw new MojoInitializationException("Unable to create MD5 digest", e);
         }
-        final byte[] input = string.getBytes(Charset.forName("UTF-8"));
+        final byte[] input = string.getBytes(UTF_8);
         return toHexString(digest.digest(input));
     }
 
