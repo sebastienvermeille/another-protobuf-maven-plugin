@@ -78,128 +78,30 @@
 <th>Date</th>
 <th>Description</th></tr>
 <tr class="b">
-<td><a href="#a0.7.0">0.7.0</a></td>
+<td><a href="#a0.7.2">0.7.2</a></td>
 <td>Pending</td>
 <td>TBD</td></tr>
 <tr class="a">
-<td><a href="#a0.6.1">0.6.1</a></td>
-<td>2018-10-01</td>
-<td>Additional protoc options</td></tr>
-<tr class="b">
-<td><a href="#a0.5.0">0.5.0</a></td>
-<td>2016-01-28</td>
-<td>Rebranding</td></tr>
-<tr class="a">
-<td><a href="#a0.4.4">0.4.4</a></td>
-<td>2015-12-21</td>
-<td>Additional protoc options</td></tr>
-<tr class="b">
-<td><a href="#a0.4.3">0.4.3</a></td>
-<td>2015-09-20</td>
-<td>Support for JavaNano, minor changes</td></tr>
-<tr class="a">
-<td><a href="#a0.4.2">0.4.2</a></td>
-<td>2015-04-29</td>
-<td>Bug fixes</td></tr>
-<tr class="b">
-<td><a href="#a0.4.1">0.4.1</a></td>
-<td>2015-04-27</td>
-<td>Support for native protoc plugins</td></tr>
-<tr class="a">
-<td><a href="#a0.4.0">0.4.0</a></td>
-<td>2015-03-11</td>
-<td>Support for C++ and Python, Java 6, Maven 3</td></tr>
-<tr class="b">
-<td><a href="#a0.3.2">0.3.2</a></td>
-<td>2013-10-21</td>
-<td>Compatibility with Maven 3.1.x</td></tr>
-<tr class="a">
-<td><a href="#a0.3.1">0.3.1</a></td>
-<td>2013-03-05</td>
-<td>Functional updates</td></tr>
-<tr class="b">
-<td><a href="#a0.3.0">0.3.0</a></td>
-<td>2013-01-04</td>
-<td>New features</td></tr>
-<tr class="a">
-<td><a href="#a0.2.0">0.2.0</a></td>
-<td>2011-12-12</td>
-<td>Bug fixes and new features</td></tr></table></section><section>
-<h3 id="a0.7.0">Release 0.7.0 &#x2013; Pending</h3>
+<td><a href="#a0.7.1">0.7.1</a></td>
+<td>2021-05-05</td>
+<td>Fork and add extra parameters support</td></tr></table></section><section>
+<h3 id="a0.7.2">Release 0.7.2 &#x2013; Pending</h3>
 <table border="0" class="bodyTable">
 <tr class="b">
 <th>Type</th>
 <th>Changes</th>
 <th>By</th></tr>
 <tr class="a">
-<td><img src="images/fix.gif" alt="Fix" title="Fix" /></td>
-<td>Fix file descriptor leak. Fixes <a class="externalLink" href="https://github.com/sebastienvermeille/another-protobuf-maven-plugin/72">72</a>. Thanks to Laurent Goujon (laurentgo).</td>
-<td><a href="team-list.html#sergei-ivanov">sergei-ivanov</a></td></tr>
-<tr class="b">
-<td><img src="images/add.gif" alt="Add" title="Add" /></td>
-<td>Support passing options to the Java compiler. Fixes <a class="externalLink" href="https://github.com/sebastienvermeille/another-protobuf-maven-plugin/64">64</a>. Thanks to Julien Henry (henryju).</td>
-<td><a href="team-list.html#sergei-ivanov">sergei-ivanov</a></td></tr>
-<tr class="a">
 <td><img src="images/update.gif" alt="Update" title="Update" /></td>
-<td>Allowed more flexibility in specifying input proto files.
-                Versioned file extensions (e.g. .proto2, .proto3) can be used. Fixes <a class="externalLink" href="https://github.com/sebastienvermeille/another-protobuf-maven-plugin/57">57</a>. Thanks to David Reichert (davidmreichert).</td>
-<td><a href="team-list.html#sergei-ivanov">sergei-ivanov</a></td></tr>
+<td>Take ownership on the project, refactore packages, etc...</td>
+<td><a href="team-list.html#svermeille">svermeille</a></td></tr>
 <tr class="b">
 <td><img src="images/update.gif" alt="Update" title="Update" /></td>
-<td>Removed common goal properties and logic for generating descriptor sets.
-                Instead, two additional goals were introduced for descriptor set generation. Fixes <a class="externalLink" href="https://github.com/sebastienvermeille/another-protobuf-maven-plugin/54">54</a>.</td>
-<td><a href="team-list.html#sergei-ivanov">sergei-ivanov</a></td></tr>
-<tr class="a">
-<td><img src="images/remove.gif" alt="Remove" title="Remove" /></td>
-<td>Removed support for JavaNano generator. Fixes <a class="externalLink" href="https://github.com/sebastienvermeille/another-protobuf-maven-plugin/52">52</a>.</td>
-<td><a href="team-list.html#sergei-ivanov">sergei-ivanov</a></td></tr>
-<tr class="b">
-<td><img src="images/add.gif" alt="Add" title="Add" /></td>
-<td>Provided origin information for WinRun4J binaries. Fixes <a class="externalLink" href="https://github.com/sebastienvermeille/another-protobuf-maven-plugin/53">53</a>.</td>
-<td><a href="team-list.html#sergei-ivanov">sergei-ivanov</a></td></tr>
-<tr class="a">
-<td><img src="images/update.gif" alt="Update" title="Update" /></td>
-<td>Use pb instead of protobin as file extension for binary descriptors. Fixes <a class="externalLink" href="https://github.com/sebastienvermeille/another-protobuf-maven-plugin/51">51</a>. Thanks to Cosmin Lehene (clehene).</td>
-<td><a href="team-list.html#sergei-ivanov">sergei-ivanov</a></td></tr>
-<tr class="b">
-<td><img src="images/update.gif" alt="Update" title="Update" /></td>
-<td>Set clearOutputDirectory parameter to false by default. Fixes <a class="externalLink" href="https://github.com/sebastienvermeille/another-protobuf-maven-plugin/48">48</a>.</td>
-<td><a href="team-list.html#sergei-ivanov">sergei-ivanov</a></td></tr>
-<tr class="a">
-<td><img src="images/update.gif" alt="Update" title="Update" /></td>
-<td>Java 1.8 and Maven 3.3.9 are now minimum required versions for running the plugin. Fixes <a class="externalLink" href="https://github.com/sebastienvermeille/another-protobuf-maven-plugin/49">49</a>.</td>
-<td><a href="team-list.html#sergei-ivanov">sergei-ivanov</a></td></tr>
-<tr class="b">
-<td><img src="images/update.gif" alt="Update" title="Update" /></td>
-<td>More detailed error message. Fixes <a class="externalLink" href="https://github.com/sebastienvermeille/another-protobuf-maven-plugin/47">47</a>. Thanks to Cosmin Lehene (clehene).</td>
-<td><a href="team-list.html#sergei-ivanov">sergei-ivanov</a></td></tr></table></section><section>
-<h3 id="a0.6.1">Release 0.6.1 &#x2013; 2018-10-01</h3>
-<table border="0" class="bodyTable">
-<tr class="a">
-<th>Type</th>
-<th>Changes</th>
-<th>By</th></tr>
-<tr class="b">
-<td><img src="images/update.gif" alt="Update" title="Update" /></td>
-<td>Address vulnerabilities reported by Snyk. Fixes <a class="externalLink" href="https://github.com/sebastienvermeille/another-protobuf-maven-plugin/43">43</a>.</td>
-<td><a href="team-list.html#sergei-ivanov">sergei-ivanov</a></td></tr>
-<tr class="a">
-<td><img src="images/add.gif" alt="Add" title="Add" /></td>
-<td>Add useArgumentFile option to help with &quot;Command line is too long&quot; error. Fixes <a class="externalLink" href="https://github.com/sebastienvermeille/another-protobuf-maven-plugin/5">5</a>. Thanks to Chris Heisterkamp (cheister).</td>
-<td><a href="team-list.html#sergei-ivanov">sergei-ivanov</a></td></tr>
-<tr class="b">
-<td><img src="images/add.gif" alt="Add" title="Add" /></td>
-<td>Added CI configurations.</td>
-<td><a href="team-list.html#sergei-ivanov">sergei-ivanov</a></td></tr>
-<tr class="a">
-<td><img src="images/add.gif" alt="Add" title="Add" /></td>
-<td>Added new goals to generate C# sources from protobuf definitions. Fixes <a class="externalLink" href="https://github.com/sebastienvermeille/another-protobuf-maven-plugin/1">1</a>.</td>
-<td><a href="team-list.html#sergei-ivanov">sergei-ivanov</a></td></tr>
-<tr class="b">
-<td><img src="images/add.gif" alt="Add" title="Add" /></td>
-<td>Added new goals to generate JavaScript sources from protobuf definitions. Fixes <a class="externalLink" href="https://github.com/sebastienvermeille/another-protobuf-maven-plugin/4">4</a>.</td>
-<td><a href="team-list.html#sergei-ivanov">sergei-ivanov</a></td></tr></table></section><section>
-<h3 id="a0.5.0">Release 0.5.0 &#x2013; 2016-01-28</h3>
+<td>Rename plugin from protobuf-maven-plugin to another-protobuf-maven-plugin. This way is will avoid
+                ambiguity with the forked original plugin name.
+                Change maven artifact references accordingly.</td>
+<td><a href="team-list.html#svermeille">svermeille</a></td></tr></table></section><section>
+<h3 id="a0.7.1">Release 0.7.1 &#x2013; 2021-05-05</h3>
 <table border="0" class="bodyTable">
 <tr class="a">
 <th>Type</th>
@@ -207,223 +109,8 @@
 <th>By</th></tr>
 <tr class="b">
 <td><img src="images/add.gif" alt="Add" title="Add" /></td>
-<td>Added licence and copyright information and prepared for the first release into Maven Central.</td>
-<td><a href="team-list.html#sergei-ivanov">sergei-ivanov</a></td></tr>
-<tr class="a">
-<td><img src="images/update.gif" alt="Update" title="Update" /></td>
-<td>Renamed project coordinates and java packages.</td>
-<td><a href="team-list.html#sergei-ivanov">sergei-ivanov</a></td></tr>
-<tr class="b">
-<td><img src="images/remove.gif" alt="Remove" title="Remove" /></td>
-<td>Obsolete goal 'testCompile' has been removed.</td>
-<td><a href="team-list.html#sergei-ivanov">sergei-ivanov</a></td></tr></table></section><section>
-<h3 id="a0.4.4">Release 0.4.4 &#x2013; 2015-12-21</h3>
-<table border="0" class="bodyTable">
-<tr class="a">
-<th>Type</th>
-<th>Changes</th>
-<th>By</th></tr>
-<tr class="b">
-<td><img src="images/add.gif" alt="Add" title="Add" /></td>
-<td>Added support for including source info in descriptor sets. Fixes <a class="externalLink" href="https://github.com/sebastienvermeille/another-protobuf-maven-plugin/39">39</a>. Thanks to Alexander Torstling (atorstling).</td>
-<td><a href="team-list.html#sergei-ivanov">sergei-ivanov</a></td></tr></table></section><section>
-<h3 id="a0.4.3">Release 0.4.3 &#x2013; 2015-09-20</h3>
-<table border="0" class="bodyTable">
-<tr class="a">
-<th>Type</th>
-<th>Changes</th>
-<th>By</th></tr>
-<tr class="b">
-<td><img src="images/add.gif" alt="Add" title="Add" /></td>
-<td>Added support for JavaNano generator (requires protobuf compiler version 3 or above). Fixes <a class="externalLink" href="https://github.com/sebastienvermeille/another-protobuf-maven-plugin/38">38</a>. Thanks to Marek Kedzierski (kedzie).</td>
-<td><a href="team-list.html#sergei-ivanov">sergei-ivanov</a></td></tr></table></section><section>
-<h3 id="a0.4.2">Release 0.4.2 &#x2013; 2015-04-29</h3>
-<table border="0" class="bodyTable">
-<tr class="a">
-<th>Type</th>
-<th>Changes</th>
-<th>By</th></tr>
-<tr class="b">
-<td><img src="images/fix.gif" alt="Fix" title="Fix" /></td>
-<td>Made the order of imports predictable and matching the order of dependencies. Fixes <a class="externalLink" href="https://github.com/sebastienvermeille/another-protobuf-maven-plugin/34">34</a>.</td>
-<td><a href="team-list.html#sergei-ivanov">sergei-ivanov</a></td></tr>
-<tr class="a">
-<td><img src="images/fix.gif" alt="Fix" title="Fix" /></td>
-<td>Fixed release configuration.</td>
-<td><a href="team-list.html#sergei-ivanov">sergei-ivanov</a></td></tr></table></section><section>
-<h3 id="a0.4.1">Release 0.4.1 &#x2013; 2015-04-27</h3>
-<table border="0" class="bodyTable">
-<tr class="b">
-<th>Type</th>
-<th>Changes</th>
-<th>By</th></tr>
-<tr class="a">
-<td><img src="images/add.gif" alt="Add" title="Add" /></td>
-<td>Added an option to download protoc binary artifact from Maven repo. Fixes <a class="externalLink" href="https://github.com/sebastienvermeille/another-protobuf-maven-plugin/33">33</a>.</td>
-<td><a href="team-list.html#sergei-ivanov">sergei-ivanov</a></td></tr>
-<tr class="b">
-<td><img src="images/add.gif" alt="Add" title="Add" /></td>
-<td>Generated descriptor set can be attached to the build. Fixes <a class="externalLink" href="https://github.com/sebastienvermeille/another-protobuf-maven-plugin/21">21</a>.</td>
-<td><a href="team-list.html#sergei-ivanov">sergei-ivanov</a></td></tr>
-<tr class="a">
-<td><img src="images/add.gif" alt="Add" title="Add" /></td>
-<td>Added new goals to use custom native protoc plugins. Fixes <a class="externalLink" href="https://github.com/sebastienvermeille/another-protobuf-maven-plugin/30">30</a>.</td>
-<td><a href="team-list.html#sergei-ivanov">sergei-ivanov</a></td></tr>
-<tr class="b">
-<td><img src="images/add.gif" alt="Add" title="Add" /></td>
-<td>Added new parameter 'attachProtoSources', which controls whether the source protobuf files
-                are attached to the build and included into the final artifact. Fixes <a class="externalLink" href="https://github.com/sebastienvermeille/another-protobuf-maven-plugin/32">32</a>.</td>
-<td><a href="team-list.html#sergei-ivanov">sergei-ivanov</a></td></tr></table></section><section>
-<h3 id="a0.4.0">Release 0.4.0 &#x2013; 2015-03-11</h3>
-<table border="0" class="bodyTable">
-<tr class="a">
-<th>Type</th>
-<th>Changes</th>
-<th>By</th></tr>
-<tr class="b">
-<td><img src="images/fix.gif" alt="Fix" title="Fix" /></td>
-<td>Fixed toolchain support that was broken by incompatible changes in Maven 3.2.5. Fixes <a class="externalLink" href="https://github.com/sebastienvermeille/another-protobuf-maven-plugin/25">25</a>.</td>
-<td><a href="team-list.html#sergei-ivanov">sergei-ivanov</a></td></tr>
-<tr class="a">
-<td><img src="images/update.gif" alt="Update" title="Update" /></td>
-<td>Maven 3.0 is now a minimum required version for running the plugin. Fixes <a class="externalLink" href="https://github.com/sebastienvermeille/another-protobuf-maven-plugin/27">27</a>.</td>
-<td><a href="team-list.html#sergei-ivanov">sergei-ivanov</a></td></tr>
-<tr class="b">
-<td><img src="images/update.gif" alt="Update" title="Update" /></td>
-<td>Java 1.6 is now a minimum required version for running the plugin. Fixes <a class="externalLink" href="https://github.com/sebastienvermeille/another-protobuf-maven-plugin/26">26</a>.</td>
-<td><a href="team-list.html#sergei-ivanov">sergei-ivanov</a></td></tr>
-<tr class="a">
-<td><img src="images/add.gif" alt="Add" title="Add" /></td>
-<td>A new option to suppress clearing of the output directory. Fixes <a class="externalLink" href="https://github.com/sebastienvermeille/another-protobuf-maven-plugin/19">19</a>. Thanks to abatalev.</td>
-<td><a href="team-list.html#sergei-ivanov">sergei-ivanov</a></td></tr>
-<tr class="b">
-<td><img src="images/add.gif" alt="Add" title="Add" /></td>
-<td>Added new goals to generate C++ and Python sources from protobuf definitions. Fixes <a class="externalLink" href="https://github.com/sebastienvermeille/another-protobuf-maven-plugin/5">5</a>.</td>
-<td><a href="team-list.html#sergei-ivanov">sergei-ivanov</a></td></tr>
-<tr class="a">
-<td><img src="images/update.gif" alt="Update" title="Update" /></td>
-<td>Goal 'testCompile' has been renamed into 'test-compile'
-                (the old goal still remains for backward compatibility).</td>
-<td><a href="team-list.html#sergei-ivanov">sergei-ivanov</a></td></tr></table></section><section>
-<h3 id="a0.3.2">Release 0.3.2 &#x2013; 2013-10-21</h3>
-<table border="0" class="bodyTable">
-<tr class="b">
-<th>Type</th>
-<th>Changes</th>
-<th>By</th></tr>
-<tr class="a">
-<td><img src="images/fix.gif" alt="Fix" title="Fix" /></td>
-<td>Removed direct dependency on Aether library, and used injected Maven components for artifact resolution.</td>
-<td><a href="team-list.html#sergei-ivanov">sergei-ivanov</a></td></tr>
-<tr class="b">
-<td><img src="images/add.gif" alt="Add" title="Add" /></td>
-<td>Allowed to specify classifier in java protoc plugin definition.</td>
-<td><a href="team-list.html#sergei-ivanov">sergei-ivanov</a></td></tr>
-<tr class="a">
-<td><img src="images/add.gif" alt="Add" title="Add" /></td>
-<td>Allowed to use version range specifications in java protoc plugin definition.</td>
-<td><a href="team-list.html#sergei-ivanov">sergei-ivanov</a></td></tr>
-<tr class="b">
-<td><img src="images/remove.gif" alt="Remove" title="Remove" /></td>
-<td>Removed 'scope' parameter from java protoc plugin definition.
-                It has never been used, and any scope other than &quot;runtime&quot; is unlikely to work correctly.</td>
-<td><a href="team-list.html#sergei-ivanov">sergei-ivanov</a></td></tr></table></section><section>
-<h3 id="a0.3.1">Release 0.3.1 &#x2013; 2013-03-05</h3>
-<table border="0" class="bodyTable">
-<tr class="a">
-<th>Type</th>
-<th>Changes</th>
-<th>By</th></tr>
-<tr class="b">
-<td><img src="images/add.gif" alt="Add" title="Add" /></td>
-<td>Integration tests for java protoc plugins.</td>
-<td><a href="team-list.html#rwicke">rwicke</a></td></tr>
-<tr class="a">
-<td><img src="images/update.gif" alt="Update" title="Update" /></td>
-<td>Support for running java protoc plugins on 64-bit Windows platform.</td>
-<td><a href="team-list.html#rwicke">rwicke</a></td></tr>
-<tr class="b">
-<td><img src="images/update.gif" alt="Update" title="Update" /></td>
-<td>Fixed integration into Eclipse lifecycle (library version conflict) Thanks to jsilland.</td>
-<td><a href="team-list.html#sergei-ivanov">sergei-ivanov</a></td></tr></table></section><section>
-<h3 id="a0.3.0">Release 0.3.0 &#x2013; 2013-01-04</h3>
-<table border="0" class="bodyTable">
-<tr class="a">
-<th>Type</th>
-<th>Changes</th>
-<th>By</th></tr>
-<tr class="b">
-<td><img src="images/add.gif" alt="Add" title="Add" /></td>
-<td>Support for java-based plugins for protoc compiler.</td>
-<td><a href="team-list.html#rwicke">rwicke</a></td></tr>
-<tr class="a">
-<td><img src="images/add.gif" alt="Add" title="Add" /></td>
-<td>Generation of binary descriptor sets.</td>
-<td><a href="team-list.html#rwicke">rwicke</a></td></tr>
-<tr class="b">
-<td><img src="images/update.gif" alt="Update" title="Update" /></td>
-<td>Upgraded required Maven version to 2.2.1.</td>
-<td><a href="team-list.html#sergei-ivanov">sergei-ivanov</a></td></tr>
-<tr class="a">
-<td><img src="images/update.gif" alt="Update" title="Update" /></td>
-<td>Updated to the latest versions of Maven plugins.
-                Switched to using Java 5 Mojo annotations for plugin metadata.</td>
-<td><a href="team-list.html#sergei-ivanov">sergei-ivanov</a></td></tr>
-<tr class="b">
-<td><img src="images/add.gif" alt="Add" title="Add" /></td>
-<td>Integration into Eclipse lifecycle (supported by M2E 1.1 and later) Thanks to Igor Petruk.</td>
-<td><a href="team-list.html#sergei-ivanov">sergei-ivanov</a></td></tr></table></section><section>
-<h3 id="a0.2.0">Release 0.2.0 &#x2013; 2011-12-12</h3>
-<table border="0" class="bodyTable">
-<tr class="a">
-<th>Type</th>
-<th>Changes</th>
-<th>By</th></tr>
-<tr class="b">
-<td><img src="images/add.gif" alt="Add" title="Add" /></td>
-<td>Added protobuf toolchain extension for use by maven-toolchains-plugin.
-                Integrated protobuf toolchain into plugin execution.</td>
-<td><a href="team-list.html#sergei-ivanov">sergei-ivanov</a></td></tr>
-<tr class="a">
-<td><img src="images/add.gif" alt="Add" title="Add" /></td>
-<td>Additional debug logging is produced when Maven runs in verbose mode.</td>
-<td><a href="team-list.html#sergei-ivanov">sergei-ivanov</a></td></tr>
-<tr class="b">
-<td><img src="images/add.gif" alt="Add" title="Add" /></td>
-<td>Added a suite of integration tests.</td>
-<td><a href="team-list.html#sergei-ivanov">sergei-ivanov</a></td></tr>
-<tr class="a">
-<td><img src="images/add.gif" alt="Add" title="Add" /></td>
-<td>Created content for the Maven-generated web site.</td>
-<td><a href="team-list.html#sergei-ivanov">sergei-ivanov</a></td></tr>
-<tr class="b">
-<td><img src="images/fix.gif" alt="Fix" title="Fix" /></td>
-<td>Updated documentation in source code.</td>
-<td><a href="team-list.html#sergei-ivanov">sergei-ivanov</a></td></tr>
-<tr class="a">
-<td><img src="images/fix.gif" alt="Fix" title="Fix" /></td>
-<td>Updated Mojo documentation.</td>
-<td><a href="team-list.html#sergei-ivanov">sergei-ivanov</a></td></tr>
-<tr class="b">
-<td><img src="images/fix.gif" alt="Fix" title="Fix" /></td>
-<td>Updated Mojo annotations for Maven3 (marked plugin as thread-safe for parallel module builds).</td>
-<td><a href="team-list.html#sergei-ivanov">sergei-ivanov</a></td></tr>
-<tr class="a">
-<td><img src="images/add.gif" alt="Add" title="Add" /></td>
-<td>Allowed protoc executable to be specified when invoking plugin from command line.</td>
-<td><a href="team-list.html#sergei-ivanov">sergei-ivanov</a></td></tr>
-<tr class="b">
-<td><img src="images/add.gif" alt="Add" title="Add" /></td>
-<td>Added options to suppress plugin execution.</td>
-<td><a href="team-list.html#sergei-ivanov">sergei-ivanov</a></td></tr>
-<tr class="a">
-<td><img src="images/fix.gif" alt="Fix" title="Fix" /></td>
-<td>Enabled test protobuf definitions to import production definitions from the same module. Thanks to B. K. Oxley (binkley).</td>
-<td><a href="team-list.html#sergei-ivanov">sergei-ivanov</a></td></tr>
-<tr class="b">
-<td><img src="images/fix.gif" alt="Fix" title="Fix" /></td>
-<td>Fixed importing protobuf definitions from other projects or modules when namespaces are used. Thanks to Paul Nyheim (pnyheim).</td>
-<td><a href="team-list.html#sergei-ivanov">sergei-ivanov</a></td></tr></table></section></section>
+<td>Add an option &lt;extraArgs&gt; which let user pass custom parameters to protoc command. Fixes <a class="externalLink" href="https://github.com/sebastienvermeille/another-protobuf-maven-plugin/2">2</a>.</td>
+<td><a href="team-list.html#svermeille">svermeille</a></td></tr></table></section></section>
       </div>
     </div>
     <div class="clear">
