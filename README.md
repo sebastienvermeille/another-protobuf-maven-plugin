@@ -1,20 +1,31 @@
-[![GitHub license](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://raw.githubusercontent.com/xolstice/protobuf-maven-plugin/master/LICENSE)
-[![Maven Central](https://img.shields.io/maven-central/v/org.xolstice.maven.plugins/protobuf-maven-plugin.svg)](https://repo1.maven.org/maven2/org/xolstice/maven/plugins/protobuf-maven-plugin/)
-[![Bintray](https://img.shields.io/bintray/v/xolstice/maven/protobuf-maven-plugin.svg)](https://bintray.com/xolstice/maven/protobuf-maven-plugin/)
-[![Build Status](https://travis-ci.com/xolstice/protobuf-maven-plugin.svg?branch=master)](https://travis-ci.com/xolstice/protobuf-maven-plugin)
-[![Build status](https://ci.appveyor.com/api/projects/status/u8mxkjcs1xl1s3om/branch/master?svg=true)](https://ci.appveyor.com/project/xolstice/protobuf-maven-plugin/branch/master)
-[![Known Vulnerabilities](https://snyk.io/test/github/xolstice/protobuf-maven-plugin/badge.svg)](https://snyk.io/test/github/xolstice/protobuf-maven-plugin)
-[![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/4070/badge)](https://bestpractices.coreinfrastructure.org/projects/4070)
+[![GitHub license](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://github.com/sebastienvermeille/another-protobuf-maven-plugin/blob/master/LICENSE)
+[![Maven Central](https://img.shields.io/maven-central/v/dev.cookiecode/protobuf-maven-plugin.svg)](https://mvnrepository.com/artifact/dev.cookiecode/protobuf-maven-plugin/)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=sebastienvermeille_another-protobuf-maven-plugin&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=sebastienvermeille_another-protobuf-maven-plugin)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=sebastienvermeille_another-protobuf-maven-plugin&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=sebastienvermeille_another-protobuf-maven-plugin)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=sebastienvermeille_another-protobuf-maven-plugin&metric=coverage)](https://sonarcloud.io/summary/new_code?id=sebastienvermeille_another-protobuf-maven-plugin)
 
-# Maven Protocol Buffers Plugin
+[//]: # ([![Build Status]&#40;https://travis-ci.com/xolstice/protobuf-maven-plugin.svg?branch=master&#41;]&#40;https://travis-ci.com/xolstice/protobuf-maven-plugin&#41;)
 
-[![Join the chat at https://gitter.im/xolstice/protobuf-maven-plugin](https://badges.gitter.im/xolstice/protobuf-maven-plugin.svg)](https://gitter.im/xolstice/protobuf-maven-plugin?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[//]: # ([![Build status]&#40;https://ci.appveyor.com/api/projects/status/u8mxkjcs1xl1s3om/branch/master?svg=true&#41;]&#40;https://ci.appveyor.com/project/xolstice/protobuf-maven-plugin/branch/master&#41;)
+
+[//]: # ([![Known Vulnerabilities]&#40;https://snyk.io/test/github/xolstice/protobuf-maven-plugin/badge.svg&#41;]&#40;https://snyk.io/test/github/xolstice/protobuf-maven-plugin&#41;)
+[//]: # ([![CII Best Practices]&#40;https://bestpractices.coreinfrastructure.org/projects/4070/badge&#41;]&#40;https://bestpractices.coreinfrastructure.org/projects/4070&#41;)
+[//]: # ([![Join the chat at https://gitter.im/xolstice/protobuf-maven-plugin]&#40;https://badges.gitter.im/xolstice/protobuf-maven-plugin.svg&#41;]&#40;https://gitter.im/xolstice/protobuf-maven-plugin?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge&#41;)
+
+# Another Maven Protocol Buffers Plugin
 
 A plugin that integrates protocol buffers compiler (`protoc`) into Maven lifecycle.
-This is a continuation of `maven-protoc-plugin` that was started at Google
-and later developed by GitHub community.
 
-[Release notes](https://www.xolstice.org/protobuf-maven-plugin/changes-report.html) and detailed documentation
-are available on the [web site](https://www.xolstice.org/protobuf-maven-plugin/).
+[Release notes](https://another-protobuf-maven-plugin.cookiecode.dev/changes-report.html) and detailed documentation
+are available on the [web site](https://another-protobuf-maven-plugin.cookiecode.dev/).
 
 Please also read [Contribution Guidelines](docs/CONTRIBUTING.md) and [Code of Conduct](docs/CODE_OF_CONDUCT.md) for this project.
+
+
+### Why did you create another plugin ?
+
+This is a continuation of `maven-protobuf-plugin` that was forked by xolstice, which was itself a continuation of
+`maven-protoc-plugin` that was started at Google and later developed by GitHub community.
+
+I opened a PR years ago as many other contributors but the `maven-protobuf-plugin` project was unfortunately
+abandoned by its authors.
