@@ -447,8 +447,6 @@
                             <merge>false</merge>
                             <noJekyll>true</noJekyll>
                             <server>github</server>
-                            <repositoryName>another-protobuf-maven-plugin</repositoryName>
-                            <repositoryOwner>sebastienvermeille</repositoryOwner>
                         </configuration>
                     </execution>
                 </executions>
