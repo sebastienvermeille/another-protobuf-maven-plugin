@@ -23,7 +23,7 @@ jobs:
             {
               "id": "github",
               "username": "",
-              "password": "${env.GITHUB_OAUTH_PASS}"
+              "password": "${env.OAUTH_GITHUB_PAGES_PASS}"
             }
           ]
     - name: Set up JDK 11
