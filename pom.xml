@@ -317,7 +317,7 @@
                 <configuration>
                     <toolchains>
                         <jdk>
-                            <version>[${jdk.version},)</version>
+                            <version>${jdk.version}</version>
                         </jdk>
                     </toolchains>
                 </configuration>
