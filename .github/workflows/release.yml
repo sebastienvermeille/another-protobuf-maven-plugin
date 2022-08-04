@@ -16,7 +16,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: maven-settings-xml-action
-      uses: whelk-io/maven-settings-xml-action@v20
+      uses: whelk-io/maven-settings-xml-action@v4
       with:
         repositories: '[{ "id": "fix_world", "url": "https://maven.pkg.github.com/joshjohanning-org/sherlock-heroku-poc-mvn-package" }]'
         servers: '[{ "id": "github", "username": "", "password": "${{ secrets.OAUTH_GITHUB_PAGES_PASS_BKP }}" }]'
