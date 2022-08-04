@@ -22,7 +22,7 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: maven-settings-xml-action
-      uses: whelk-io/maven-settings-xml-action@v4
+      uses: whelk-io/maven-settings-xml-action@v20
       with:
         servers: >
           [
