@@ -24,14 +24,11 @@ jobs:
     - name: maven-settings-xml-action
       uses: whelk-io/maven-settings-xml-action@v20
       with:
-        servers: >
-          [
-            {
-              "id": "github",
-              "username": "",
-              "password": "${env.OAUTH_GITHUB_PAGES_PASS}"
-            }
-          ]
-        output_file: .m2/settings.xml        
+        repositories: '[{ "id": "fix_world", "url": "https://maven.pkg.github.com/joshjohanning-org/sherlock-heroku-poc-mvn-package" }]'
+        servers: '[{ "id": "github", "username": "", "password": "${{ secrets.OAUTH_GITHUB_PAGES_PASS_BKP }}" }]'
+
+    - name: View settings.xml
+      run: cat ~/.m2/settings.xml 
+      
     - name: Build and deploy to gh-pages
       run: mvn -B -X site-deploy --file pom.xml --settings /home/runner/.m2/settings.xml
