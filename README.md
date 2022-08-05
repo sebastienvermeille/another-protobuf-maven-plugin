@@ -4,13 +4,10 @@
 [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=sebastienvermeille_another-protobuf-maven-plugin&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=sebastienvermeille_another-protobuf-maven-plugin)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=sebastienvermeille_another-protobuf-maven-plugin&metric=coverage)](https://sonarcloud.io/summary/new_code?id=sebastienvermeille_another-protobuf-maven-plugin)
 
-[//]: # ([![Build Status]&#40;https://travis-ci.com/xolstice/protobuf-maven-plugin.svg?branch=master&#41;]&#40;https://travis-ci.com/xolstice/protobuf-maven-plugin&#41;)
+[![Known Vulnerabilities](https://snyk.io/test/github/sebastienvermeille/another-protobuf-maven-plugin/badge.svg)](https://snyk.io/test/github/sebastienvermeille/another-protobuf-maven-plugin)
+![Discord](https://img.shields.io/discord/1004998701917421588?label=discord)
+[![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/6337/badge)](https://bestpractices.coreinfrastructure.org/projects/6337)
 
-[//]: # ([![Build status]&#40;https://ci.appveyor.com/api/projects/status/u8mxkjcs1xl1s3om/branch/master?svg=true&#41;]&#40;https://ci.appveyor.com/project/xolstice/protobuf-maven-plugin/branch/master&#41;)
-
-[//]: # ([![Known Vulnerabilities]&#40;https://snyk.io/test/github/xolstice/protobuf-maven-plugin/badge.svg&#41;]&#40;https://snyk.io/test/github/xolstice/protobuf-maven-plugin&#41;)
-[//]: # ([![CII Best Practices]&#40;https://bestpractices.coreinfrastructure.org/projects/4070/badge&#41;]&#40;https://bestpractices.coreinfrastructure.org/projects/4070&#41;)
-[//]: # ([![Join the chat at https://gitter.im/xolstice/protobuf-maven-plugin]&#40;https://badges.gitter.im/xolstice/protobuf-maven-plugin.svg&#41;]&#40;https://gitter.im/xolstice/protobuf-maven-plugin?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge&#41;)
 
 # Another Maven Protocol Buffers Plugin
 
