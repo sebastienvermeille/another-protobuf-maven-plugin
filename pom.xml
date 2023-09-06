@@ -41,7 +41,7 @@
 
         <mavenVersion>3.3.9</mavenVersion>
         <plexusComponentVersion>2.1.0</plexusComponentVersion>
-        <plexusUtilsVersion>3.3.0</plexusUtilsVersion>
+        <plexusUtilsVersion>3.4.2</plexusUtilsVersion>
         <pluginToolsVersion>3.6.0</pluginToolsVersion>
 
         <goalPrefix>protobuf</goalPrefix>
@@ -302,7 +302,7 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-plugin-plugin</artifactId>
                 <configuration>
-                    <mojoDependencies />
+                    <mojoDependencies/>
                     <goalPrefix>${goalPrefix}</goalPrefix>
                 </configuration>
                 <executions>
@@ -446,7 +446,7 @@
                 <artifactId>maven-plugin-plugin</artifactId>
                 <version>3.6.0</version>
                 <configuration>
-                    <mojoDependencies />
+                    <mojoDependencies/>
                     <goalPrefix>${goalPrefix}</goalPrefix>
                 </configuration>
             </plugin>
