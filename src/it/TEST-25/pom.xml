@@ -34,7 +34,7 @@
     <name>Integration Test 25</name>
 
     <properties>
-        <protobufVersion>3.4.0</protobufVersion>
+        <protobufVersion>3.24.2</protobufVersion>
     </properties>
 
     <build>

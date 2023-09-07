@@ -41,7 +41,7 @@
 
         <mavenVersion>3.3.9</mavenVersion>
 
-        <protobufVersion>3.11.1</protobufVersion>
+        <protobufVersion>3.24.2</protobufVersion>
         <protobufJavaArtifact>protobuf-java</protobufJavaArtifact>
     </properties>
 
@@ -166,6 +166,11 @@
             <groupId>com.google.protobuf</groupId>
             <artifactId>${protobufJavaArtifact}</artifactId>
             <version>${protobufVersion}</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.annotation</groupId>
+            <artifactId>javax.annotation-api</artifactId>
+            <version>1.2</version>
         </dependency>
         <!-- Test dependencies -->
         <dependency>

@@ -35,7 +35,7 @@
 
     <properties>
         <!-- Peg to the same protobuf version as MinimalPlugin was compiled against -->
-        <protobufVersion>3.4.0</protobufVersion>
+        <protobufVersion>3.24.2</protobufVersion>
     </properties>
 
     <build>

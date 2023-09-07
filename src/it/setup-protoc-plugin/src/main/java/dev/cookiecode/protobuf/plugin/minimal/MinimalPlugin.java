@@ -1,4 +1,4 @@
-package org.xolstice.protobuf.plugin.minimal;
+package dev.cookiecode.protobuf.plugin.minimal;
 
 /*
  * Copyright (c) 2016 Maven Protocol Buffers Plugin Authors. All rights reserved.
