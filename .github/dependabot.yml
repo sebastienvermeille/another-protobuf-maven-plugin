@@ -1,0 +1,31 @@
+version: 2
+updates:
+  # Enable version updates for maven
+  - package-ecosystem: "maven"
+    directory: "/"
+    # Check the npm registry for updates every day (weekdays)
+    schedule:
+      interval: "daily"
+    assignees:
+      - "sebastienvermeille"
+    reviewers:
+      - "sebastienvermeille"
+    commit-message:
+      prefix: "[maven] "
+    labels:
+      - "java"
+      - "dependencies"
+
+  # Enable version updates for GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    assignees:
+      - "sebastienvermeille"
+    reviewers:
+      - "sebastienvermeille"
+    commit-message:
+      prefix: "[github-action] "
+    labels:
+      - "CI/CD"

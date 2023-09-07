@@ -23,7 +23,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.xolstice.maven.plugins.protobuf.its</groupId>
+        <groupId>dev.cookiecode.its</groupId>
         <artifactId>it-parent</artifactId>
         <version>1.0.0</version>
     </parent>
@@ -41,7 +41,7 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.xolstice.maven.plugins</groupId>
+                <groupId>dev.cookiecode</groupId>
                 <artifactId>protobuf-maven-plugin</artifactId>
                 <version>@project.version@</version>
                 <executions>
@@ -54,14 +54,14 @@
                             <protocPlugins>
                                 <protocPlugin>
                                     <id>minimal</id>
-                                    <groupId>org.xolstice.maven.plugins.protobuf.its</groupId>
+                                    <groupId>dev.cookiecode.its</groupId>
                                     <artifactId>test-protoc-plugin</artifactId>
                                     <version>1.0.5</version>
                                     <mainClass>org.xolstice.protobuf.plugin.minimal.MinimalPlugin</mainClass>
                                 </protocPlugin>
                                 <protocPlugin>
                                     <id>prefix</id>
-                                    <groupId>org.xolstice.maven.plugins.protobuf.its</groupId>
+                                    <groupId>dev.cookiecode.its</groupId>
                                     <artifactId>test-protoc-plugin</artifactId>
                                     <!-- Test that version ranges are correctly resolved too -->
                                     <version>[1.0.0,1.1.0)</version>

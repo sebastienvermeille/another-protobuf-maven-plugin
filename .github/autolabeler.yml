@@ -1,0 +1,3 @@
+documentation: ["*.mdx", "*.md", ".doc/*", "docs/*"]
+java: ["*.java"]
+CI/CD: [".github/*"]
