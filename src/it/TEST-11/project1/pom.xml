@@ -23,7 +23,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.xolstice.maven.plugins.protobuf.its</groupId>
+        <groupId>dev.cookiecode.its</groupId>
         <artifactId>test-11-parent</artifactId>
         <version>1.0.0</version>
     </parent>
@@ -35,7 +35,7 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.xolstice.maven.plugins</groupId>
+                <groupId>dev.cookiecode</groupId>
                 <artifactId>protobuf-maven-plugin</artifactId>
                 <executions>
                     <execution>

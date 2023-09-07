@@ -23,7 +23,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.xolstice.maven.plugins.protobuf.its</groupId>
+        <groupId>dev.cookiecode.its</groupId>
         <artifactId>it-parent</artifactId>
         <version>1.0.0</version>
     </parent>
@@ -41,7 +41,7 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.xolstice.maven.plugins</groupId>
+                <groupId>dev.cookiecode</groupId>
                 <artifactId>protobuf-maven-plugin</artifactId>
                 <version>@project.version@</version>
                 <executions>
@@ -54,7 +54,7 @@
                             <protocPlugins>
                                 <protocPlugin>
                                     <id>missing</id>
-                                    <groupId>org.xolstice.maven.plugins.protobuf.its</groupId>
+                                    <groupId>dev.cookiecode.its</groupId>
                                     <artifactId>test-protoc-plugin</artifactId>
                                     <!-- This is a knowingly non-existent version -->
                                     <version>2.0.0</version>

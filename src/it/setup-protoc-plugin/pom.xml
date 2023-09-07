@@ -22,7 +22,7 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.xolstice.maven.plugins.protobuf.its</groupId>
+    <groupId>dev.cookiecode.its</groupId>
     <artifactId>test-protoc-plugin</artifactId>
     <version>1.0.5</version>
     <packaging>jar</packaging>
