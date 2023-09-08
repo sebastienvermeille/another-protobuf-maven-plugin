@@ -48,14 +48,13 @@ import org.sonatype.plexus.build.incremental.BuildContext;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
+import java.util.stream.Collectors;
 
 import static java.lang.Math.max;
 import static java.lang.String.format;
@@ -391,6 +390,22 @@ abstract class AbstractProtocMojo extends AbstractMojo {
             defaultValue = "false"
     )
     private boolean clearOutputDirectory;
+
+    /**
+     * When {@code true}, the .proto files to be compiled will be sorted before providing their
+     * paths to the protoc compiler. Otherwise, the order depends on the order in which the
+     * files are returned from the file system, which is nondeterministic and differs between
+     * file systems (and thus between Windows and macOS/Linux, for example).
+     * <p>
+     * This can for example be relevant when using documentation generation plugins for protoc.
+     *
+     * @since 0.7.2
+     */
+    @Parameter(
+            required = false,
+            defaultValue = "false"
+    )
+    private boolean sortProtoFiles;
 
     /**
      * Executes the mojo.
@@ -886,7 +901,11 @@ abstract class AbstractProtocMojo extends AbstractMojo {
         } catch (IOException e) {
             throw new MojoInitializationException("Unable to retrieve the list of files: " + e.getMessage(), e);
         }
-        return protoFilesInDirectory;
+        if(sortProtoFiles) {
+            return sortProtoFiles(protoFilesInDirectory);
+        } else {
+            return protoFilesInDirectory;
+        }
     }
 
     protected List<File> findProtoFilesInDirectories(final Iterable<File> directories) {
@@ -898,6 +917,41 @@ abstract class AbstractProtocMojo extends AbstractMojo {
             protoFiles.addAll(findProtoFilesInDirectory(directory));
         }
         return protoFiles;
+    }
+
+    /**
+     * Sorts the given list of .proto files lexicographically.
+     * <p>
+     * This results in an order like
+     * <ol>
+     * <li>/top1/a.proto</li>
+     * <li>/top1/sub1/a.proto</li>
+     * <li>/top1/sub1/b.proto</li>
+     * <li>/top1/sub1/bot1/d.proto</li>
+     * <li>/top1/sub1/bot2/c.proto</li>
+     * <li>/top1/sub2/x.proto</li>
+     * <li>/top2/z.proto</li>
+     * <li>/top2/sub1/y.proto</li>
+     * </ol>
+     *
+     * @param unsortedFiles the unsorted list of files
+     * @return the sorted list
+     */
+    protected List<File> sortProtoFiles(final List<File> unsortedFiles) {
+        return unsortedFiles.stream().sorted((aFirst, aSecond) -> {
+            final Path first = aFirst.getAbsoluteFile().toPath();
+            final Path firstParent = first.getParent();
+            final Path second = aSecond.getAbsoluteFile().toPath();
+            final Path secondParent = second.getParent();
+
+            // In case of equal parent directories, compare the file names
+            if(firstParent.equals(secondParent)) {
+                return first.getFileName().compareTo(second.getFileName());
+            } else {
+                // For different parent directories, sort parents lexicographically
+                return firstParent.compareTo(secondParent);
+            }
+        }).collect(Collectors.toList());
     }
 
     /**
