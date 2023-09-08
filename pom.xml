@@ -25,7 +25,7 @@
     <packaging>maven-plugin</packaging>
     <name>Another Maven Protocol Buffers Plugin</name>
     <version>2.1.0</version>
-    <url>https://another-protobuf-maven-plugin.cookiecode.dev</url>
+    <url>https://github.com/sebastienvermeille/another-protobuf-maven-plugin</url>
     <description>Maven Plugin that executes the Protocol Buffers (protoc) compiler</description>
     <inceptionYear>2021</inceptionYear>
 
@@ -446,7 +446,7 @@
                         </goals>
                         <phase>site-deploy</phase>
                         <configuration>
-                            <message>Create website for ${project.artifactId}-${project.version}</message>
+                            <message>Building maven site for ${project.artifactId}-${project.version}</message>
                             <merge>false</merge>
                             <noJekyll>true</noJekyll>
                             <server>github</server>
