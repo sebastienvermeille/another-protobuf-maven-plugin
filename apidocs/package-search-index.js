@@ -1,1 +1,0 @@
-packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"dev.cookiecode.maven.plugin.protobuf"},{"l":"dev.cookiecode.maven.toolchain.protobuf"},{"l":"org.xolstice.maven.plugin.protobuf"}]
