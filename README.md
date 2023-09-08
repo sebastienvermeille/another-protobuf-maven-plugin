@@ -1,11 +1,9 @@
 [![GitHub license](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://github.com/sebastienvermeille/another-protobuf-maven-plugin/blob/master/LICENSE)
-[![Maven Central](https://img.shields.io/maven-central/v/dev.cookiecode/protobuf-maven-plugin.svg)](https://mvnrepository.com/artifact/dev.cookiecode/protobuf-maven-plugin/)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=sebastienvermeille_another-protobuf-maven-plugin&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=sebastienvermeille_another-protobuf-maven-plugin)
-[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=sebastienvermeille_another-protobuf-maven-plugin&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=sebastienvermeille_another-protobuf-maven-plugin)
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=sebastienvermeille_another-protobuf-maven-plugin&metric=coverage)](https://sonarcloud.io/summary/new_code?id=sebastienvermeille_another-protobuf-maven-plugin)
+[![Maven Central](https://img.shields.io/maven-central/v/dev.cookiecode/another-protobuf-maven-plugin.svg)](https://mvnrepository.com/artifact/dev.cookiecode/another-protobuf-maven-plugin/)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=dev.cookiecode%3Aanother-protobuf-maven-plugin&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=dev.cookiecode%3Aanother-protobuf-maven-plugin)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=dev.cookiecode%3Aanother-protobuf-maven-plugin&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=dev.cookiecode%3Aanother-protobuf-maven-plugin)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=dev.cookiecode%3Aanother-protobuf-maven-plugin&metric=coverage)](https://sonarcloud.io/summary/new_code?id=dev.cookiecode%3Aanother-protobuf-maven-plugin)
 
-[![Known Vulnerabilities](https://snyk.io/test/github/sebastienvermeille/another-protobuf-maven-plugin/badge.svg)](https://snyk.io/test/github/sebastienvermeille/another-protobuf-maven-plugin)
-![Discord](https://img.shields.io/discord/1004998701917421588?label=discord)
 [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/6337/badge)](https://bestpractices.coreinfrastructure.org/projects/6337)
 
 
