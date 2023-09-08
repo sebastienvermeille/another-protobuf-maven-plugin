@@ -1,4 +1,5 @@
 [![GitHub license](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://github.com/sebastienvermeille/another-protobuf-maven-plugin/blob/master/LICENSE)
+[![join discord](https://img.shields.io/badge/join%20discord-gray?style=flat&logo=discord&link=https://discord.gg/uqQ2SWCQCb)](https://discord.gg/uqQ2SWCQCb)
 [![Maven Central](https://img.shields.io/maven-central/v/dev.cookiecode/another-protobuf-maven-plugin.svg)](https://mvnrepository.com/artifact/dev.cookiecode/another-protobuf-maven-plugin/)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=dev.cookiecode%3Aanother-protobuf-maven-plugin&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=dev.cookiecode%3Aanother-protobuf-maven-plugin)
 [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=dev.cookiecode%3Aanother-protobuf-maven-plugin&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=dev.cookiecode%3Aanother-protobuf-maven-plugin)
