@@ -17,7 +17,11 @@ jobs:
     - name: maven-settings-xml-action
       uses: whelk-io/maven-settings-xml-action@v4
       with:
-        servers: '[{ "id": "github", "password": "${{ secrets.OAUTH_GITHUB_PAGES_PASS }}" }]'
+        servers: '[{
+          "id": "github",
+          "username": "${{ secrets.OAUTH_GITHUB_PAGES_USERNAME }}",
+          "password": "${{ secrets.OAUTH_GITHUB_PAGES_PASS }}"
+        }]'
 
     - name: View settings.xml
       run: cat ~/.m2/settings.xml
