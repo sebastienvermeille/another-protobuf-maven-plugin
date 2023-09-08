@@ -24,7 +24,7 @@
     <artifactId>another-protobuf-maven-plugin</artifactId>
     <packaging>maven-plugin</packaging>
     <name>Another Maven Protocol Buffers Plugin</name>
-    <version>0.7.2-SNAPSHOT</version>
+    <version>2.1.0</version>
     <url>https://another-protobuf-maven-plugin.cookiecode.dev</url>
     <description>Maven Plugin that executes the Protocol Buffers (protoc) compiler</description>
     <inceptionYear>2021</inceptionYear>
