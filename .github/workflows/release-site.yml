@@ -6,8 +6,7 @@ name: Update doc website
 on:
   push:
     branches: [ "master" ]
-#   pull_request:
-#     branches: [ "master" ]
+  workflow_dispatch:
 
 jobs:
   build:
@@ -22,11 +21,11 @@ jobs:
 
     - name: View settings.xml
       run: cat ~/.m2/settings.xml
-#     - name: Set up JDK 8
-#       uses: actions/setup-java@v3
-#       with:
-#         java-version: '8'
-#         distribution: 'temurin'
-#         cache: maven
+    - name: Set up JDK 8
+      uses: actions/setup-java@v3
+      with:
+       java-version: '8'
+       distribution: 'temurin'
+       cache: maven
     - name: Build and deploy to gh-pages
       run: mvn -B site-deploy --file pom.xml
