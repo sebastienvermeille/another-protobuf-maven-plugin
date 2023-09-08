@@ -11,6 +11,14 @@
 
 # Another Maven Protocol Buffers Plugin
 
+```
+<dependency>
+  <groupId>dev.cookiecode</groupId>
+  <artifactId>another-protobuf-maven-plugin</artifactId>
+  <version>2.1.0</version>
+</dependency>
+```
+
 A plugin that integrates protocol buffers compiler (`protoc`) into Maven lifecycle.
 
 [Release notes](https://another-protobuf-maven-plugin.cookiecode.dev/changes-report.html) and detailed documentation
