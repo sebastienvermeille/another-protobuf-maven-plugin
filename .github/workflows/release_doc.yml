@@ -1,0 +1,32 @@
+# This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
+# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
+
+name: Update doc website
+
+on:
+  push:
+    branches: [ "master" ]
+#   pull_request:
+#     branches: [ "master" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: maven-settings-xml-action
+      uses: whelk-io/maven-settings-xml-action@v4
+      with:
+        servers: '[{ "id": "github", "username": "", "password": "${{ secrets.OAUTH_GITHUB_PAGES_PASS }}" }]'
+
+    - name: View settings.xml
+      run: cat ~/.m2/settings.xml
+#     - name: Set up JDK 8
+#       uses: actions/setup-java@v3
+#       with:
+#         java-version: '8'
+#         distribution: 'temurin'
+#         cache: maven
+    - name: Build and deploy to gh-pages
+      run: mvn -B site-deploy --file pom.xml

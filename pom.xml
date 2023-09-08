@@ -48,6 +48,9 @@
         <!-- sonarqube analysis -->
         <sonar.organization>sebastienvermeille</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+
+        <!-- plugins version -->
+        <maven.gpg.plugin.version>3.1.0</maven.gpg.plugin.version>
     </properties>
 
     <prerequisites>
@@ -86,22 +89,26 @@
         <tag>HEAD</tag>
     </scm>
 
-    <distributionManagement>
-<!--        TODO: update this-->
-        <downloadUrl>https://bintray.com/xolstice/maven/protobuf-maven-plugin/view</downloadUrl>
-        <site>
-            <!--
-                release:perform checks this element to determine whether site-deploy goal needs to be run.
-                The actual site deployment is done by GitHub site-maven-plugin, so the URL here is not used.
-            -->
-            <id>gh-pages</id>
-            <url>https://github.com/xolstice/protobuf-maven-plugin/tree/gh-pages</url>
-        </site>
+    <repositories>
         <repository>
-            <id>bintray</id>
-            <name>Releases on Bintray</name>
-            <url>https://api.bintray.com/maven/xolstice/maven/protobuf-maven-plugin</url>
+            <id>central</id>
+            <url>https://repo1.maven.org/maven2</url>
         </repository>
+    </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>mavencentral</id>
+            <name>Maven central</name>
+            <url>https://repo.maven.apache.org/maven2</url>
+        </pluginRepository>
+    </pluginRepositories>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
     </distributionManagement>
 
     <issueManagement>
@@ -180,16 +187,33 @@
                 </plugin>
 
                 <plugin>
+                    <groupId>org.sonatype.plugins</groupId>
+                    <artifactId>nexus-staging-maven-plugin</artifactId>
+                    <version>1.6.13</version>
+                    <extensions>true</extensions>
+                    <configuration>
+                        <serverId>ossrh</serverId>
+                        <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
+                        <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                    </configuration>
+                </plugin>
+
+                <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-javadoc-plugin</artifactId>
-                    <version>3.1.1</version>
+                    <version>3.5.0</version>
                     <configuration>
-                        <minmemory>128m</minmemory>
-                        <maxmemory>512m</maxmemory>
-                        <detectLinks>true</detectLinks>
-                        <show>package</show>
-                        <notimestamp>true</notimestamp>
+                        <additionalOptions>-Xdoclint:none</additionalOptions>
+                        <failOnError>false</failOnError>
                     </configuration>
+                    <executions>
+                        <execution>
+                            <id>attach-javadocs</id>
+                            <goals>
+                                <goal>jar</goal>
+                            </goals>
+                        </execution>
+                    </executions>
                 </plugin>
 
                 <plugin>
@@ -511,6 +535,41 @@
     </reporting>
 
     <profiles>
+        <profile>
+            <id>release-sign-artifacts</id>
+            <activation>
+                <property>
+                    <name>performRelease</name>
+                    <value>true</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>${maven.gpg.plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                                <configuration>
+                                    <!-- This is required to make sure the plugin does not stop asking for -->
+                                    <!-- user input on the passphrase -->
+                                    <gpgArguments>
+                                        <arg>--pinentry-mode</arg>
+                                        <arg>loopback</arg>
+                                    </gpgArguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
         <profile>
             <!--
                 A separate profile to optionally enable integration tests
