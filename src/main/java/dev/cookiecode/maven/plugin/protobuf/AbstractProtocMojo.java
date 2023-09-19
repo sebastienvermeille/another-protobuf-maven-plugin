@@ -398,6 +398,24 @@ abstract class AbstractProtocMojo extends AbstractMojo {
      * file systems (and thus between Windows and macOS/Linux, for example).
      * <p>
      * This can for example be relevant when using documentation generation plugins for protoc.
+     * <p>
+     * Enabling sorting results in a deterministic order like in the following example, with 
+     * higher directory levels being sorted first, then lower levels are sorted recursively. 
+     * Sorting at each level is alphabetically, but each level forms an individual "pool", 
+     * with the topmost level considered to be one pool, and the each subdirectory there
+     * (and recursively below) creating another pool. Proto files within a pool are always
+     * considered to be sorted in front of subdirectories. This ordering scheme is designed
+     * to work well for large, hierarchically structured APIs.
+     * <ol>
+     * <li>/top1/a.proto</li>
+     * <li>/top1/sub1/a.proto</li>
+     * <li>/top1/sub1/b.proto</li>
+     * <li>/top1/sub1/bot1/d.proto</li>
+     * <li>/top1/sub1/bot2/c.proto</li>
+     * <li>/top1/sub2/x.proto</li>
+     * <li>/top2/z.proto</li>
+     * <li>/top2/sub1/y.proto</li>
+     * </ol>
      *
      * @since 0.7.2
      */
