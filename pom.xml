@@ -39,7 +39,7 @@
         <java.compiler.source>${jdk.version}</java.compiler.source>
         <java.compiler.target>${jdk.version}</java.compiler.target>
 
-        <mavenVersion>3.3.9</mavenVersion>
+        <mavenVersion>3.5.0</mavenVersion>
         <plexusComponentVersion>2.1.0</plexusComponentVersion>
         <plexusUtilsVersion>3.4.2</plexusUtilsVersion>
         <pluginToolsVersion>3.6.0</pluginToolsVersion>

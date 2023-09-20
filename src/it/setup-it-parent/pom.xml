@@ -39,7 +39,7 @@
         <java.compiler.source>${java.sdk.version}</java.compiler.source>
         <java.compiler.target>${java.sdk.version}</java.compiler.target>
 
-        <mavenVersion>3.3.9</mavenVersion>
+        <mavenVersion>3.5.0</mavenVersion>
 
         <protobufVersion>3.24.2</protobufVersion>
         <protobufJavaArtifact>protobuf-java</protobufJavaArtifact>
