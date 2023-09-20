@@ -34,7 +34,7 @@
     <name>Integration Test 2</name>
 
     <properties>
-        <protobufVersion>[3.4.0,3.5.0)</protobufVersion>
+        <protobufVersion>[3.24.2,3.24.3)</protobufVersion>
     </properties>
 
     <build>
@@ -61,7 +61,7 @@
             </plugin>
             <plugin>
                 <groupId>dev.cookiecode</groupId>
-                <artifactId>protobuf-maven-plugin</artifactId>
+                <artifactId>another-protobuf-maven-plugin</artifactId>
                 <version>@project.version@</version>
                 <extensions>true</extensions>
             </plugin>

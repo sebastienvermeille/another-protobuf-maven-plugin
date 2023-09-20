@@ -35,14 +35,14 @@
 
     <properties>
         <!-- Peg to the same protobuf version as MinimalPlugin was compiled against -->
-        <protobufVersion>3.4.0</protobufVersion>
+        <protobufVersion>3.24.2</protobufVersion>
     </properties>
 
     <build>
         <plugins>
             <plugin>
                 <groupId>dev.cookiecode</groupId>
-                <artifactId>protobuf-maven-plugin</artifactId>
+                <artifactId>another-protobuf-maven-plugin</artifactId>
                 <version>@project.version@</version>
                 <executions>
                     <execution>
@@ -57,15 +57,15 @@
                                     <groupId>dev.cookiecode.its</groupId>
                                     <artifactId>test-protoc-plugin</artifactId>
                                     <version>1.0.5</version>
-                                    <mainClass>org.xolstice.protobuf.plugin.minimal.MinimalPlugin</mainClass>
+                                    <mainClass>dev.cookiecode.protobuf.plugin.minimal.MinimalPlugin</mainClass>
                                 </protocPlugin>
                                 <protocPlugin>
                                     <id>prefix</id>
                                     <groupId>dev.cookiecode.its</groupId>
                                     <artifactId>test-protoc-plugin</artifactId>
                                     <!-- Test that version ranges are correctly resolved too -->
-                                    <version>[1.0.0,1.1.0)</version>
-                                    <mainClass>org.xolstice.protobuf.plugin.minimal.MinimalPlugin</mainClass>
+                                    <version>1.0.5</version>
+                                    <mainClass>dev.cookiecode.protobuf.plugin.minimal.MinimalPlugin</mainClass>
                                     <args>
                                         <arg>prefix-</arg>
                                     </args>
