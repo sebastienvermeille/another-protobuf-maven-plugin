@@ -21,7 +21,7 @@
 A plugin that integrates protocol buffers compiler (`protoc`) into Maven lifecycle.
 
 [Release notes](https://another-protobuf-maven-plugin.cookiecode.dev/changes-report.html) and detailed documentation
-are available on the [web site](https://another-protobuf-maven-plugin.cookiecode.dev/).
+are available on the [web site](https://sebastienvermeille.github.io/another-protobuf-maven-plugin/).
 
 Please also read [Contribution Guidelines](docs/CONTRIBUTING.md) and [Code of Conduct](docs/CODE_OF_CONDUCT.md) for this project.
 
